@@ -146,7 +146,7 @@ public partial class webservice : System.Web.UI.Page
         List<string> Flonlat = new List<string>(); string flonl = "";
         List<string> FASno = new List<string>(); string fasn = "";
         List<string> FASna = new List<string>(); string fasnam=  "";
-        //string server = "v4.whois.cymru.com";
+        string server = "v4.whois.cymru.com";
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -187,9 +187,9 @@ public partial class webservice : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                //string whois = whoisinfo(server, item);
-                //whois = whois + "end";
-                string whois = "NA";
+                string whois = whoisinfo(server, item);
+                whois = whois + "end";
+                //string whois = "NA";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
@@ -247,24 +247,24 @@ public partial class webservice : System.Web.UI.Page
         _ObjDataClasses.SubmitChanges();
 
     }
-    //private string whoisinfo(string whoisServer, string url)
-    //{
-    //    StringBuilder whoisresult = new StringBuilder();
-    //    TcpClient whoisclient = new TcpClient(whoisServer, 43);
-    //    NetworkStream whoisnetworkstream = whoisclient.GetStream();
-    //    BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-    //    StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+    private string whoisinfo(string whoisServer, string url)
+    {
+        StringBuilder whoisresult = new StringBuilder();
+        TcpClient whoisclient = new TcpClient(whoisServer, 43);
+        NetworkStream whoisnetworkstream = whoisclient.GetStream();
+        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
 
-    //    streamWriter.WriteLine(url);
-    //    streamWriter.Flush();
+        streamWriter.WriteLine(url);
+        streamWriter.Flush();
 
-    //    StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-    //    while (!streamReaderReceive.EndOfStream)
-    //    { whoisresult.Append(streamReaderReceive.ReadLine()); }
+        while (!streamReaderReceive.EndOfStream)
+        { whoisresult.Append(streamReaderReceive.ReadLine()); }
 
-    //    return whoisresult.ToString();
-    //}
+        return whoisresult.ToString();
+    }
     private string dattime()
     {
         DateTime now = DateTime.Now;

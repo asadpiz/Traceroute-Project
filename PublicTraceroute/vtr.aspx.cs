@@ -20,6 +20,11 @@ using System.Web.Security;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
+using DotNet.Highcharts;
+using DotNet.Highcharts.Options;
+using DotNet.Highcharts.Enums;
+using DotNet.Highcharts.Helpers;
+
 
 public partial class vtr : System.Web.UI.Page
 {
@@ -167,7 +172,7 @@ public partial class vtr : System.Web.UI.Page
         List<string> Flonlat = new List<string>();
         List<string> FASno = new List<string>();
         List<string> FASna = new List<string>();
-        string server = "v4.whois.cymru.com";
+        //string server = "v4.whois.cymru.com";
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -206,9 +211,9 @@ public partial class vtr : System.Web.UI.Page
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
 
-                //string whois = "";
-                string whois = whoisinfo(server, item);
-                whois = whois + "end";
+                string whois = "";
+                //string whois = whoisinfo(server, item);
+                //whois = whois + "end";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
@@ -341,7 +346,7 @@ public partial class vtr : System.Web.UI.Page
         List<string> Flonlat = new List<string>();
         List<string> FASno = new List<string>();
         List<string> FASna = new List<string>();
-        string server = "v4.whois.cymru.com";
+        //string server = "v4.whois.cymru.com";
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -379,9 +384,9 @@ public partial class vtr : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                //string whois = "";
-                string whois = whoisinfo(server, item);
-                whois = whois + "end";
+                string whois = "";
+                //string whois = whoisinfo(server, item);
+                //whois = whois + "end";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
@@ -672,24 +677,24 @@ public partial class vtr : System.Web.UI.Page
         }
     }
 
-    private string whoisinfo(string whoisServer, string url)
-    {
-        StringBuilder whoisresult = new StringBuilder();
-        TcpClient whoisclient = new TcpClient(whoisServer, 43);
-        NetworkStream whoisnetworkstream = whoisclient.GetStream();
-        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+    //private string whoisinfo(string whoisServer, string url)
+    //{
+    //    StringBuilder whoisresult = new StringBuilder();
+    //    TcpClient whoisclient = new TcpClient(whoisServer, 43);
+    //    NetworkStream whoisnetworkstream = whoisclient.GetStream();
+    //    BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+    //    StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
 
-        streamWriter.WriteLine(url);
-        streamWriter.Flush();
+    //    streamWriter.WriteLine(url);
+    //    streamWriter.Flush();
 
-        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+    //    StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-        while (!streamReaderReceive.EndOfStream)
-        { whoisresult.Append(streamReaderReceive.ReadLine()); }
+    //    while (!streamReaderReceive.EndOfStream)
+    //    { whoisresult.Append(streamReaderReceive.ReadLine()); }
 
-        return whoisresult.ToString();
-    }
+    //    return whoisresult.ToString();
+    //}
     private string dattime()
     {
         DateTime now = DateTime.Now;
@@ -700,5 +705,37 @@ public partial class vtr : System.Web.UI.Page
         timendate = timendate.Replace(":", "-");
         string dirname = timendate;
         return dirname;
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        ////////// Analyze Button
+        object[] data = new object[30];
+        data[0] = new object[] { "RTT1", 10};
+        data[1] = new object[] { "RTT2", 20 };
+        data[2] = new object[] { "RTT3", 40 };
+        data[3] = new object[] { "RTT4", 10 };
+        data[4] = new object[] { "RTT5", 20 };
+        DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart").InitChart(new Chart { DefaultSeriesType = ChartTypes.Pie, PlotShadow = false })
+        .SetTitle(new Title { Text = "Test For RTT" })
+        .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }" })
+        .SetPlotOptions(new PlotOptions
+        {
+            Pie = new PlotOptionsPie
+            {
+                AllowPointSelect = true,
+                Cursor = Cursors.Pointer,
+                DataLabels = new PlotOptionsPieDataLabels
+                {
+                    Color = ColorTranslator.FromHtml("#000000"),
+                    ConnectorColor = ColorTranslator.FromHtml("#000000"),
+                    Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }"
+                },
+            }
+        })
+             .SetSeries(new Series
+             {
+                 Data = new Data(data)
+             });
+        LiteralProvinces.Text = chart.ToHtmlString();
     }
 }

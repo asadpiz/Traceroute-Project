@@ -224,7 +224,6 @@ public partial class publicserver : System.Web.UI.Page
         System.IO.StreamReader rTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"));
         string Rtext = rTrfile.ReadToEnd();
         rTrfile.Close();
-
         string Rlinepattern = @"(?<linegroup>[ \n]\d+  .*)";
         string Rrttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
 
@@ -233,7 +232,6 @@ public partial class publicserver : System.Web.UI.Page
         List<string> RipS = new List<string>();
         List<string> Rrttave = new List<string>();
         List<string> methodstr = new List<string>();
-
         /// !!!!!!!!!!!!!!!!!!! HOP FLAG !!!!!!!!!!!!!!!!!!!!!!!!!! ////////////////////////////////////////
 
         MatchCollection Rtrline = Regex.Matches(Rtext, Rlinepattern);
@@ -246,8 +244,8 @@ public partial class publicserver : System.Web.UI.Page
             float Rrtt11 = 0;
 
             string Rline = Rlinematch.Value;
-            ListBox1.Visible = true;
-            ListBox1.Items.Add(Rline);
+
+            ////////////////////////////////////// Extract IPs Line-By-Line ///////////////////////////////////////////////////////////////////////
             Match method = Regex.Match(Rline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
             if (method.Success)
             {
@@ -257,9 +255,6 @@ public partial class publicserver : System.Web.UI.Page
             {
                 methodstr.Add("NA");
             }
-
-            ////////////////////////////////////// Extract IPs Line-By-Line ///////////////////////////////////////////////////////////////////////
-
             Match Rmatchip = Regex.Match(Rline, @"\(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\)");
             if (Rmatchip.Success)
             {
@@ -270,10 +265,7 @@ public partial class publicserver : System.Web.UI.Page
                 string Rtrimst = Rtrimen.TrimStart(Rstartchar);
                 RipS.Add(Rtrimst);
             }
-            /////////////////////////////////////////// Case for '*' ///////////////////////////////
-
-            Match Rmatchstar = Regex.Match(Rline, @"(\d)+  \* \* \*");
-            if (Rmatchstar.Success)
+            else
             {
                 RipS.Add("Destination Unreachable");
                 Rrttave.Add("0");
@@ -300,7 +292,7 @@ public partial class publicserver : System.Web.UI.Page
             }
 
         }
-        /////////////////////////// FINDING LONGITUDE & LATITUDE OF FORWARD IPS /////////////////////////////////////////////////
+        /////////////////////////// FINDING LONGITUDE & LATITUDE OF Reverse IPS /////////////////////////////////////////////////
         List<string> Rlonlat = new List<string>();
         List<string> RASno = new List<string>();
         List<string> RASna = new List<string>();
@@ -342,7 +334,7 @@ public partial class publicserver : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-
+                //string whois = "";
                 string whois = whoisinfo(server, item);
                 whois = whois + "end";
                 ////////////////////// AS NO ////////////////////
@@ -350,8 +342,8 @@ public partial class publicserver : System.Web.UI.Page
                 if (asnummatch.Success)
                 {
                     string asno = asnummatch.Value;
-                    char[] Rendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Rendchar);
+                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                    asno = asno.TrimStart(Fendchar);
                     RASno.Add(asno);
                 }
                 else
@@ -361,10 +353,10 @@ public partial class publicserver : System.Web.UI.Page
                 if (asnamematch.Success)
                 {
                     string asna = asnamematch.Value;
-                    char[] Rendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Rendchar);
-                    char Rstart = '|';
-                    asna = asna.TrimStart(Rstart);
+                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
+                    asna = asna.TrimEnd(Fendchar);
+                    char Fstart = '|';
+                    asna = asna.TrimStart(Fstart);
                     RASna.Add(asna);
                 }
                 else
@@ -595,7 +587,7 @@ public partial class publicserver : System.Web.UI.Page
             Frep2 = 1;
             if (Flonglatlist[ind] == "0_0")
             {
-                zeroballoonlist.Add("<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>");
+                zeroballoonlist.Add("<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr>");
                 zeroflag = 1;
             }
             else
@@ -639,36 +631,37 @@ public partial class publicserver : System.Web.UI.Page
                             longg = Convert.ToDouble(words[0]);
                             lat = Convert.ToDouble(words[1]);
                             string icon = "";
-                            if (forward == 1)
+                            if (forward == 0)
                             {
                                 if (ind == 0)
                                 {
-                                    icon = "icons/database.png";
+                                    icon = "icons/greenflag3.png";
                                 }
                                 else if (ind == (Flonglatlist.Count - 1))
                                 {
-                                    icon = "icons/database.png";
+                                    icon = "icons/greenflag3.png";
+                                }
+                                else
+                                {
+                                    icon = "icons/wifiblue.png";
+                                }
+                            }
+                            else
+                            {
+                                if (ind == 0)
+                                {
+                                    icon = "icons/greenflag3.png";
+                                }
+                                else if (ind == (Flonglatlist.Count - 1))
+                                {
+                                    icon = "icons/greenflag3.png";
                                 }
                                 else
                                 {
                                     icon = "icons/wifi.png";
                                 }
                             }
-                            else if (forward == 0)
-                            {
-                                if (ind == 0)
-                                {
-                                    icon = "icons/revstart.png";
-                                }
-                                else if (ind == (Flonglatlist.Count - 1))
-                                {
-                                    icon = "icons/revend.png";
-                                }
-                                else
-                                {
-                                    icon = "icons/rev.png";
-                                }
-                            }
+
                             string idpps = Convert.ToString(IDpp);
                             GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
                             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
@@ -714,36 +707,37 @@ public partial class publicserver : System.Web.UI.Page
                     longg = Convert.ToDouble(words[0]);
                     lat = Convert.ToDouble(words[1]);
                     string icon = "";
-                    if (forward == 1)
+                    if (forward == 0)
                     {
                         if (ind == 0)
                         {
-                            icon = "icons/database.png";
+                            icon = "icons/greenflag3.png";
                         }
                         else if (ind == (Flonglatlist.Count - 1))
                         {
-                            icon = "icons/database.png";
+                            icon = "icons/greenflag3.png";
                         }
                         else
                         {
-                            icon = "icons/wifi.png";
+                            icon = "icons/wifiblue.png";
                         }
                     }
-                    else if (forward == 0)
+                    else 
                     {
-                        if (ind == 0)
-                        {
-                            icon = "icons/revstart.png";
-                        }
-                        else if (ind == (Flonglatlist.Count - 1))
-                        {
-                            icon = "icons/revend.png";
-                        }
-                        else
-                        {
-                            icon = "icons/rev.png";
-                        }
+                          if (ind == 0)
+                            {
+                                icon = "icons/greenflag3.png";
+                            }
+                            else if (ind == (Flonglatlist.Count - 1))
+                            {
+                                icon = "icons/greenflag3.png";
+                            }
+                            else
+                            {
+                                icon = "icons/wifi.png";
+                            }                    
                     }
+
                     string idpps = Convert.ToString(IDpp);
                     GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
                     GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
@@ -793,21 +787,25 @@ public partial class publicserver : System.Web.UI.Page
                             string idl = Convert.ToString(idline);
                             GooglePolyline PL1 = new GooglePolyline();
                             double sss = rttcompare[indx];
-                            if (sss <= 100)
+                            if (sss <= 80)
                             {
                                 PL1.ColorCode = "#FFF014";
                             }
-                            else if ((sss > 100) & (sss <= 200))
+                            else if ((sss > 80) & (sss <= 160))
                             {
                                 PL1.ColorCode = "#00FF78";
                             }
-                            else if ((sss > 200) & (sss <= 300))
+                            else if ((sss > 160) & (sss <= 240))
                             {
-                                PL1.ColorCode = "#FFF014";
+                                PL1.ColorCode = "#3C78FF";
                             }
-                            else if ((sss > 300) & (sss <= 400))
+                            else if ((sss > 240) & (sss <= 320))
                             {
                                 PL1.ColorCode = "#FF7814";
+                            }
+                            else if ((sss > 320) & (sss <= 400))
+                            {
+                                PL1.ColorCode = "#14FFF0";
                             }
                             else if (sss > 400)
                             {

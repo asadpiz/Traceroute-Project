@@ -23,11 +23,11 @@
         }
         .style3
         {
-            background-color: #00CCFF;
+            background-color: #FFFFFF;
         }
         .style4
         {
-            background-color: #CCCCFF;
+            background-color: #FFFFFF;
         }
         .style5
         {
@@ -57,7 +57,8 @@
         <td class="style3">
             <asp:Label ID="Label2" runat="server" Font-Bold="True" ForeColor="#003366" 
                 Text="Select a server"></asp:Label>
-           : <asp:DropDownList ID="DropDownList1" runat="server" Height="24px" Width="423px">
+           :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <asp:DropDownList ID="DropDownList1" runat="server" Height="38px" Width="423px">
                 <asp:ListItem>University of Southern California (AS47)	Los Angeles, CA, US</asp:ListItem>
                 <asp:ListItem>University of Washington (AS73) Seattle, WA, US</asp:ListItem>
                 <asp:ListItem>RUSnet (AS3277) Saint Petersburg, 66, RU</asp:ListItem>
