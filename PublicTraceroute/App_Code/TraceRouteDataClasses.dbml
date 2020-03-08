@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TraceRoute" Class="TraceRouteDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=Asad-PC;Initial Catalog=TraceRoute;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="TraceRouteConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Routes" Member="Routes">
+    <Type Name="Route">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ip" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="longlat" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="RTT" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ASNumber" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ASName" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="WebsiteID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Date_Time" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="WebsiteName_Route" Member="WebsiteName" ThisKey="WebsiteID" OtherKey="id" Type="WebsiteName" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WebsiteName" Member="WebsiteNames">
+    <Type Name="WebsiteName">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="WebsiteName_Route" Member="Routes" ThisKey="id" OtherKey="WebsiteID" Type="Route" />
+    </Type>
+  </Table>
+  <Function Name="dbo.GetRoutes" Method="GetRoutes">
+    <ElementType Name="GetRoutesResult">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ip" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="longlat" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="RTT" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ASNumber" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ASName" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="WebsiteID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Date_Time" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

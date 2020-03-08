@@ -23,11 +23,20 @@ using System.Text.RegularExpressions;
 
 public partial class webservice : System.Web.UI.Page
 {
+    TraceRouteDataClassesDataContext _ObjDataClasses = new TraceRouteDataClassesDataContext();
     String strResult;
     WebResponse objResponse;
     protected void Page_Load(object sender, EventArgs e)
     {
         List<string> hostnames = new List<string>();
+        hostnames.Add("www.google.com");
+        //hostnames.Add("www.facebook.com");
+        //hostnames.Add("www.wikipedia.org");
+        //hostnames.Add("www.youtube.com");
+        //hostnames.Add("www.yahoo.com");
+        //hostnames.Add("www.baidu.com");
+        //hostnames.Add("www.live.com");
+
         foreach (string item in hostnames)
         {
             routine(item);
@@ -39,8 +48,10 @@ public partial class webservice : System.Web.UI.Page
     private void routine(string hostname)
     {
         string dirname = dattime();
+        DateTime now = DateTime.Now;
+
         System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
-        string ipAddressOrHostName = ""; ////////////RETREIVE ADDRESS FROM 
+        string ipAddressOrHostName = hostname;
 
         IPAddress ipAddress = Dns.GetHostEntry(ipAddressOrHostName).AddressList[0];
         StringBuilder traceResults = new StringBuilder();
@@ -72,7 +83,9 @@ public partial class webservice : System.Web.UI.Page
         string Ftext = FTrfile.ReadToEnd();
         FTrfile.Close();
 
-        List<string> FipS = new List<string>(); List<string> Frttave = new List<string>(); List<string> methodstr = new List<string>();
+        List<string> FipS = new List<string>(); List<string> Frttave = new List<string>(); //List<string> methodstr = new List<string>();
+        string Fip = ""; string Frtta = "";
+
 
 
         string Flinepattern = @"(\d+[\t].*)";
@@ -84,26 +97,30 @@ public partial class webservice : System.Web.UI.Page
         {
             string eline = Rlinematch.Value;
             int star = 0;
-            Match method = Regex.Match(eline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
-            if (method.Success)
-            {
-                methodstr.Add(method.Value);
-            }
-            else
-            {
-                methodstr.Add("NA");
-            }
+            //Match method = Regex.Match(eline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
+            //if (method.Success)
+            //{
+            //    methodstr.Add(method.Value);
+            //}
+            //else
+            //{
+            //    methodstr.Add("NA");
+            //}
             Match Fmatchms = Regex.Match(eline, FIP);
             Match Frtt = Regex.Match(eline, Frttpattern);
 
             if (Fmatchms.Success)
             {
                 FipS.Add(Fmatchms.ToString());
+                Fip = Fip + "_" + Fmatchms.ToString();
+
             }
             else
             {
                 FipS.Add("Destination Unreachable");
-                Frttave.Add("0");
+                Fip = Fip + "_" + "Destination Unreachable";
+                //Frttave.Add("0");
+                Frtta = Frtta + "_" + "0";
                 star = 1;
             }
 
@@ -115,18 +132,21 @@ public partial class webservice : System.Web.UI.Page
                     char Rendchar = '\t';
                     string Rtrimen = Rrtttemp.TrimStart(Rendchar);
                     string Rtrimst = Rtrimen.TrimEnd(Rendchar);
-                    Frttave.Add(Rtrimst);
+                    //Frttave.Add(Rtrimst);
+                    Frtta = Frtta + "_" + Rtrimst;
                 }
                 else
-                { Frttave.Add("0"); }
+                { //Frttave.Add("0");
+                Frtta = Frtta + "_" + "0";
+                }
             }
         }
 
         /////////////////////////// FINDING LONGITUDE & LATITUDE OF FORWARD IPS /////////////////////////////////////////////////
-        List<string> Flonlat = new List<string>();
-        List<string> FASno = new List<string>();
-        List<string> FASna = new List<string>();
-        string server = "v4.whois.cymru.com";
+        List<string> Flonlat = new List<string>(); string flonl = "";
+        List<string> FASno = new List<string>(); string fasn = "";
+        List<string> FASna = new List<string>(); string fasnam=  "";
+        //string server = "v4.whois.cymru.com";
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -154,18 +174,22 @@ public partial class webservice : System.Web.UI.Page
                     char Fstartchar = '>';
                     string lltrimen = lltemp.TrimEnd(Fendchar);
                     string lltrimst = lltrimen.TrimStart(Fstartchar);
-                    Flonlat.Add(lltrimst);
+                    //Flonlat.Add(lltrimst);
+                    flonl = flonl + "_"+lltrimst;
                     found_match = found_match + 1;
                 }
                 if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
                 {
-                    Flonlat.Add("0");
-                    Flonlat.Add("0");
+                    //Flonlat.Add("0");
+                    //Flonlat.Add("0");
+                    flonl = flonl + "_" + "0";
+                    flonl = flonl + "_" + "0";
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                string whois = whoisinfo(server, item);
-                whois = whois + "end";
+                //string whois = whoisinfo(server, item);
+                //whois = whois + "end";
+                string whois = "NA";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
@@ -173,10 +197,13 @@ public partial class webservice : System.Web.UI.Page
                     string asno = asnummatch.Value;
                     char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
                     asno = asno.TrimStart(Fendchar);
-                    FASno.Add(asno);
+                    //FASno.Add(asno);
+                    fasn = fasn + "_" + asno;
                 }
                 else
-                { FASno.Add("NA"); }
+                { //FASno.Add("NA");
+                fasn = fasn + "_" + "NA";
+                }
                 ////////////////////////////////AS NAME ////////////////////////////////////////
                 Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
                 if (asnamematch.Success)
@@ -186,39 +213,58 @@ public partial class webservice : System.Web.UI.Page
                     asna = asna.TrimEnd(Fendchar);
                     char Fstart = '|';
                     asna = asna.TrimStart(Fstart);
-                    FASna.Add(asna);
+                    //FASna.Add(asna);
+                    fasnam = fasnam + "_" + asna;
                 }
                 else
-                { FASna.Add("NA"); }
+                { //FASna.Add("NA");
+                fasnam = fasnam + "_" + "NA";
+                }
             }
             else
             {
-                Flonlat.Add("0");
-                Flonlat.Add("0");
-                FASna.Add("NA");
-                FASno.Add("NA");
+                //Flonlat.Add("0");
+                flonl = flonl + "_" + "0";
+                flonl = flonl + "_" + "0";
+                //Flonlat.Add("0");
+                fasnam = fasnam + "_" + "NA";
+                fasn = fasn + "_" + "NA";
+                //FASna.Add("NA");
+                //FASno.Add("NA");
             }
         }
+        string asd = Fip;
+        string asdd = Frtta;
+        string asddd = flonl;
+        string asdddd = fasn;
+        string addddddd = fasnam;
+
+        Route objRoute = new Route();
+        objRoute.ip = Fip;
+        objRoute.longlat = flonl; objRoute.RTT = Frtta; objRoute.ASName = fasnam; objRoute.ASNumber = fasn; objRoute.WebsiteID = 1; objRoute.Date_Time = now;
+
+        _ObjDataClasses.Routes.InsertOnSubmit(objRoute);
+        _ObjDataClasses.SubmitChanges();
 
     }
-    private string whoisinfo(string whoisServer, string url)
-    {
-        StringBuilder whoisresult = new StringBuilder();
-        TcpClient whoisclient = new TcpClient(whoisServer, 43);
-        NetworkStream whoisnetworkstream = whoisclient.GetStream();
-        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+    //private string whoisinfo(string whoisServer, string url)
+    //{
+    //    StringBuilder whoisresult = new StringBuilder();
+    //    TcpClient whoisclient = new TcpClient(whoisServer, 43);
+    //    NetworkStream whoisnetworkstream = whoisclient.GetStream();
+    //    BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+    //    StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
 
-        streamWriter.WriteLine(url);
-        streamWriter.Flush();
+    //    streamWriter.WriteLine(url);
+    //    streamWriter.Flush();
 
-        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+    //    StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-        while (!streamReaderReceive.EndOfStream)
-        { whoisresult.Append(streamReaderReceive.ReadLine()); }
+    //    while (!streamReaderReceive.EndOfStream)
+    //    { whoisresult.Append(streamReaderReceive.ReadLine()); }
 
-        return whoisresult.ToString();
-    }
+    //    return whoisresult.ToString();
+    //}
     private string dattime()
     {
         DateTime now = DateTime.Now;

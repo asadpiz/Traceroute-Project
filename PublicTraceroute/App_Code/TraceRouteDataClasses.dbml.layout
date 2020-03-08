@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="TraceRouteDataClasses">
+  <DataContextMoniker Name="/TraceRouteDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6c4ae21b-f5d8-4105-a300-4cf1fcb59e9c" absoluteBounds="3.5, 1, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/TraceRouteDataClassesDataContext/Route" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4ff60edb-0e23-43d0-8ebe-3689a7c1dca8" absoluteBounds="3.515, 1.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3eb24f5b-72f1-45dd-972c-a570d8ee53d7" absoluteBounds="0.75, 1.5, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/TraceRouteDataClassesDataContext/WebsiteName" />
+      <nestedChildShapes>
+        <elementListCompartment Id="af6c5fb3-8f3a-4d89-ac72-a3f3fee26cb0" absoluteBounds="0.765, 1.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.09699625651042); (3.5 : 2.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TraceRouteDataClassesDataContext/WebsiteName/WebsiteName_Route" />
+      <nodes>
+        <classShapeMoniker Id="3eb24f5b-72f1-45dd-972c-a570d8ee53d7" />
+        <classShapeMoniker Id="6c4ae21b-f5d8-4105-a300-4cf1fcb59e9c" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

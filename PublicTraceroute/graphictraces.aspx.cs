@@ -23,6 +23,8 @@ using System.Text.RegularExpressions;
 
 public partial class graphictraces : System.Web.UI.Page
 {
+    
+   
     String strResult;
     WebResponse objResponse;
     int uploaded = 2;
@@ -215,9 +217,9 @@ public partial class graphictraces : System.Web.UI.Page
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
 
-                string whois = "";
-                //string whois = whoisinfo(server, item);
-                //whois = whois + "end";
+                //string whois = "";
+                string whois = whoisinfo(server, item);
+                whois = whois + "end";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
@@ -396,9 +398,9 @@ public partial class graphictraces : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                string whois = "";
-                //string whois = whoisinfo(server, item);
-                //whois = whois + "end";
+                //string whois = "";
+                string whois = whoisinfo(server, item);
+                whois = whois + "end";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
@@ -566,9 +568,9 @@ public partial class graphictraces : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                string whois = "";
-                //string whois = whoisinfo(server, item);
-                //whois = whois + "end";
+                //string whois = "";
+                string whois = whoisinfo(server, item);
+                whois = whois + "end";
                 ////////////////////// AS NO ////////////////////
                 Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
                 if (asnummatch.Success)
