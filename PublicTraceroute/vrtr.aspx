@@ -163,7 +163,7 @@ height:1200px;
           <span class="style13">&nbsp;<strong>&quot;Show Reverse Route&quot;)</strong></span><span class="style2"><br />
           </span>
           <asp:FileUpload id="FileUploadControl" runat="server" />
-                   <asp:Button ID="Button5" runat="server" Text="Upload" Width="74px" 
+                  <asp:Button runat="server" id="UploadButton" text="Upload" onclick="UploadButton_Click" Width="74px" 
              Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
                 CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
                 ViewStateMode="Enabled"/>
