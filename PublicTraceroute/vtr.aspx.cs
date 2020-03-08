@@ -22,16 +22,16 @@ using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
 using DotNet.Highcharts;
 using DotNet.Highcharts.Options;
-using DotNet.Highcharts.Enums;
 using DotNet.Highcharts.Helpers;
+using DotNet.Highcharts.Enums;
 
 
 public partial class vtr : System.Web.UI.Page
 {
-
+      
     String strResult;
     WebResponse objResponse;
-    int uploaded = 2;
+    int uploaded = 2; 
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -62,43 +62,39 @@ public partial class vtr : System.Web.UI.Page
                     {
                         string filename = Path.GetFileName(FileUploadControl.FileName);
                         FileUploadControl.SaveAs(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
-                        StatusLabel.Text = "Upload status: File uploaded!";
+                        StatusLabel.Text = "Upload status:Success- File uploaded!";
                         uploaded = 1;
                         Session["uploadflag"] = uploaded;
                     }
                     else
-                        StatusLabel.Text = "Upload status: The file has to be less than 10 kb!";
+                        StatusLabel.Text = "Upload status:Failed- The file has to be less than 10 kb!";
                 }
                 else
-                    StatusLabel.Text = "Upload status: Only .txt files are accepted!";
+                    StatusLabel.Text = "Upload status:Failed- Only .txt files are accepted!";
             }
             catch (Exception ex)
             {
-                StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+                StatusLabel.Text = "Upload status:Failed- The file could not be uploaded. The following error occured: " + ex.Message;
             }
         }
 
     }
-    ///////// FTR Uploaded OR pasted in TextBox
+    ///////// FTR Uploaded /////////////////////////////////////////
     protected void Button1_Click1(object sender, EventArgs e)
     {
-        TextBox1.Text = String.Empty;
+        TextBox1.Text  = String.Empty; ///////// Empty The Text Box
         string dirname = (string)Session["theText"];
-        int uploaded = (int)Session["uploadflag"];
-        string Ftext = "";
+        int uploaded   = (int)Session["uploadflag"];
+        string Ftext   = "";
+
         if (uploaded == 1)
         {
             System.IO.StreamReader FTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
             Ftext = FTrfile.ReadToEnd();
             FTrfile.Close();
+            TextBox1.Text = Ftext;
         }
-        else
-        {
-            dirname = dattime();
-            System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
-            Ftext = TextBox1.Text;
-        }
-        TextBox1.Text = Ftext;
+        
         string Flinepattern = @"(?<linegroup>[ \n]\d+  .*)";
         string Frttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
 
@@ -172,7 +168,10 @@ public partial class vtr : System.Web.UI.Page
         List<string> Flonlat = new List<string>();
         List<string> FASno = new List<string>();
         List<string> FASna = new List<string>();
-        //string server = "v4.whois.cymru.com";
+        string server = "v4.whois.cymru.com";
+        string asno = "";
+        string asna = "";
+        int whoisnotworking = 0;
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -209,35 +208,50 @@ public partial class vtr : System.Web.UI.Page
                     Flonlat.Add("0");
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
-
-
-                string whois = "";
-                //string whois = whoisinfo(server, item);
-                //whois = whois + "end";
-                ////////////////////// AS NO ////////////////////
-                Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                if (asnummatch.Success)
+                if (whoisnotworking == 0)
                 {
-                    string asno = asnummatch.Value;
-                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Fendchar);
-                    FASno.Add(asno);
+                    string whois = whoisinfo(server, item);
+                    if (whois == "sNA")
+                    {
+                        FASna.Add("sNA");
+                        FASno.Add("sNA");
+                        whoisnotworking = 5;
+                    }
+                    else
+                    {
+                        whoisnotworking = 0;
+                        whois = whois + "end";
+                        Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                        if (asnummatch.Success)
+                        {
+                            asno = asnummatch.Value;
+                            char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                            asno = asno.TrimStart(Fendchar);
+                            FASno.Add(asno);
+                        }
+                        else
+                        { FASno.Add("NA"); }
+
+                        Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                        if (asnamematch.Success)
+                        {
+                            asna = asnamematch.Value;
+                            char[] Fendchar = { 'e', 'n', 'd', '\n' };
+                            asna = asna.TrimEnd(Fendchar);
+                            char Fstart = '|';
+                            asna = asna.TrimStart(Fstart);
+                            FASna.Add(asna);
+                        }
+                        else
+                        { FASna.Add("NA"); }
+                    }
                 }
                 else
-                { FASno.Add("NA"); }
-                ////////////////////////////////AS NAME ////////////////////////////////////////
-                Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                if (asnamematch.Success)
                 {
-                    string asna = asnamematch.Value;
-                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Fendchar);
-                    char Fstart = '|';
-                    asna = asna.TrimStart(Fstart);
-                    FASna.Add(asna);
+                    FASna.Add("NA");
+                    FASno.Add("NA");
                 }
-                else
-                { FASna.Add("NA"); }
+
             }
             else
             {
@@ -247,6 +261,9 @@ public partial class vtr : System.Web.UI.Page
                 FASno.Add("NA");
             }
         }
+       TextBox1.Visible= true;
+       Session["AsName"] = FASna;
+       Session["Rttave"] = Frttave;
 
         GenerateGMap(Flonlat, FipS, Frttave, dirname, methodstr, FASno, FASna);
 
@@ -346,7 +363,10 @@ public partial class vtr : System.Web.UI.Page
         List<string> Flonlat = new List<string>();
         List<string> FASno = new List<string>();
         List<string> FASna = new List<string>();
-        //string server = "v4.whois.cymru.com";
+        string server = "v4.whois.cymru.com";
+        string asno = "";
+        string asna = "";
+        int whoisnotworking = 0;
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -383,34 +403,50 @@ public partial class vtr : System.Web.UI.Page
                     Flonlat.Add("0");
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
+                if (whoisnotworking == 0)
+                {
+                    string whois = whoisinfo(server, item);
+                    if (whois == "sNA")
+                    {
+                        FASna.Add("sNA");
+                        FASno.Add("sNA");
+                        whoisnotworking = 5;
+                    }
+                    else
+                    {
+                        whoisnotworking = 0;
+                        whois = whois + "end";
+                        Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                        if (asnummatch.Success)
+                        {
+                            asno = asnummatch.Value;
+                            char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                            asno = asno.TrimStart(Fendchar);
+                            FASno.Add(asno);
+                        }
+                        else
+                        { FASno.Add("NA"); }
 
-                string whois = "";
-                //string whois = whoisinfo(server, item);
-                //whois = whois + "end";
-                ////////////////////// AS NO ////////////////////
-                Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                if (asnummatch.Success)
-                {
-                    string asno = asnummatch.Value;
-                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Fendchar);
-                    FASno.Add(asno);
+                        Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                        if (asnamematch.Success)
+                        {
+                            asna = asnamematch.Value;
+                            char[] Fendchar = { 'e', 'n', 'd', '\n' };
+                            asna = asna.TrimEnd(Fendchar);
+                            char Fstart = '|';
+                            asna = asna.TrimStart(Fstart);
+                            FASna.Add(asna);
+                        }
+                        else
+                        { FASna.Add("NA"); }
+                    }
                 }
                 else
-                { FASno.Add("NA"); }
-                ////////////////////////////////AS NAME ////////////////////////////////////////
-                Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                if (asnamematch.Success)
                 {
-                    string asna = asnamematch.Value;
-                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Fendchar);
-                    char Fstart = '|';
-                    asna = asna.TrimStart(Fstart);
-                    FASna.Add(asna);
+                    FASna.Add("NA");
+                    FASno.Add("NA");
                 }
-                else
-                { FASna.Add("NA"); }
+
             }
             else
             {
@@ -420,9 +456,11 @@ public partial class vtr : System.Web.UI.Page
                 FASno.Add("NA");
             }
         }
-
-
+        TextBox1.Visible = true;
+        Session["AsName"] = FASna;
+        Session["Rttave"] = Frttave;
         GenerateGMap(Flonlat, FipS, Frttave, dirname, methodstr, FASno, FASna);
+
     }
 
     void GenerateGMap(List<string> LongLat, List<string> FipS, List<string> Frttave, string dirname, List<string> methodstr, List<string> FASno, List<string> FASna)
@@ -675,26 +713,34 @@ public partial class vtr : System.Web.UI.Page
                 }
             }
         }
+
     }
 
-    //private string whoisinfo(string whoisServer, string url)
-    //{
-    //    StringBuilder whoisresult = new StringBuilder();
-    //    TcpClient whoisclient = new TcpClient(whoisServer, 43);
-    //    NetworkStream whoisnetworkstream = whoisclient.GetStream();
-    //    BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-    //    StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+    private string whoisinfo(string whoisServer, string url)
+    {
+        try
+        {
+            StringBuilder whoisresult = new StringBuilder();
+            TcpClient whoisclient = new TcpClient(whoisServer, 43);
+            NetworkStream whoisnetworkstream = whoisclient.GetStream();
+            BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+            StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+            streamWriter.WriteLine(url);
+            streamWriter.Flush();
 
-    //    streamWriter.WriteLine(url);
-    //    streamWriter.Flush();
+            StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-    //    StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+            while (!streamReaderReceive.EndOfStream)
+            { whoisresult.Append(streamReaderReceive.ReadLine()); }
+            return whoisresult.ToString();
 
-    //    while (!streamReaderReceive.EndOfStream)
-    //    { whoisresult.Append(streamReaderReceive.ReadLine()); }
-
-    //    return whoisresult.ToString();
-    //}
+        }
+        catch (SocketException)
+        {
+            string whoisresult = "sNA";
+            return whoisresult;
+        }
+    }
     private string dattime()
     {
         DateTime now = DateTime.Now;
@@ -708,34 +754,6 @@ public partial class vtr : System.Web.UI.Page
     }
     protected void Button4_Click(object sender, EventArgs e)
     {
-        ////////// Analyze Button
-        object[] data = new object[30];
-        data[0] = new object[] { "RTT1", 10};
-        data[1] = new object[] { "RTT2", 20 };
-        data[2] = new object[] { "RTT3", 40 };
-        data[3] = new object[] { "RTT4", 10 };
-        data[4] = new object[] { "RTT5", 20 };
-        DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart").InitChart(new Chart { DefaultSeriesType = ChartTypes.Pie, PlotShadow = false })
-        .SetTitle(new Title { Text = "Test For RTT" })
-        .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }" })
-        .SetPlotOptions(new PlotOptions
-        {
-            Pie = new PlotOptionsPie
-            {
-                AllowPointSelect = true,
-                Cursor = Cursors.Pointer,
-                DataLabels = new PlotOptionsPieDataLabels
-                {
-                    Color = ColorTranslator.FromHtml("#000000"),
-                    ConnectorColor = ColorTranslator.FromHtml("#000000"),
-                    Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }"
-                },
-            }
-        })
-             .SetSeries(new Series
-             {
-                 Data = new Data(data)
-             });
-        LiteralProvinces.Text = chart.ToHtmlString();
+        Server.Transfer("vtrasresults.aspx");
     }
 }

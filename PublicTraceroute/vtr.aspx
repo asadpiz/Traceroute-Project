@@ -123,13 +123,26 @@ height:1200px;
              Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
                 CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
                 ViewStateMode="Enabled" onclick="Button3_Click"  />
+                    &nbsp;&nbsp;&nbsp;
+                    <asp:Button ID="Button4" runat="server" Text="Show More" Width="74px" 
+             Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
+                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
+                ViewStateMode="Enabled" onclick="Button4_Click"  />
                     <br />
                     <br /></li>
             </ul>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
          <br />
-    <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
+         <asp:Timer runat="server" Interval="5000" ID="Timer1"></asp:Timer>
+     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+         <ContentTemplate>
+                <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
+        </ContentTemplate>    
+        <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="Timer1" EventName="Tick" />
+        </Triggers>  
+     </asp:UpdatePanel>
             <br />
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/legend.jpg" />
             <ul class="style9">
@@ -158,24 +171,19 @@ height:1200px;
              Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
                 CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
                 ViewStateMode="Enabled" onclick="Button1_Click1"/>
-          <asp:Button ID="Button4" runat="server" Text="Analyze" Width="135px" 
-              onclick="Button4_Click" />
-        </div>
     
     </div>
+
     <asp:TextBox ID="TextBox1" runat="server" Rows="40" TextMode="MultiLine" 
         Width="960px" AutoCompleteType="Notes" BackColor="#FFCC99" 
         BorderColor="#FFFF66" BorderStyle="Dotted" BorderWidth="1px" 
-        style="margin-top: 0px" ToolTip="Paste Trace Results Here"></asp:TextBox>
+        style="margin-top: 0px" Enabled="False" ReadOnly="True" Visible="False"></asp:TextBox>
     <br />
     <br />
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
    </div>
-       <div>
-        <asp:Literal ID="LiteralProvinces" runat="server"></asp:Literal>
-    </div>
     </form>
     </div>
     <div id="footer">

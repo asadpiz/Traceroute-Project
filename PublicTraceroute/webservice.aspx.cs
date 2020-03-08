@@ -29,13 +29,14 @@ public partial class webservice : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         List<string> hostnames = new List<string>();
+        ////////////// WEBSITE ID????
         hostnames.Add("www.google.com");
-        //hostnames.Add("www.facebook.com");
-        //hostnames.Add("www.wikipedia.org");
-        //hostnames.Add("www.youtube.com");
-        //hostnames.Add("www.yahoo.com");
-        //hostnames.Add("www.baidu.com");
-        //hostnames.Add("www.live.com");
+        hostnames.Add("www.facebook.com");
+        hostnames.Add("www.wikipedia.org");
+        hostnames.Add("www.youtube.com");
+        hostnames.Add("www.yahoo.com");
+        hostnames.Add("www.baidu.com");
+        hostnames.Add("www.live.com");
 
         foreach (string item in hostnames)
         {
@@ -51,6 +52,7 @@ public partial class webservice : System.Web.UI.Page
         DateTime now = DateTime.Now;
 
         System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
+        ///////////////// ISSUE TR
         string ipAddressOrHostName = hostname;
 
         IPAddress ipAddress = Dns.GetHostEntry(ipAddressOrHostName).AddressList[0];
@@ -83,7 +85,7 @@ public partial class webservice : System.Web.UI.Page
         string Ftext = FTrfile.ReadToEnd();
         FTrfile.Close();
 
-        List<string> FipS = new List<string>(); List<string> Frttave = new List<string>(); //List<string> methodstr = new List<string>();
+        List<string> FipS = new List<string>(); List<string> Frttave = new List<string>();
         string Fip = ""; string Frtta = "";
 
 
@@ -97,15 +99,6 @@ public partial class webservice : System.Web.UI.Page
         {
             string eline = Rlinematch.Value;
             int star = 0;
-            //Match method = Regex.Match(eline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
-            //if (method.Success)
-            //{
-            //    methodstr.Add(method.Value);
-            //}
-            //else
-            //{
-            //    methodstr.Add("NA");
-            //}
             Match Fmatchms = Regex.Match(eline, FIP);
             Match Frtt = Regex.Match(eline, Frttpattern);
 
@@ -147,6 +140,9 @@ public partial class webservice : System.Web.UI.Page
         List<string> FASno = new List<string>(); string fasn = "";
         List<string> FASna = new List<string>(); string fasnam=  "";
         string server = "v4.whois.cymru.com";
+        string asno = "";
+        string asna = "";
+        int whoisnotworking = 0;
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -186,39 +182,59 @@ public partial class webservice : System.Web.UI.Page
                     flonl = flonl + "_" + "0";
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
+                if (whoisnotworking == 0)
+                {
+                    string whois = whoisinfo(server, item);
+                    if (whois == "sNA")
+                    {
+                        //FASna.Add("sNA");
+                        //FASno.Add("sNA");
+                        fasnam = fasnam + "_" + "sNA";
+                        fasn = fasn + "_" + "sNA";
+                        whoisnotworking = 5;
+                    }
+                    else
+                    {
+                        whoisnotworking = 0;
+                        whois = whois + "end";
+                        Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                        if (asnummatch.Success)
+                        {
+                            asno = asnummatch.Value;
+                            char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                            asno = asno.TrimStart(Fendchar);
+                            //FASno.Add(asno);
+                            fasn = fasn + "_" + asno;
+                        }
+                        else
+                        { //FASno.Add("NA");
+                        fasn = fasn + "_" + "NA";
+                        }
 
-                string whois = whoisinfo(server, item);
-                whois = whois + "end";
-                //string whois = "NA";
-                ////////////////////// AS NO ////////////////////
-                Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                if (asnummatch.Success)
-                {
-                    string asno = asnummatch.Value;
-                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Fendchar);
-                    //FASno.Add(asno);
-                    fasn = fasn + "_" + asno;
+                        Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                        if (asnamematch.Success)
+                        {
+                            asna = asnamematch.Value;
+                            char[] Fendchar = { 'e', 'n', 'd', '\n' };
+                            asna = asna.TrimEnd(Fendchar);
+                            char Fstart = '|';
+                            asna = asna.TrimStart(Fstart);
+                            //FASna.Add(asna);
+                            fasnam = fasnam + "_" + asna;
+                        }
+                        else
+                        { 
+                            //FASna.Add("NA");
+                        fasnam = fasnam + "_" + "NA";
+                        }
+                    }
                 }
                 else
-                { //FASno.Add("NA");
-                fasn = fasn + "_" + "NA";
-                }
-                ////////////////////////////////AS NAME ////////////////////////////////////////
-                Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                if (asnamematch.Success)
                 {
-                    string asna = asnamematch.Value;
-                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Fendchar);
-                    char Fstart = '|';
-                    asna = asna.TrimStart(Fstart);
-                    //FASna.Add(asna);
-                    fasnam = fasnam + "_" + asna;
-                }
-                else
-                { //FASna.Add("NA");
-                fasnam = fasnam + "_" + "NA";
+                    //FASna.Add("NA");
+                    //FASno.Add("NA");
+                    fasnam = fasnam + "_" + "NA";
+                    fasn = fasn + "_" + "NA";
                 }
             }
             else
@@ -241,6 +257,7 @@ public partial class webservice : System.Web.UI.Page
 
         Route objRoute = new Route();
         objRoute.ip = Fip;
+        ////////////// WEBSITE ID????
         objRoute.longlat = flonl; objRoute.RTT = Frtta; objRoute.ASName = fasnam; objRoute.ASNumber = fasn; objRoute.WebsiteID = 1; objRoute.Date_Time = now;
 
         _ObjDataClasses.Routes.InsertOnSubmit(objRoute);
@@ -249,21 +266,28 @@ public partial class webservice : System.Web.UI.Page
     }
     private string whoisinfo(string whoisServer, string url)
     {
-        StringBuilder whoisresult = new StringBuilder();
-        TcpClient whoisclient = new TcpClient(whoisServer, 43);
-        NetworkStream whoisnetworkstream = whoisclient.GetStream();
-        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+        try
+        {
+            StringBuilder whoisresult = new StringBuilder();
+            TcpClient whoisclient = new TcpClient(whoisServer, 43);
+            NetworkStream whoisnetworkstream = whoisclient.GetStream();
+            BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+            StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+            streamWriter.WriteLine(url);
+            streamWriter.Flush();
 
-        streamWriter.WriteLine(url);
-        streamWriter.Flush();
+            StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+            while (!streamReaderReceive.EndOfStream)
+            { whoisresult.Append(streamReaderReceive.ReadLine()); }
+            return whoisresult.ToString();
 
-        while (!streamReaderReceive.EndOfStream)
-        { whoisresult.Append(streamReaderReceive.ReadLine()); }
-
-        return whoisresult.ToString();
+        }
+        catch (SocketException)
+        {
+            string whoisresult = "sNA";
+            return whoisresult;
+        }
     }
     private string dattime()
     {
