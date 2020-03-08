@@ -1,0 +1,48 @@
+<title>traceroute from 128.125.137.243 (www.usc.edu) to  39.47.25.19 (39.47.25.19) for 39.47.25.19</title>
+<div align='center'><table border='1'><td align='center'><h2>traceroute from 128.125.137.243 (www.usc.edu) to  39.47.25.19 (39.47.25.19) for 39.47.25.19</h2>
+To perform a
+       <!-- a href='http://boardwatch.internet.com/mag/96/dec/bwm38.html' -->
+        traceroute
+        from www.usc.edu,
+        enter the desired target
+       <a href='http://webopedia.internet.com/TERM/d/domain_name.html'>host.domain</a>
+       (e.g. www.yahoo.com) or
+       <a href='http://aol.pcwebopedia.com/TERM/I/IP_address.html'>Internet
+       address</a> (e.g. 137.138.28.228) in the box
+       below:
+       <form action='/cgi-bin/traceroute' method='GET'>
+       Enter target name or address:
+       <input type='text' size='30' name='target'> then push 'Enter' key.
+       </form></tr></table></div>
+<table bgcolor='yellow'><tr><td align='center'><font color=red><b>
+Please note that traceroutes can appear similar 
+to port scans. If you see a suspected port scan alert, 
+for example from your firewall, with 
+a series of ports in the range 33434 - 33465, coming 
+from www.usc.edu it is probably a reverse traceroute from our 
+web based reverse traceroute server. Please do NOT report this to 
+us, it will almost certainly be a waste of both of our times. 
+For more on this see<br>
+<a href='http://www.slac.stanford.edu/comp/net/wan-mon/traceroute-srv.html#security'>
+Traceroute security issues</a>.</b></font></td></tr></table>
+<pre>
+Executing 'traceroute -m 30 -q 3 -f 3 39.47.25.19'<br>
+traceroute to 39.47.25.19 (39.47.25.19), 30 hops max, 40 byte packets
+ 3  v249-gw-6 (68.181.194.65)  1.248 ms  0.509 ms  0.576 ms
+ 4  lax-dc1--losnettos-dc.cenic.net (137.164.23.225)  0.613 ms  0.499 ms  0.850 ms
+ 5  dc-lax-core2--lax-agg1-ge.cenic.net (137.164.46.107)  1.260 ms  1.089 ms  1.059 ms
+ 6  dc-svl-core1--lax-core2-10ge-1.cenic.net (137.164.46.51)  9.998 ms  8.986 ms  8.898 ms
+ 7  dc-svl-px1--svl-core1-10ge-2.cenic.net (137.164.46.13)  8.900 ms  8.947 ms  8.945 ms
+ 8  137.164.131.61 (137.164.131.61)  9.789 ms  61.190 ms  9.436 ms
+ 9  g5-0-0.plapx-dr1.ix.singtel.com (198.32.176.50)  9.146 ms  9.229 ms  9.279 ms
+10  203.208.171.153 (203.208.171.153)  9.122 ms  9.291 ms  9.045 ms
+11  ge-4-0-0-0.plapx-cr3.ix.singtel.com (203.208.183.174)  43.563 ms ge-4-0-3-0.sngc3-cr1.ix.singtel.com (203.208.183.45)  216.496 ms ge-4-0-0-0.plapx-cr3.ix.singtel.com (203.208.183.174)  9.308 ms
+12  203.208.166.162 (203.208.166.162)  190.247 ms 203.208.166.58 (203.208.166.58)  179.317 ms so-2-0-2-0.sngtp-cr2.ix.singtel.com (203.208.149.29)  190.013 ms
+13  203.208.192.66 (203.208.192.66)  279.372 ms  284.287 ms  274.014 ms
+14  static-10GE-KHI494-P01-KHI494-SWB.pie.net.pk (202.125.128.157)  281.096 ms  276.984 ms  286.412 ms
+15  rwp44.pie.net.pk (221.120.251.22)  285.551 ms 203.208.192.66 (203.208.192.66)  280.930 ms  272.919 ms
+16  static-10GE-KHI494-P01-KHI494-SWB.pie.net.pk (202.125.128.157)  279.229 ms  279.540 ms 182.184.23.30 (182.184.23.30)  288.758 ms
+17  * * *
+18  182.184.23.30 (182.184.23.30)  300.071 ms *  266.990 ms
+19  * * *
+20 
