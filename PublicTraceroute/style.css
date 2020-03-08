@@ -9,9 +9,7 @@ Released for free under a Creative Commons Attribution 2.5 License
     text-align: left;
     margin-left: 0;
     margin-right: 0;
-    position: relative;
-    top: 0px;
-    left: -2147483648px;
+    margin-top: 0;
 }
 
 body {
@@ -22,15 +20,12 @@ body {
 }
 
 input, textarea {
-	border-left: 1px solid #D6D6D6;
-    border-right: 1px solid #FFFFFF;
-    border-top: 1px solid #A3A3A3;
-    border-bottom: 1px solid #FFFFFF;
-    background: #FFFFFF url('images/img09.gif') repeat-x;
-    font: normal 1em/normal "Trebuchet MS", Arial, Helvetica, sans-serif;
-    color: #6E6E6E;
-    top: 0px;
-    left: 0px;
+	background: #FFFFFF repeat-x;
+	border: 1px solid #FFFFFF;
+	border-top-color: #A3A3A3;
+	border-left-color: #D6D6D6;
+	font: normal 1em/normal "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #6E6E6E;
 }
 
 h1, h2, h3 {
@@ -77,7 +72,7 @@ blockquote {
 }
 
 a {
-	color: #346086;
+	color: #003366;
 }
 
 a:hover {
@@ -141,8 +136,6 @@ hr {
 	height: 62px;
 	margin: 0 auto;
 	background: #252E3A url(images/img02.jpg) no-repeat;
-    top: 0px;
-    left: 0px;
 }
 
 #menu ul {
@@ -156,8 +149,6 @@ hr {
 	float: left;
 	padding: 0 20px 0 22px;
 	background: url(images/img03.gif) no-repeat left center;
-    height: 36px;
-    width: 88px;
 }
 
 #menu li.first {
@@ -237,7 +228,6 @@ hr {
 	height: 47px;
 	margin: 20px 0 40px 0;
 	padding: 15px 0 0 20px;
-	background: url(images/img07.gif) no-repeat;
 	line-height: normal;
 }
 
@@ -329,7 +319,7 @@ hr {
 #footer p {
 	margin: 0;
 	line-height: normal;
-	color: #000000;
+	color: #B4B4B4;
 }
 
 #footer a {
@@ -343,3 +333,63 @@ hr {
 #footer .credit {
 	float: right;
 }
+/* Button */
+.button
+{
+    background: url('images/oval-orange-right.gif');
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #001563;
+}
+
+.button:hover
+{
+    background: url('images/oval-orange-right.gif');
+    border: solid 1px grey;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Red;   
+    height: 25px;
+
+}
+/* HOVER BUTTON*/
+a.ovalbutton{
+background: transparent url('images/oval-orange-left.gif') no-repeat top left;
+display: block;
+float: left;
+font: normal 13px Tahoma; /* Change 13px as desired */
+line-height: 16px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 24px) */
+height: 24px; /* Height of button background height */
+padding-left: 11px; /* Width of left menu image */
+text-decoration: none;
+}
+
+a:link.ovalbutton, a:visited.ovalbutton, a:active.ovalbutton{
+color: #494949; /*button text color*/
+}
+
+a.ovalbutton span{
+background: url('images/oval-orange-right.gif') no-repeat right top;
+display: block;
+padding: 4px 11px 4px 0;
+    text-align: center;
+    width: 132px;
+}
+
+a.ovalbutton:hover{ /* Hover state CSS */
+background-position: bottom left;
+}
+
+a.ovalbutton:hover span{ /* Hover state CSS */
+background-position: bottom right;
+color: black;
+}
+/* Insert Button Click Event*/
+.buttonwrapper{ /* Container you can use to surround a CSS button to clear float */
+overflow: hidden; /*See: http://www.quirksmode.org/css/clearing.html */
+width: 100%;
+    text-align: center;
+}
+

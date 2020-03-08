@@ -35,20 +35,6 @@ left:-120px;
 width:1280px;
 height:1200px;
 }
-    .style2
-    {
-        font-family: sans-serif;
-        color: #FF6666;
-    }
-    .style3
-    {
-        font-family: "Trebuchet MS";
-        color: #FF6666;
-    }
-    .style4
-    {
-        color: #0000CC;
-    }
     .style6
     {
         font-family: "Britannic Bold";
@@ -70,20 +56,6 @@ height:1200px;
     .style10
     {
         color: #FF9900;
-    }
-    .style11
-    {
-        font-family: "Trebuchet MS";
-    }
-    .style12
-    {
-        font-family: "Trebuchet MS";
-        color: #FF9900;
-    }
-    .style13
-    {
-        font-family: sans-serif;
-        color: #000000;
     }
     .style14
     {
@@ -136,72 +108,84 @@ height:1200px;
 <div id="page">
     <form id="form1" runat="server">
    <div>
-        <div>
+        <div class="style18">
             <ul class="style9">
-                <li><span class="style10"><strong>Issue <a class="style7" 
+                <li class="style19"><strong>Issue <a class="style7" 
                         href="http://revtr.cs.washington.edu/">Reverse Traceroute</a> From Any Arbitrary Destination towards anyone of the Following 3 Servers 
-                 <div id='outerdiv'>
-  <iframe id='inneriframe' name='content' marginheight="0px" marginwidth="0px" runat="server" title="Washigton.edu" type="text/html" width="500" height="278" src="http://revtr.cs.washington.edu" frameborder="0" align="center" >
-  </iframe>
-   </div>&nbsp;&nbsp;</strong></span>&nbsp;&nbsp;&nbsp<asp:Button ID="Button4" runat="server" 
-                        Text="Show Trace" Width="74px" 
-             Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled" />
-                    
-                    <br />
-                    <br />
-                    <br /></li>
-            </ul>
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
+&nbsp;</strong></li>
+                </ul>
+            <div class="style18">
+            <span class="style10"><strong>
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Destination:<asp:TextBox ID="TextBox2" runat="server" 
+                        AutoCompleteType="Homepage" BackColor="White" BorderStyle="Solid" 
+                        ForeColor="Black" Width = "300px"></asp:TextBox>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+            <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source:</strong></span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                    <asp:DropDownList ID="DropDownList1" runat="server" Height="22px" Width="300px">
+                        <asp:ListItem Value="79">planetlab1.sfc.wide.ad.jp (203.178.143.10)</asp:ListItem>
+                        <asp:ListItem Value="111">planetlab5.cs.uiuc.edu (72.36.112.78)</asp:ListItem>
+                        <asp:ListItem Value="161">planetlab-2.cs.auckland.ac.nz (130.216.1.23)</asp:ListItem>
+                    </asp:DropDownList>
+                    <span class="style10"><strong>
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <asp:Button ID="btnSearch" runat="server" OnClick="Button4_Click" CssClass="button" 
+                Text="Request Measurement" Height="22px" Width="201px" />
+      <style type="text/css">
+          .button
+{
+    background: url('images/oval-orange-right.gif');
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #001563;
+          }
+
+.button:hover
+{
+    background: url('images/oval-orange-right.gif');
+    border: solid 1px grey;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Red;   
+    height: 25px;
+
+}
+          .style18
+          {
+              text-align: left;
+          }
+          .style19
+          {
+              text-align: left;
+              color: #FF9900;
+          }
+      </style>
+                     </div>
+                     <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
+<asp:UpdatePanel ID="UpdatePanel1" runat="server">     
+     <Triggers>
+        <asp:AsyncPostBackTrigger  ControlID="Timer1" EventName="Tick" />
+    </Triggers>
+       <ContentTemplate>
+            <asp:Label ID="Label1" runat="server" Text="" Width = "300px" Height = "20px"></asp:Label>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+         <asp:Timer ID="Timer1" runat="server" ontick="Timer1_Tick" Interval="5000" Enabled="false">
+        </asp:Timer>
          <br />
     <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
             <br />
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/legend.jpg" />
-            <ul class="style9">
-                <li><strong><span class="style12">Alternatively Upload </span><span class="style3"><asp:HyperLink 
-                        ID="HyperLink1" runat="server" 
-            NavigateUrl="http://revtr.cs.washington.edu/" CssClass="style4">Reverse Traceroute</asp:HyperLink>
-                    </span>
-                    </strong><span class="style3"><strong><span class="style4">&nbsp;</span></strong></span><strong><span 
-                        class="style11"><span class="style10">Results (</span><span class="style14">.txt</span><span class="style10">) 
-                    Or Paste them in the Box Below to show them 
-                    Graphically</span></span></strong><br />
-                    <br /></li>
-            </ul>
-
-      <div align="center">
-          <span class="style14">(Click <strong>&quot;Upload&quot;</strong> Before Clicking </span>
-          <span class="style13">&nbsp;<strong>&quot;Show Reverse Route&quot;)</strong></span><span class="style2"><br />
-          </span>
-          <asp:FileUpload id="FileUploadControl" runat="server" />
-                  <asp:Button runat="server" id="UploadButton" text="Upload" onclick="UploadButton_Click" Width="74px" 
-             Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled"/>
-          <br />
-    <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
-          <br />
-          <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Button ID="Button2" 
-              runat="server" Text="Show Reverse Route" Width="128px" 
-             Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled" onclick="Button2_Click1" />
-        </div>
     
     </div>
-    <asp:TextBox ID="TextBox1" runat="server" Rows="40" TextMode="MultiLine" 
-        Width="960px" AutoCompleteType="Notes" BackColor="#24486C" 
-        BorderColor="#FFFF66" BorderStyle="Dotted" BorderWidth="1px" 
-        style="margin-top: 0px" ToolTip="Paste Trace Results Here" ForeColor="White"></asp:TextBox>
-    <br />
-    <br />
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
-   </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
     </form>
     </div>
     <div id="footer">

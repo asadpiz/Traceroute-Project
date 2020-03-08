@@ -41,10 +41,10 @@ public partial class vtr : System.Web.UI.Page
             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint("0", 0, 0);
         }
     }
-
-    //////////// ISSUE LIVE TRACERT     //////////////////////////
     protected void Button3_Click(object sender, EventArgs e)
-    {
+    {/////////////IGNORE THIS ///////////////////////////////////
+
+
         string dirname = dattime();
         System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
         ////////////Insert whether valid data is entered or not
@@ -131,6 +131,11 @@ public partial class vtr : System.Web.UI.Page
             }
         }
 
+/////////////////// IGNORE EVERYTHING ABOVE, we have just created a list of IP addresses FipS above //////////////////////////////////////////////////
+
+
+/// Below we pick 1 IP from the created list and find its longitude latitude and store longitude and latitude in a list Flonlat
+/// first element of list is longitude, next element latitude, then next longitude and so on.
         /////////////////////////// FINDING LONGITUDE & LATITUDE OF FORWARD IPS /////////////////////////////////////////////////
         List<string> Flonlat = new List<string>();
         List<string> FASno = new List<string>();
@@ -159,11 +164,9 @@ public partial class vtr : System.Web.UI.Page
                 foreach (Match Fll in Flonglat)
                 {
                     string lltemp = Fll.Value;
-                    char Fendchar = '<';
-                    char Fstartchar = '>';
-                    string lltrimen = lltemp.TrimEnd(Fendchar);
-                    string lltrimst = lltrimen.TrimStart(Fstartchar);
-                    Flonlat.Add(lltrimst);
+                    lltemp = lltemp.Replace("<", "");
+                    lltemp = lltemp.Replace(">", "");
+                    Flonlat.Add(lltemp);
                     found_match = found_match + 1;
                 }
                 if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
@@ -222,8 +225,8 @@ public partial class vtr : System.Web.UI.Page
 
     void GenerateGMap(List<string> LongLat, List<string> FipS, List<string> Frttave, string dirname, List<string> methodstr, List<string> FASno, List<string> FASna)
     {
-        GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
-        GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
+        //GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
+        //GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
         List<double> LonLat = LongLat.Select(x => double.Parse(x)).ToList();
 
         int m = 0;

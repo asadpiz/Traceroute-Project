@@ -20,13 +20,16 @@ using System.Web.Security;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
-
+using OpenPop.Common.Logging;
+using OpenPop.Mime;
+using OpenPop.Mime.Decode;
+using OpenPop.Mime.Header;
+using OpenPop.Pop3;
 public partial class vrtr : System.Web.UI.Page
 {
 
     String strResult;
     WebResponse objResponse;
-    int uploaded = 2;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -38,401 +41,13 @@ public partial class vrtr : System.Web.UI.Page
             GoogleMapForASPNet1.GoogleMapObject.Height = "500px";
             GoogleMapForASPNet1.GoogleMapObject.ZoomLevel = 3;
             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint("0", 0, 0);
-        }
-        //GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
-        //GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
-  
+        }  
     }
-
-    protected void UploadButton_Click(object sender, EventArgs e)
-    {
-        string dirname = dattime();
-        Session["theText"] = dirname;
-
-        System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
-        if (FileUploadControl.HasFile)
-        {
-            try
-            {
-                if (FileUploadControl.PostedFile.ContentType == "text/plain")
-                {
-                    if (FileUploadControl.PostedFile.ContentLength < 10240)
-                    {
-                        string filename = Path.GetFileName(FileUploadControl.FileName);
-                        FileUploadControl.SaveAs(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
-                        StatusLabel.Text = "Upload status: File uploaded!";
-                        uploaded = 1;
-                        Session["uploadflag"] = uploaded;
-                    }
-                    else
-                        StatusLabel.Text = "Upload status: The file has to be less than 10 kb!";
-                }
-                else
-                    StatusLabel.Text = "Upload status: Only .txt files are accepted!";
-            }
-            catch (Exception ex)
-            {
-                StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
-            }
-        }
-
-    }
-    ///////// RTR Uploaded OR pasted in TextBox
-    protected void Button2_Click1(object sender, EventArgs e)
-    {
-        TextBox1.Text = String.Empty;
-        string dirname = (string)Session["theText"];
-        int uploaded = (int)Session["uploadflag"];
-
-        string Rtext = "";
-        if (uploaded == 1)
-        {
-            System.IO.StreamReader RTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
-            Rtext = RTrfile.ReadToEnd();
-            RTrfile.Close();
-
-        }
-        else
-        {
-            dirname = dattime();
-            System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
-            Rtext = TextBox1.Text;
-        }
-
-        string Rlinepattern = @"(?<linegroup>[ \n]\d+  .*)";
-        string Rrttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
-
-        ////////////// IP & STAR patterns declared inside the Loop /////////////
-
-        List<string> RipS = new List<string>();
-        List<string> Rrttave = new List<string>();
-        List<string> methodstr = new List<string>();
-        /// !!!!!!!!!!!!!!!!!!! HOP FLAG !!!!!!!!!!!!!!!!!!!!!!!!!! ////////////////////////////////////////
-
-        MatchCollection Rtrline = Regex.Matches(Rtext, Rlinepattern);
-        foreach (Match Rlinematch in Rtrline)
-        {
-            float Rsumm = 0;
-            int Rstar = 0;
-            int Rlength = 0;
-            float RRave = 0;
-            float Rrtt11 = 0;
-
-            string Rline = Rlinematch.Value;
-
-            ////////////////////////////////////// Extract IPs Line-By-Line ///////////////////////////////////////////////////////////////////////
-            Match method = Regex.Match(Rline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
-            if (method.Success)
-            {
-                methodstr.Add(method.Value);
-            }
-            else
-            {
-                methodstr.Add("NA");
-            }
-            Match Rmatchip = Regex.Match(Rline, @"\(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\)");
-            if (Rmatchip.Success)
-            {
-                string Riptemp = Rmatchip.Value;
-                char Rendchar = ')';
-                char Rstartchar = '(';
-                string Rtrimen = Riptemp.TrimEnd(Rendchar);
-                string Rtrimst = Rtrimen.TrimStart(Rstartchar);
-                RipS.Add(Rtrimst);
-            }
-            else
-            {
-                RipS.Add("Destination Unreachable");
-                Rrttave.Add("0");
-                Rstar = 1;
-            }
-
-            //////////////////////////////////////////// Extract RTTs & Calculate Average RTT Line-by-Line ////////////
-            if (Rstar != 1)
-            {
-                MatchCollection RtrRTT = Regex.Matches(Rline, Rrttpattern);
-                foreach (Match Rrttmatch in RtrRTT)
-                {
-                    string Rrtttemp = Rrttmatch.Value;
-                    char[] Rendchar = { ' ', 'm', 's' };
-                    string Rtrimen = Rrtttemp.TrimEnd(Rendchar);
-                    Rrtt11 = float.Parse(Rtrimen);
-                    Rlength = Rlength + 1;
-                    Rsumm = Rsumm + Rrtt11;
-                }
-                RRave = Rsumm / Rlength;
-                string Rrttaverage = RRave.ToString();
-                Rrttaverage = Rrttaverage + " ms";
-                Rrttave.Add(Rrttaverage);
-            }
-
-        }
-        /////////////////////////// FINDING LONGITUDE & LATITUDE OF Reverse IPS /////////////////////////////////////////////////
-        List<string> Rlonlat = new List<string>();
-        List<string> RASno = new List<string>();
-        List<string> RASna = new List<string>();
-        string server = "v4.whois.cymru.com";
-        foreach (string item in RipS)
-        {
-            if (item != "Destination Unreachable")
-            {
-                string URL1 = "http://www.geoiptool.com/en/?IP=IPADD";
-                URL1 = URL1.Replace("IPADD", item);
-                WebRequest objRequest = HttpWebRequest.Create(URL1);
-                objResponse = objRequest.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/RLongLat.txt"), strResult);
-
-                System.IO.StreamReader geoipfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/RLongLat.txt"));
-                string RLLtext = geoipfile.ReadToEnd();
-                geoipfile.Close();
-                int found_match = 0;
-                MatchCollection Rlonglat = Regex.Matches(RLLtext, @"(>-?\d{1,3}<)|(>-?\d{1,3}[.]\d{0,4}<)");
-                foreach (Match Rll in Rlonglat)
-                {
-                    string lltemp = Rll.Value;
-                    char Rendchar = '<';
-                    char Rstartchar = '>';
-                    string lltrimen = lltemp.TrimEnd(Rendchar);
-                    string lltrimst = lltrimen.TrimStart(Rstartchar);
-                    Rlonlat.Add(lltrimst);
-                    found_match = found_match + 1;
-                }
-                if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
-                {
-                    Rlonlat.Add("0");
-                    Rlonlat.Add("0");
-                }
-                //////////////////////////////////FINDING AS no & Name ////////////////////////////
-
-                string whois = whoisinfo(server, item);
-                if (whois == "sNA")
-                {
-                    RASno.Add("sNA");
-                    RASna.Add("sNA");
-                }
-                else
-                {
-                    whois = whois + "end";
-                    ////////////////////// AS NO ////////////////////
-                    Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                    if (asnummatch.Success)
-                    {
-                        string asno = asnummatch.Value;
-                        char[] Rendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                        asno = asno.TrimStart(Rendchar);
-                        RASno.Add(asno);
-                    }
-                    else
-                    { RASno.Add("NA"); }
-                    ////////////////////////////////AS NAME ////////////////////////////////////////
-                    Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                    if (asnamematch.Success)
-                    {
-                        string asna = asnamematch.Value;
-                        char[] Rendchar = { 'e', 'n', 'd', '\n' };
-                        asna = asna.TrimEnd(Rendchar);
-                        char Rstart = '|';
-                        asna = asna.TrimStart(Rstart);
-                        RASna.Add(asna);
-                    }
-                    else
-                    { RASna.Add("NA"); }
-                }
-            }
-            else
-            {
-                Rlonlat.Add("0");
-                Rlonlat.Add("0");
-                RASna.Add("NA");
-                RASno.Add("NA");
-            }
-        }
-
-        GenerateGMap(Rlonlat, RipS, Rrttave, dirname, methodstr, RASno, RASna);
-    }
-    ////////////// ISSUE LIVE TRACERT     //////////////////////////
-    //protected void Button3_Click(object sender, EventArgs e)
-    //{
-    //    TextBox1.Text = String.Empty;
-    //    string dirname = dattime();
-    //    System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
-    //    ////////////Insert whether valid data is entered or not
-    //    string ipAddressOrHostName = TextBox2.Text;
-
-    //    IPAddress ipAddress = Dns.GetHostEntry(ipAddressOrHostName).AddressList[0];
-    //    StringBuilder traceResults = new StringBuilder();
-    //    using (Ping pingSender = new Ping())
-    //    {
-    //        TextBox1.Text = "\n\n";
-    //        PingOptions pingOptions = new PingOptions();
-    //        Stopwatch stopWatch = new Stopwatch();
-    //        byte[] bytes = new byte[32];
-    //        pingOptions.DontFragment = true;
-    //        pingOptions.Ttl = 1;
-    //        int maxHops = 30;
-    //        traceResults.AppendLine(string.Format("Tracing route to {0}\n over a maximum of {1} hops:", ipAddress, maxHops));
-    //        for (int i = 1; i < maxHops + 1; i++)
-    //        {
-    //            stopWatch.Reset();
-    //            stopWatch.Start();
-    //            PingReply pingReply = pingSender.Send(ipAddress, 5000, new byte[32], pingOptions);
-    //            stopWatch.Stop();
-    //            TextBox1.Text = TextBox1.Text + string.Format("{0}\t{1} \t{2} ms\n", i, pingReply.Address, stopWatch.ElapsedMilliseconds);
-    //            File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"), string.Format("{0}\t{1}ms \t{2}\n", i, stopWatch.ElapsedMilliseconds, pingReply.Address + Environment.NewLine));
-    //            if (pingReply.Status == IPStatus.Success)
-    //            {
-    //                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"), "Trace complete.");
-    //                break;
-    //            }
-    //            pingOptions.Ttl++;
-    //        }
-    //    }
-    //    System.IO.StreamReader FTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"));
-    //    string Ftext = FTrfile.ReadToEnd();
-    //    FTrfile.Close();
-
-    //    List<string> FipS = new List<string>(); List<string> Frttave = new List<string>(); List<string> methodstr = new List<string>();
-
-
-    //    string Flinepattern = @"(\d+[\t].*)";
-    //    string FIP = @"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b";
-    //    string Frttpattern = @"[\t]\d+ms [\t]";
-
-    //    MatchCollection Rtrline = Regex.Matches(Ftext, Flinepattern);
-    //    foreach (Match Rlinematch in Rtrline)
-    //    {
-    //        string eline = Rlinematch.Value;
-    //        int star = 0;
-    //        Match method = Regex.Match(eline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
-    //        if (method.Success)
-    //        {
-    //            methodstr.Add(method.Value);
-    //        }
-    //        else
-    //        {
-    //            methodstr.Add("NA");
-    //        }
-    //        Match Fmatchms = Regex.Match(eline, FIP);
-    //        Match Frtt = Regex.Match(eline, Frttpattern);
-
-    //        if (Fmatchms.Success)
-    //        {
-    //            FipS.Add(Fmatchms.ToString());
-    //        }
-    //        else
-    //        {
-    //            FipS.Add("Destination Unreachable");
-    //            Frttave.Add("0");
-    //            star = 1;
-    //        }
-
-    //        if (star != 1)
-    //        {
-    //            if (Frtt.Success)
-    //            {
-    //                string Rrtttemp = Frtt.Value;
-    //                char Rendchar = '\t';
-    //                string Rtrimen = Rrtttemp.TrimStart(Rendchar);
-    //                string Rtrimst = Rtrimen.TrimEnd(Rendchar);
-    //                Frttave.Add(Rtrimst);
-    //            }
-    //            else
-    //            { Frttave.Add("0"); }
-    //        }
-    //    }
-
-    //    /////////////////////////// FINDING LONGITUDE & LATITUDE OF FORWARD IPS /////////////////////////////////////////////////
-    //    List<string> Flonlat = new List<string>();
-    //    List<string> FASno = new List<string>();
-    //    List<string> FASna = new List<string>();
-    //    string server = "v4.whois.cymru.com";
-    //    foreach (string item in FipS)
-    //    {
-    //        if (item != "Destination Unreachable")
-    //        {
-    //            string URL1 = "http://www.geoiptool.com/en/?IP=IPADD";
-    //            URL1 = URL1.Replace("IPADD", item);
-    //            WebRequest objRequest = HttpWebRequest.Create(URL1);
-    //            objResponse = objRequest.GetResponse();
-    //            using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-    //            {
-    //                strResult = sr.ReadToEnd();
-    //                sr.Close();
-    //            }
-    //            File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/FLongLat.txt"), strResult);
-
-    //            System.IO.StreamReader geoipfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/FLongLat.txt"));
-    //            string FLLtext = geoipfile.ReadToEnd();
-    //            geoipfile.Close();
-    //            int found_match = 0;
-    //            MatchCollection Flonglat = Regex.Matches(FLLtext, @"(>-?\d{1,3}<)|(>-?\d{1,3}[.]\d{0,4}<)");
-    //            foreach (Match Fll in Flonglat)
-    //            {
-    //                string lltemp = Fll.Value;
-    //                char Fendchar = '<';
-    //                char Fstartchar = '>';
-    //                string lltrimen = lltemp.TrimEnd(Fendchar);
-    //                string lltrimst = lltrimen.TrimStart(Fstartchar);
-    //                Flonlat.Add(lltrimst);
-    //                found_match = found_match + 1;
-    //            }
-    //            if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
-    //            {
-    //                Flonlat.Add("0");
-    //                Flonlat.Add("0");
-    //            }
-    //            //////////////////////////////////FINDING AS no & Name ////////////////////////////
-
-    //            //string whois = "";
-    //            string whois = whoisinfo(server, item);
-    //            whois = whois + "end";
-    //            ////////////////////// AS NO ////////////////////
-    //            Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-    //            if (asnummatch.Success)
-    //            {
-    //                string asno = asnummatch.Value;
-    //                char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-    //                asno = asno.TrimStart(Fendchar);
-    //                FASno.Add(asno);
-    //            }
-    //            else
-    //            { FASno.Add("NA"); }
-    //            ////////////////////////////////AS NAME ////////////////////////////////////////
-    //            Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-    //            if (asnamematch.Success)
-    //            {
-    //                string asna = asnamematch.Value;
-    //                char[] Fendchar = { 'e', 'n', 'd', '\n' };
-    //                asna = asna.TrimEnd(Fendchar);
-    //                char Fstart = '|';
-    //                asna = asna.TrimStart(Fstart);
-    //                FASna.Add(asna);
-    //            }
-    //            else
-    //            { FASna.Add("NA"); }
-    //        }
-    //        else
-    //        {
-    //            Flonlat.Add("0");
-    //            Flonlat.Add("0");
-    //            FASna.Add("NA");
-    //            FASno.Add("NA");
-    //        }
-    //    }
-
-
-    //    GenerateGMap(Flonlat, FipS, Frttave, dirname, methodstr, FASno, FASna);
-    //}
-
     void GenerateGMap(List<string> LongLat, List<string> FipS, List<string> Frttave, string dirname, List<string> methodstr, List<string> FASno, List<string> FASna)
     {
         GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
         GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
+
         List<double> LonLat = LongLat.Select(x => double.Parse(x)).ToList();
 
         int m = 0;
@@ -680,6 +295,9 @@ public partial class vrtr : System.Web.UI.Page
                 }
             }
         }
+        string[] filePaths = Directory.GetFiles(Server.MapPath("~/App_Data/Email"));
+        foreach (string filePath in filePaths)
+        { File.Delete(filePath); }
     }
 
     private string whoisinfo(string whoisServer, string url)
@@ -717,5 +335,242 @@ public partial class vrtr : System.Web.UI.Page
         timendate = timendate.Replace(":", "-");
         string dirname = timendate;
         return dirname;
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        string url = "http://revtr.cs.washington.edu/measure.php";
+        string dest = TextBox2.Text;
+        string nod = DropDownList1.SelectedValue;
+        string postData = string.Format("destination={0}&node={1}&email=vizitrace.reverse.traceroute%40gmail.com&prediction=If+you+believe+you+know+the+traceroute+%28for+instance%2C+if+you+are+trying+out+our+system+using+a+destination+that+you+actually+control%29%2C+please+cut-and-paste+the+traceroute+into+this+box+to+aid+us+in+improving+our+system.", dest, nod);
+
+        HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+        webRequest.Method = "POST";
+        webRequest.ContentType = "application/x-www-form-urlencoded";
+        webRequest.ContentLength = postData.Length;
+        using (StreamWriter requestWriter2 = new StreamWriter(webRequest.GetRequestStream()))
+        {
+            requestWriter2.Write(postData);
+        }
+        HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();
+        string responseData = string.Empty;
+        using (StreamReader responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream()))
+        {
+            responseData = responseReader.ReadToEnd();
+        }
+        Timer1.Enabled = true;
+    }
+    protected void Timer1_Tick(object sender, EventArgs e)
+    {
+        List<string> seenUids = new List<string>();
+        List<Message> allmes = new List<Message>();
+        allmes = FetchUnseenMessages("pop.gmail.com", 995, true, "vizitrace.reverse.traceroute@gmail.com", "vizitrace@12012", seenUids);
+        int i = 0;
+        int count = allmes.Count();
+        if (allmes.Count == 0)
+        {
+            Label1.Text = "Waiting For Email";
+        }
+        else
+        {
+            Timer1.Enabled = false;
+            string dirname = dattime();
+                MessagePart html = allmes[allmes.Count()-1].FindFirstHtmlVersion();
+                if (html != null)
+                {
+                    Label1.Text = "Measurement Recieved";
+                    html.Save(new FileInfo(Server.MapPath("~/App_Data/Email" + dirname + ".txt")));
+                    string emaildir = "~/App_Data/Email" + dirname + ".txt";
+                    i++;
+                    livertr(emaildir);
+                }
+        }
+    }
+    public static List<Message> FetchUnseenMessages(string hostname, int port, bool useSsl, string username, string password, List<string> seenUids)
+    {
+        using (Pop3Client client = new Pop3Client())
+        {
+            client.Connect(hostname, port, useSsl);
+            client.Authenticate(username, password);
+            List<string> uids = client.GetMessageUids();
+
+            List<Message> newMessages = new List<Message>();
+            for (int i = 0; i < uids.Count; i++)
+            {
+                string currentUidOnServer = uids[i];
+                if (!seenUids.Contains(currentUidOnServer))
+                {
+                    Message unseenMessage = client.GetMessage(i + 1);
+                    newMessages.Add(unseenMessage);
+                    seenUids.Add(currentUidOnServer);
+                }
+            }
+            return newMessages;
+        }
+    }
+    private void livertr(string emaildir)
+    {
+        System.IO.StreamReader RTrfile = new System.IO.StreamReader(Server.MapPath(emaildir));
+        string Rtext = RTrfile.ReadToEnd();
+        RTrfile.Close();
+
+        string Rlinepattern = @"(?<linegroup>[ \n]\d+  .*)";
+        string Rrttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
+
+        ////////////// IP & STAR patterns declared inside the Loop /////////////
+
+        List<string> RipS = new List<string>();
+        List<string> Rrttave = new List<string>();
+        List<string> methodstr = new List<string>();
+        /// !!!!!!!!!!!!!!!!!!! HOP FLAG !!!!!!!!!!!!!!!!!!!!!!!!!! ////////////////////////////////////////
+
+        MatchCollection Rtrline = Regex.Matches(Rtext, Rlinepattern);
+        foreach (Match Rlinematch in Rtrline)
+        {
+            float Rsumm = 0;
+            int Rstar = 0;
+            int Rlength = 0;
+            float RRave = 0;
+            float Rrtt11 = 0;
+
+            string Rline = Rlinematch.Value;
+
+            ////////////////////////////////////// Extract IPs Line-By-Line ///////////////////////////////////////////////////////////////////////
+            Match method = Regex.Match(Rline, @"(( -?dst\r)|( -?sym\r)|( -?tr\r)|( -?rr\r)|( -?ts\r))");
+            if (method.Success)
+            {
+                methodstr.Add(method.Value);
+            }
+            else
+            {
+                methodstr.Add("NA");
+            }
+            Match Rmatchip = Regex.Match(Rline, @"\(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\)");
+            if (Rmatchip.Success)
+            {
+                string Riptemp = Rmatchip.Value;
+                Riptemp = Riptemp.Replace(")", "");
+                Riptemp = Riptemp.Replace("(", "");
+                //char Rendchar = ')';
+                //char Rstartchar = '(';
+                //string Rtrimen = Riptemp.TrimEnd(Rendchar);
+                //string Rtrimst = Rtrimen.TrimStart(Rstartchar);
+                RipS.Add(Riptemp);
+            }
+            else
+            {
+                RipS.Add("Destination Unreachable");
+                Rrttave.Add("0");
+                Rstar = 1;
+            }
+
+            //////////////////////////////////////////// Extract RTTs & Calculate Average RTT Line-by-Line ////////////
+            if (Rstar != 1)
+            {
+                MatchCollection RtrRTT = Regex.Matches(Rline, Rrttpattern);
+                foreach (Match Rrttmatch in RtrRTT)
+                {
+                    string Rrtttemp = Rrttmatch.Value;
+                    char[] Rendchar = { ' ', 'm', 's' };
+                    string Rtrimen = Rrtttemp.TrimEnd(Rendchar);
+                    Rrtt11 = float.Parse(Rtrimen);
+                    Rlength = Rlength + 1;
+                    Rsumm = Rsumm + Rrtt11;
+                }
+                RRave = Rsumm / Rlength;
+                string Rrttaverage = RRave.ToString();
+                Rrttaverage = Rrttaverage + " ms";
+                Rrttave.Add(Rrttaverage);
+            }
+
+        }
+        /////////////////////////// FINDING LONGITUDE & LATITUDE OF Reverse IPS /////////////////////////////////////////////////
+        List<string> Rlonlat = new List<string>();
+        List<string> RASno = new List<string>();
+        List<string> RASna = new List<string>();
+        string server = "v4.whois.cymru.com";
+        foreach (string item in RipS)
+        {
+            if (item != "Destination Unreachable")
+            {
+                string URL1 = "http://www.geoiptool.com/en/?IP=IPADD";
+                URL1 = URL1.Replace("IPADD", item);
+                WebRequest objRequest = HttpWebRequest.Create(URL1);
+                objResponse = objRequest.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/Email" + "/RLongLat.txt"), strResult);
+
+                System.IO.StreamReader geoipfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/Email" + "/RLongLat.txt"));
+                string RLLtext = geoipfile.ReadToEnd();
+                geoipfile.Close();
+                int found_match = 0;
+                MatchCollection Rlonglat = Regex.Matches(RLLtext, @"(>-?\d{1,3}<)|(>-?\d{1,3}[.]\d{0,4}<)");
+                foreach (Match Rll in Rlonglat)
+                {
+                    string lltemp = Rll.Value;
+                    lltemp = lltemp.Replace(">", "");
+                    lltemp = lltemp.Replace("<", "");
+                    //char Rendchar = '<';
+                    //char Rstartchar = '>';
+                    //string lltrimen = lltemp.TrimEnd(Rendchar);
+                    //string lltrimst = lltrimen.TrimStart(Rstartchar);
+                    Rlonlat.Add(lltemp);
+                    found_match = found_match + 1;
+                }
+                if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
+                {
+                    Rlonlat.Add("0");
+                    Rlonlat.Add("0");
+                }
+                //////////////////////////////////FINDING AS no & Name ////////////////////////////
+
+                string whois = whoisinfo(server, item);
+                if (whois == "sNA")
+                {
+                    RASno.Add("sNA");
+                    RASna.Add("sNA");
+                }
+                else
+                {
+                    whois = whois + "end";
+                    ////////////////////// AS NO ////////////////////
+                    Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                    if (asnummatch.Success)
+                    {
+                        string asno = asnummatch.Value;
+                        char[] Rendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                        asno = asno.TrimStart(Rendchar);
+                        RASno.Add(asno);
+                    }
+                    else
+                    { RASno.Add("NA"); }
+                    ////////////////////////////////AS NAME ////////////////////////////////////////
+                    Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                    if (asnamematch.Success)
+                    {
+                        string asna = asnamematch.Value;
+                        char[] Rendchar = { 'e', 'n', 'd', '\n' };
+                        asna = asna.TrimEnd(Rendchar);
+                        char Rstart = '|';
+                        asna = asna.TrimStart(Rstart);
+                        RASna.Add(asna);
+                    }
+                    else
+                    { RASna.Add("NA"); }
+                }
+            }
+            else
+            {
+                Rlonlat.Add("0");
+                Rlonlat.Add("0");
+                RASna.Add("NA");
+                RASno.Add("NA");
+            }
+        }
+
+        GenerateGMap(Rlonlat, RipS, Rrttave, "Email", methodstr, RASno, RASna);
     }
 }

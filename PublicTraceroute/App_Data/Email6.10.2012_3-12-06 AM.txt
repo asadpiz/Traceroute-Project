@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+        Thanks for trying our reverse traceroute tool! The resulting data
+        follows:
+    </p>
+    <p><pre>reverse traceroute from pz-in-f103.1e100.net (74.125.127.103) back to planetlab1.sfc.wide.ad.jp (203.178.143.10)
+ 0  pz-in-f103.1e100.net (74.125.127.103) 95.632004 ms 95.872002 ms 95.737 ms                                            dst
+ 1   (216.239.46.6) *                                                                                                     sym
+ 2   (64.233.174.125) *                                                                                                   -sym
+ 3   (72.14.233.202) *                                                                                                    -sym
+ 4  * * *                                                                                                                -sym
+ 5   (209.85.242.251) *                                                                                                   -sym
+ 6   (209.85.255.58) *                                                                                                    -sym
+ 7   (209.85.249.195) *                                                                                                   -sym
+ 8   (209.85.255.80) 1.82 ms 1.833 ms 1.803 ms                                                                           -sym
+ 9  as15169.dix-ie.jp (202.249.2.189) 2.42 ms 2.79 ms 2.055 ms                                                           rr
+10  ve-5.alala1.otemachi.wide.ad.jp (203.178.140.215) 3.278 ms 3.842 ms 3.166 ms                                         rr
+11  ve-42.foundry6.otemachi.wide.ad.jp (203.178.136.65) 1.686 ms 1.53 ms 1.735 ms                                        -rr
+12  ve-42.foundry4.nezu.wide.ad.jp (203.178.136.66) 1.618 ms 1.409 ms 1.548 ms                                           tr
+13  ve-45.foundry2.yagami.wide.ad.jp (203.178.136.74) 1.053 ms 0.71 ms 2.381 ms                                          -tr
+14  ve-46.cisco2.fujisawa.wide.ad.jp (203.178.136.94) 0.323 ms 0.355 ms 0.167 ms                                         -tr
+15  alaxala3-sfc.fujisawa.wide.ad.jp (203.178.137.87) 0.512 ms 0.433 ms 0.471 ms                                         -tr
+16  planetlab1.sfc.wide.ad.jp (203.178.143.10) 0.03 ms 0.544 ms 0.032 ms                                                 -tr
+</pre></p>
+    <p>
+        The rightmost columns explains how we determined a path. A dash prefix
+        indicates that this hop was determined from the same segment as an earlier
+        hop.<br/>
+        dst - This hop is the destination or the destination's uplink. <br/>
+        sym - We had to assume this hop was symmetric to the forward traceroute 
+        in order to generate the path. Note that we always assume that hop1, the 
+        destination's uplink, is symmetric, in order to avoid excess probing of 
+        endhosts.  This assumption will generally be true for endhosts.<br/>
+        tr - This hop was determined from an intersection with a known
+        traceroute.<br/>
+        rr - We used the Record Route option of the Internet Protocol to find 
+        this hop.<br/>
+        ts - We used the Timestamp option of the Internet Protocol to find this
+        hop.<br/><br/>
+        See <a href="http://revtr.cs.washington.edu/FAQ.html#how">here</a>
+        for more details on the different methods.
+    </p><p>
+        Have questions? Check out our <a href="http://revtr.cs.washington.edu/FAQ.html">FAQ</a>!
+    </p>
+  </body>
+</html>

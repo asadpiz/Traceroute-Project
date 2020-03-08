@@ -130,15 +130,15 @@ public partial class vtrmore : System.Web.UI.Page
 
             ////////////////////////////////////// Extract IPs Line-By-Line ///////////////////////////////////////////////////////////////////////
 
-            Match Fmatchip = Regex.Match(Fline, @"((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(  \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} ))");
+            Match Fmatchip = Regex.Match(Fline, @"((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(  \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} )|(\(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\)))");
             if (Fmatchip.Success)
             {
                 string Fiptemp = Fmatchip.Value;
-                char Fendchar = ']';
-                char Fstartchar = '[';
-                string Ftrimen = Fiptemp.TrimEnd(Fendchar);
-                string Ftrimst = Ftrimen.TrimStart(Fstartchar);
-                FipS.Add(Ftrimst);
+                Fiptemp = Fiptemp.Replace("[", "");
+                Fiptemp = Fiptemp.Replace("]", "");
+                Fiptemp = Fiptemp.Replace("(", "");
+                Fiptemp = Fiptemp.Replace(")", "");
+                FipS.Add(Fiptemp);
             }
             else
             {

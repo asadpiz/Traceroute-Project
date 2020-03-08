@@ -37,11 +37,6 @@ left:-120px;
 width:1280px;
 height:1200px;
 }
-    .style2
-    {
-        font-family: sans-serif;
-        color: #FF6666;
-    }
     .style7
     {
         text-decoration: none;
@@ -78,11 +73,6 @@ height:1200px;
     {
         color: #000000;
     }
-    .style16
-    {
-        font-family: sans-serif;
-        color: #000000;
-    }
     .style17
     {
         color: #FF0000;
@@ -99,7 +89,8 @@ height:1200px;
         <span class="style17">Probes</span></strong></span></a></div>
 <div id="menu">
 	<ul>
-		<li class="first"><a href="http://traceroute.cognet.seecs.nust.edu.pk/index.aspx" accesskey="1" title="">Home/li>
+		<li class="first"><a href="http://traceroute.cognet.seecs.nust.edu.pk/index.aspx" accesskey="1" title="">
+            Home
 		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vtr.aspx" accesskey="2" title="">Traceroute</a></li>
         <li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vrtr.aspx" accesskey="3" title="">Reverse Traceroute</a></li>
 		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/publicserver.aspx" accesskey="4" title="">AS Topology</a></li>
@@ -114,62 +105,129 @@ height:1200px;
     </div>
 <div id="page">
     <form id="form1" runat="server">
-   <div>
         <div>
-            <ul class="style9">
-                <li><strong><span class="style12">AlterAlternatively Upload Traceroute </span>
-                    <span 
-                        class="style11"><span class="style10">Results (n><span class="style15">.txt</span><span class="style10">) 
+               <ul class="style9">
+                    <li class="style18"><strong><span class="style12">Alternatively Upload </span>
+                        <span class="style21">Traceroute</span><span class="style12">/ </span>
+                        <span class="style3">
+                        <asp:HyperLink 
+                        ID="HyperLink1" runat="server" 
+            NavigateUrl="http://revtr.cs.washington.edu/" CssClass="style4">Reverse Traceroute</asp:HyperLink>
+                        </span></strong><span class="style3"><strong><span class="style4">&nbsp;</span></strong></span><strong><span 
+                        class="style11"><span class="style10">Results (.txt) 
                     Or Paste them in the Box Below to show them 
-                    Graphically</span></span></strong><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <br />
-                    <div align="center">
-                        <span class="style2">&nbsp;</span><span class="style16">(Click &quot;<strong>Upload&quot;</strong> Before Clicking &quot;<strong>Show 
-          Route Forward&quot;)</strong></span> <span class="style2">
-                        <br /></span>
-                        <asp:FileUpload id="FileUploadControl" runat="server" />
-                  &nbsp;&nbsp;
-                        <asp:Button runat="server" id="UploadButton" text="Upload" 
-              onclick="UploadButton_Click" Width="74px" 
-             Height="20px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled"/>
-                        <br />
-                        <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
-                        <br />
-                        <br />
-                        <asp:Button ID="Button1" runat="server" Text="Show Forward Route" Width="128px" 
-             Height="20px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled" onclick="Button1_Click1"/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <asp:Button ID="Button4" runat="server" Text="Analyze" Width="135px" 
-              onclick="Button4_Click" Height="20px" />
-                    </div>
-                    <br /></li>
-            </ul>
-            <asp:ScriptManager ID="ScriptManager1" runat="server">
-            </asp:ScriptManager>
-            <br />
-            <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server" 
-                ShowControls="False" Visible="True"  />
-            <br />
-            <asp:Image ID="Image1" runat="server" ImageUrl="~/images/legend.jpg" 
-                Height="127px" Width="281px" />
+                    Graphically</span></span></strong></li></ul>
+                    <div class="style20">
+                    <strong>(Click Upload, before clicking &quot;Show Route&quot;)<br />
+                        </strong>
+                    &nbsp;<strong><asp:FileUpload id="FileUploadControl" runat="server" />&nbsp;&nbsp;&nbsp;
+                        <asp:Button ID="UploadButton" runat="server" OnClick="UploadButton_Click" CssClass="button" 
+                Text="Upload" Height="22px" Width="80px" />
+                        <style type="text/css">
 
-    </div>
-        <asp:TextBox ID="TextBox1" runat="server" Rows="40" TextMode="MultiLine" 
-        Width="960px" AutoCompleteType="Notes" BackColor="#1E3C59" 
+.button
+{
+    background: url('images/oval-orange-right.gif');
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #001563;
+          }
+
+.button:hover
+{
+    background: url('images/oval-orange-right.gif');
+    border: solid 1px grey;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Red;   
+    height: 25px;
+
+}</style>
+                        &nbsp;&nbsp;&nbsp; 
+                        <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
+                        &nbsp;</strong>
+
+&nbsp;<span 
+                   style="color: rgb(110, 110, 110); font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+                        </span>&nbsp;<br />
+                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click1" 
+                            CssClass="button" Text="Show Route" Height="29px" 
+                    Width="129px" />
+                        <style type="text/css">
+
+
+                            .button
+{
+    background: url('images/oval-orange-right.gif');
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #001563;
+                                text-align: left;
+                            }
+
+.button:hover
+{
+    background: url('images/oval-orange-right.gif');
+    border: solid 1px grey;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: Red;   
+    height: 25px;
+
+}
+                            .style18
+                            {
+                                text-align: left;
+                            }
+                            .style20
+                            {
+                                text-align: center;
+                            }
+                            .style21
+                            {
+                                font-family: "Trebuchet MS";
+                                color: #003366;
+                            }
+                        </style>&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+ 
+
+
+                        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" 
+                            CssClass="button" Text="Show More" Height="29px" 
+                    Width="129px" />
+
+
+ 
+
+
+                </div>
+
+
+ 
+
+
+                <asp:ScriptManager ID="ScriptManager1" runat="server">
+                </asp:ScriptManager>
+                <br />
+
+                <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
+                <br />
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/images/legend.jpg" />
+            <asp:TextBox ID="TextBox1" runat="server" Rows="40" TextMode="MultiLine" 
+        Width="960px" AutoCompleteType="Notes" BackColor="#24486C" 
         BorderColor="#FFFF66" BorderStyle="Dotted" BorderWidth="1px" 
-        style="margin-top: 0px" ToolTip="Paste Trace Results Here" ForeColor="White" 
-            ReadOnly="True"></asp:TextBox>
-        <br />
-        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        style="margin-top: 0px;text-align:left" ToolTip="Paste Trace Results Here" ForeColor="White"></asp:TextBox>
+            <br />
+            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
-   </div>
-    <div>
-    </div>
+                </div> 
       <div>
         <asp:Literal ID="Literal1" runat="server"></asp:Literal>
     </div>
