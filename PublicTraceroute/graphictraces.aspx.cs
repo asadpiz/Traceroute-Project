@@ -25,7 +25,7 @@ public partial class graphictraces : System.Web.UI.Page
 {
     String strResult;
     WebResponse objResponse;
-    int uploaded = 0;
+    int uploaded = 2;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -471,7 +471,7 @@ public partial class graphictraces : System.Web.UI.Page
                 {
 
                     string filename = "FDesc" + ind.ToString() + ".txt";
-                    string heading = "<table width=100% table border=1 cellspacing=5><tr><th width=10%>Hop No</th><th width=35%>IP Address</th><th width=45%>RTT Average</th><th width=10%>Method</th></tr>";
+                    string heading = "<table width=100% table border=1 cellspacing=5><tr><th width=10%>Hop No</th><th width=35%>IP Address</th><th width=25%>RTT Average</th><th width=10%>Method</th><th width=10%>ISP</th><th width=10%>AS</th></tr>";
                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
                     if (zeroflag == 1)
                     {

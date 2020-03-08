@@ -19,6 +19,22 @@
             font-family: "Bradley Hand ITC";
         }
     </style>
+    <style type="text/css">
+#container{
+    width:400px;
+    height:400px;
+    border:1px solid #000; 
+    overflow:hidden;
+    margin:auto;
+}
+#container iframe {
+    width:200px;
+    height:750px;
+    margin-left:-100px;
+    margin-top:-350px;   
+    border:0 solid;
+ }
+</style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -30,7 +46,9 @@
             NavigateUrl="http://revtr.cs.washington.edu/">Reverse Traceroute</asp:HyperLink>
 &nbsp;Results in the Box Below to show them Graphically<br />
         <br />
-        
+        <div id="container">
+<iframe id="video" runat="server" title="YouTube video player" type="text/html" width="475" height="278" src="http://revtr.cs.washington.edu" frameborder="0"></iframe>
+</div>
       <div align="center">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
