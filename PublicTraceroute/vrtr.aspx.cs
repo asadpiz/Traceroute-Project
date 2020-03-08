@@ -363,7 +363,7 @@ public partial class vrtr : System.Web.UI.Page
     {
         List<string> seenUids = new List<string>();
         List<Message> allmes = new List<Message>();
-        allmes = FetchUnseenMessages("pop.gmail.com", 995, true, "vizitrace.reverse.traceroute@gmail.com", "vizitrace@12012", seenUids);
+        allmes = FetchUnseenMessages("pop.gmail.com", 995, true, "vizitrace.reverse.traceroute@gmail.com", "vizitrace", seenUids);
         int i = 0;
         int count = allmes.Count();
         if (allmes.Count == 0)

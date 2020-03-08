@@ -141,8 +141,23 @@ public partial class vtr : System.Web.UI.Page
         List<string> FASno = new List<string>();
         List<string> FASna = new List<string>();
         string server = "v4.whois.cymru.com";
+        string longi = "";
+        string lati = "";
+        int IDpp = 60;
+        int k = 0;
+        int Frepeat = 0;
+        int Frep2 = 1;
+        int zeroflag = 0;
+        double longg = 0;
+        double lat = 0;
+        int ind = 0;
+
+        List<string> Flonglatlist = new List<string>();
+        List<string> zeroballoonlist = new List<string>();
+        List<double> rttcompare = new List<double>();
         foreach (string item in FipS)
         {
+            int lo = 0;
             if (item != "Destination Unreachable")
             {
                 string URL1 = "http://www.geoiptool.com/en/?IP=IPADD";
@@ -167,12 +182,25 @@ public partial class vtr : System.Web.UI.Page
                     lltemp = lltemp.Replace("<", "");
                     lltemp = lltemp.Replace(">", "");
                     Flonlat.Add(lltemp);
+                    if (lo == 0)
+                    {
+                        longi = lltemp;
+                        lo++;
+                    }
+                    else
+                    {
+                        lati = lltemp;
+                        Flonglatlist.Add(longi + "_" + lati);
+                    }
                     found_match = found_match + 1;
                 }
                 if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
                 {
                     Flonlat.Add("0");
                     Flonlat.Add("0");
+                        longi = "0";
+                        lati = "0";
+                    Flonglatlist.Add(longi + "_" + lati);
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
@@ -216,13 +244,126 @@ public partial class vtr : System.Web.UI.Page
                 Flonlat.Add("0");
                 FASna.Add("NA");
                 FASno.Add("NA");
+                longi = "0";
+                lati = "0";
+               Flonglatlist.Add(longi + "_" + lati);
+
             }
+///////////////// NOW WE WANT TO ADD POINTS TO GOOGLE MAP //////////
+            Frep2 = 1;
+            if (longi=="0" && lati =="0")
+                {
+                    zeroballoonlist.Add("<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr>");
+                    zeroflag = 1;
+                }
+                else
+                {
+                    if (ind > 0)
+                    {
+                        k = 0;
+                        while ((k < ind) & (Frep2 > 0))
+                        {
+                            if (Flonglatlist[ind] == Flonglatlist[k])
+                            {
+
+                                string filename = "FDesc" + k.ToString() + ".txt";
+                                System.IO.StreamReader replac = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                                string replactabl = replac.ReadToEnd();
+                                replactabl = replactabl.Replace("</table>", "");
+                                replac.Close();
+                                System.IO.File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), replactabl);
+                                if (zeroflag == 1)
+                                {
+                                    foreach (string inf in zeroballoonlist)
+                                    {
+                                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
+                                    }
+                                    zeroballoonlist.Clear();
+                                    string nonzeroinfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
+                                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
+                                    zeroflag = 0;
+                                }
+                                else
+                                {
+                                    string ballooninfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
+                                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
+                                }
+
+                                System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                                string Fdesctext = descfile.ReadToEnd();
+                                descfile.Close();
+
+                                string[] words = Flonglatlist[ind].Split('_');
+                                longg = Convert.ToDouble(words[0]);
+                                lat = Convert.ToDouble(words[1]);
+                                string icon = "";
+
+                                icon = "icons/wifi.png";
+                                string idpps = Convert.ToString(IDpp);
+
+///////////////// /////////////////THIS IS THE POINT WHERE MAP SHOULD BE UPDATED //////////////////////////
+                                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
+                                GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
+                                Frepeat = Frepeat + 1;
+                                Frep2 = 0;
+                            }
+                            else
+                            {
+                                k = k + 1;
+                                Frepeat = 0;
+                            }
+                        }
+                    }
+
+                    if (Frepeat==0)
+                    {
+
+                        string filename = "FDesc" + ind.ToString() + ".txt";
+                        string heading = "<table width=100% table border=1 cellspacing=3><tr><th width=10%>Hop No</th><th width=35%>IP Address</th><th width=25%>RTT Average</th><th width=5%>Method</th><th width=10%>AS No</th><th width=15%>AS</th></tr>";
+                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
+                        if (zeroflag == 1)
+                        {
+                            foreach (string inf in zeroballoonlist)
+                            {
+                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
+                            }
+                            zeroballoonlist.Clear();
+                            string nonzeroinfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
+                            File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
+                            zeroflag = 0;
+                        }
+                        else
+                        {
+                            string ballooninfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
+                            File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
+                        }
+
+                        System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                        string Fdesctext = descfile.ReadToEnd();
+                        descfile.Close();
+
+                        string[] words = Flonglatlist[ind].Split('_');
+                        longg = Convert.ToDouble(words[0]);
+                        lat = Convert.ToDouble(words[1]);
+                        string icon = "";
+                            icon = "icons/wifi.png";
+
+
+                        string idpps = Convert.ToString(IDpp);
+
+/////////////////THIS IS THE POINT WHERE MAP SHOULD BE UPDATED //////////////////////////
+
+                        GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
+                        GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
+                    }
+                    IDpp = IDpp + 1;
+                }
+
+            ind++;
         }
-
-
         GenerateGMap(Flonlat, FipS, Frttave, dirname, methodstr, FASno, FASna);
     }
-
+/// THIS FUNCTION JUST GENERATES THE LINES BETWEEN POINTS
     void GenerateGMap(List<string> LongLat, List<string> FipS, List<string> Frttave, string dirname, List<string> methodstr, List<string> FASno, List<string> FASna)
     {
         //GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
@@ -230,11 +371,6 @@ public partial class vtr : System.Web.UI.Page
         List<double> LonLat = LongLat.Select(x => double.Parse(x)).ToList();
 
         int m = 0;
-        int IDpp = 60;
-        int k = 0;
-        int Frepeat = 0;
-        int Frep2 = 1;
-        int zeroflag = 0;
         double longg = 0;
         double lat = 0;
         string ll1 = "0";
@@ -260,135 +396,6 @@ public partial class vtr : System.Web.UI.Page
                 Flonglatlist.Add(ll2);
                 m = 0;
             }
-        }
-
-        for (int ind = 0; ind < Flonglatlist.Count; ind++)
-        {
-            Frep2 = 1;
-            if (Flonglatlist[ind] == "0_0")
-            {
-                zeroballoonlist.Add("<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr>");
-                zeroflag = 1;
-            }
-            else
-            {
-                if (ind > 0)
-                {
-                    k = 0;
-                    while ((k < ind) & (Frep2 > 0))
-                    {
-                        if (Flonglatlist[ind] == Flonglatlist[k])
-                        {
-
-                            string filename = "FDesc" + k.ToString() + ".txt";
-                            System.IO.StreamReader replac = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
-                            string replactabl = replac.ReadToEnd();
-                            replactabl = replactabl.Replace("</table>", "");
-                            replac.Close();
-                            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), replactabl);
-                            if (zeroflag == 1)
-                            {
-                                foreach (string inf in zeroballoonlist)
-                                {
-                                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
-                                }
-                                zeroballoonlist.Clear();
-                                string nonzeroinfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
-                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
-                                zeroflag = 0;
-                            }
-                            else
-                            {
-                                string ballooninfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
-                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
-                            }
-
-                            System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
-                            string Fdesctext = descfile.ReadToEnd();
-                            descfile.Close();
-
-                            string[] words = Flonglatlist[ind].Split('_');
-                            longg = Convert.ToDouble(words[0]);
-                            lat = Convert.ToDouble(words[1]);
-                            string icon = "";
-                            if (ind == 0)
-                            {
-                                icon = "icons/greenflag3.png";
-                            }
-                            else if (ind == (Flonglatlist.Count - 1))
-                            {
-                                icon = "icons/greenflag3.png";
-                            }
-                            else
-                            {
-                                icon = "icons/wifi.png";
-                            }
-                            string idpps = Convert.ToString(IDpp);
-                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
-                            GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
-                            Frepeat = Frepeat + 1;
-                            Frep2 = 0;
-                        }
-                        else
-                        {
-                            k = k + 1;
-                            Frepeat = 0;
-                        }
-                    }
-                }
-
-                if (Frepeat == 0)
-                {
-
-                    string filename = "FDesc" + ind.ToString() + ".txt";
-                    string heading = "<table width=100% table border=1 cellspacing=3><tr><th width=10%>Hop No</th><th width=35%>IP Address</th><th width=25%>RTT Average</th><th width=5%>Method</th><th width=10%>AS No</th><th width=15%>AS</th></tr>";
-                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
-                    if (zeroflag == 1)
-                    {
-                        foreach (string inf in zeroballoonlist)
-                        {
-                            File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
-                        }
-                        zeroballoonlist.Clear();
-                        string nonzeroinfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
-                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
-                        zeroflag = 0;
-                    }
-                    else
-                    {
-                        string ballooninfo = "<tr><td width=10%>" + Convert.ToString(ind) + "</td><td width=35%>" + FipS[ind] + "</td><th width=25%>" + Frttave[ind] + "</td><td width=5%>" + methodstr[ind] + "</td><td width=10%>" + FASno[ind] + "</td><td width=15%>" + FASna[ind] + "</td></tr></table>";
-                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
-                    }
-
-                    System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
-                    string Fdesctext = descfile.ReadToEnd();
-                    descfile.Close();
-
-                    string[] words = Flonglatlist[ind].Split('_');
-                    longg = Convert.ToDouble(words[0]);
-                    lat = Convert.ToDouble(words[1]);
-                    string icon = "";
-                    if (ind == 0)
-                    {
-                        icon = "icons/greenflag3.png";
-                    }
-                    else if (ind == (Flonglatlist.Count - 1))
-                    {
-                        icon = "icons/greenflag3.png";
-                    }
-                    else
-                    {
-                        icon = "icons/wifi.png";
-                    }
-
-                    string idpps = Convert.ToString(IDpp);
-                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
-                    GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
-                }
-                IDpp = IDpp + 1;
-            }
-
-
         }
         for (int indx = 0; indx < Frttave.Count; indx++)
         {
