@@ -1,0 +1,17 @@
+
+Tracing route to seecs.nust.edu.pk [115.186.131.71]
+over a maximum of 30 hops:
+
+  1    48 ms    48 ms    47 ms  192.168.1.1 
+  2   161 ms   102 ms    51 ms  182.176.0.32 
+  3    33 ms    33 ms    32 ms  10.0.2.145 
+  4    52 ms    59 ms    76 ms  203.99.170.234 
+  5    33 ms    33 ms    32 ms  rwp44.pie.net.pk [221.120.253.1] 
+  6    39 ms    33 ms    34 ms  rwp44.pie.net.pk [221.120.254.62] 
+  7    82 ms    35 ms    33 ms  rwp44.pie.net.pk [221.120.253.10] 
+  8   532 ms    34 ms    34 ms  rwp44.pie.net.pk [221.120.237.102] 
+  9    34 ms    40 ms    33 ms  58-65-175-206.nayatel.pk [58.65.175.206] 
+ 10    80 ms    35 ms    33 ms  115-186-128-178.nayatel.pk [115.186.128.178] 
+ 11    34 ms     *       80 ms  115-186-131-71.nayatel.pk [115.186.131.71] 
+
+Trace complete.

@@ -25,12 +25,15 @@ public partial class graphictraces : System.Web.UI.Page
 {
     String strResult;
     WebResponse objResponse;
-    protected void Page_Load(object sender, EventArgs e)
-    {}
-    protected void Button1_Click1(object sender, EventArgs e)
-    {
-        string Ftext = TextBox1.Text;
+    int uploaded = 0;
 
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+
+    }
+   protected void UploadButton_Click(object sender, EventArgs e)
+    {
         DateTime now = DateTime.Now;
         string timendate = DateTime.Now.ToString();
         Regex regex = new Regex(" ");
@@ -38,12 +41,54 @@ public partial class graphictraces : System.Web.UI.Page
         timendate = timendate.Replace("/", ".");
         timendate = timendate.Replace(":", "-");
         string dirname = timendate;
+        Session["theText"] = dirname;
+
+
         System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
-        //////Insert the case when Text is pasted
-        /////////////// IN case File is uploaded///////////////////////////////
-        //System.IO.StreamReader FTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"));
-        //string Ftext = FTrfile.ReadToEnd();
-        //FTrfile.Close();
+        if (FileUploadControl.HasFile)
+        {
+            try
+            {
+                if (FileUploadControl.PostedFile.ContentType == "text/plain")
+                {
+                    if (FileUploadControl.PostedFile.ContentLength < 10240)
+                    {
+                        string filename = Path.GetFileName(FileUploadControl.FileName);
+                        FileUploadControl.SaveAs(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
+                        StatusLabel.Text = "Upload status: File uploaded!";
+                        uploaded = 1;
+                        Session["uploadflag"] = uploaded;
+                    }
+                    else
+                        StatusLabel.Text = "Upload status: The file has to be less than 10 kb!";
+                }
+                else
+                    StatusLabel.Text = "Upload status: Only .txt files are accepted!";
+            }
+            catch (Exception ex)
+            {
+                StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+            }
+        }
+        
+    }
+    protected void Button1_Click1(object sender, EventArgs e)
+   {
+       
+       string dirname = (string)Session["theText"];
+       int uploaded = (int)Session["uploadflag"];
+        string Ftext = "";
+        if (uploaded == 1)
+        {
+            System.IO.StreamReader FTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
+            Ftext = FTrfile.ReadToEnd();
+            FTrfile.Close();
+        }
+        else
+        {
+            System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
+            Ftext = TextBox1.Text;
+        }
 
         string Flinepattern = @"(?<linegroup>[ \n]\d+  .*)";
         string Frttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
@@ -163,19 +208,22 @@ public partial class graphictraces : System.Web.UI.Page
     }
     protected void Button2_Click1(object sender, EventArgs e)
     {
-        string Rtext = TextBox1.Text;
-        DateTime now = DateTime.Now;
-        string timendate = DateTime.Now.ToString();
-        Regex regex = new Regex(" ");
-        timendate = regex.Replace(timendate, "_", 1);
-        timendate = timendate.Replace("/", ".");
-        timendate = timendate.Replace(":", "-");
-        string dirname = timendate;
-        System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
+        string dirname = (string)Session["theText"];
+        int uploaded = (int)Session["uploadflag"];
 
-        //System.IO.StreamReader rTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"));
-        //string Rtext = rTrfile.ReadToEnd();
-        //rTrfile.Close();
+        string Rtext = "";
+        if (uploaded == 1)
+        {   
+            System.IO.StreamReader RTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/tr.txt"));
+            Rtext = RTrfile.ReadToEnd();
+            RTrfile.Close();
+
+        }
+        else
+        {
+            System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
+            Rtext = TextBox1.Text;
+        }
 
         string Rlinepattern = @"(?<linegroup>[ \n]\d+  .*)";
         string Rrttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
@@ -392,9 +440,21 @@ public partial class graphictraces : System.Web.UI.Page
                             string[] words = Flonglatlist[ind].Split('_');
                             longg = Convert.ToDouble(words[0]);
                             lat = Convert.ToDouble(words[1]);
-
+                            string icon = "";
+                            if (ind == 0)
+                            {
+                                icon = "icons/database.png";
+                            }
+                            else if (ind == (Flonglatlist.Count - 1))
+                            {
+                                icon = "icons/database.png";
+                            }
+                            else
+                            {
+                                icon = "icons/wifi.png";
+                            }
                             string idpps = Convert.ToString(IDpp);
-                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/satellite.png", Fdesctext));
+                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
                             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                             Frepeat = Frepeat + 1;
                             Frep2 = 0;
@@ -437,9 +497,22 @@ public partial class graphictraces : System.Web.UI.Page
                     string[] words = Flonglatlist[ind].Split('_');
                     longg = Convert.ToDouble(words[0]);
                     lat = Convert.ToDouble(words[1]);
+                    string icon = "";
+                    if (ind == 0)
+                    {
+                        icon = "icons/database.png";
+                    }
+                    else if (ind == (Flonglatlist.Count - 1))
+                    {
+                        icon = "icons/database.png";
+                    }
+                    else
+                    {
+                        icon = "icons/wifi.png";
+                    }
 
                     string idpps = Convert.ToString(IDpp);
-                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/satellite.png", Fdesctext));
+                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Fdesctext));
                     GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                 }
                 IDpp = IDpp + 1;
@@ -625,8 +698,22 @@ public partial class graphictraces : System.Web.UI.Page
                             longg = Convert.ToDouble(words[0]);
                             lat = Convert.ToDouble(words[1]);
 
+                            string icon = "";
+                            if (ind == 0)
+                            {
+                                icon = "icons/database.png";
+                            }
+                            else if (ind == (Rlonglatlist.Count - 1))
+                            {
+                                icon = "icons/database.png";
+                            }
+                            else
+                            {
+                                icon = "icons/wifiblue.png";
+                            }
+
                             string idpps = Convert.ToString(IDpp);
-                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
+                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Rdesctext));
                             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                             Rrepeat = Rrepeat + 1;
                             Rrep2 = 0;
@@ -672,8 +759,22 @@ public partial class graphictraces : System.Web.UI.Page
                     longg = Convert.ToDouble(words[0]);
                     lat = Convert.ToDouble(words[1]);
 
+                    string icon = "";
+                    if (ind == 0)
+                    {
+                        icon = "icons/database.png";
+                    }
+                    else if (ind == (Rlonglatlist.Count - 1))
+                    {
+                        icon = "icons/database.png";
+                    }
+                    else
+                    {
+                        icon = "icons/wifiblue.png";
+                    }
+
                     string idpps = Convert.ToString(IDpp);
-                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
+                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, icon, Rdesctext));
                     GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                 }
                 IDpp = IDpp + 1;
