@@ -87,10 +87,11 @@ rtt.close()
 ####                GENERATING KML File                 ####
 kml = simplekml.Kml()
 m = 0
+k = 0
 km = 0
 no = 0
 z=[]
-rep = []
+repeat = 0
 for item in lonlat:
     if m==0:
         longg= item
@@ -100,21 +101,47 @@ for item in lonlat:
         m=m-1
         km =km+1
     if km ==1:
-        n = kml.newlinestring(name="Pathway", description="", coords=[(0,0)])
         y = (longg,lat)
         z.append(y)
-        n.coords = z
-        #rep = 
-        pnt = kml.newpoint(name="R"+str(no), description="Point", coords=[(longg,lat)])
-        kml.save("1.kml")
-        no =no+1
         km =km-1
-
-
-##z = 0
-##for z:(len(rtttemp)-3):
-##    average = (rtttemp[z]+rtttemp[z+1]+rtttemp[z+2])/5
-##    rttave.append(average)
-##    z =z+3
+n = kml.newlinestring(name="Reverse Traceroute", description="", coords=[(0,0)])
+n.coords = z
+for ind in range(len(z)):
+    if (ind>0):
+        k= 0
+        ## Checking For Repeatition ##
+        while (k<ind):
+            if (z[ind]==z[k]):
+                print ('repeat')
+                print (ind)
+                print (z[ind])
+                print (k)
+                descfile = open ('Desc'+str(k)+'.txt', 'a')
+                descfile.write('<pre>'+str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind]+'\n</pre>'))
+                descfile.close()
+                pnt = kml.newpoint(description="", coords=[(0,0)])
+                descfile = open ('Desc'+str(k)+'.txt', 'r')
+                pnt.description = descfile.read()
+                pnt.coords = [z[ind]]
+                descfile.close()
+                repeat = repeat + 1
+                break ## Break The Loop
+            else:
+                k = k+1
+                repeat = 0
+    if (repeat == 0):
+        print ('First Element')
+        print (ind)
+        print (z[ind])
+        descfile = open ('Desc'+str(ind)+'.txt', 'w')
+        descfile.write('<pre>\nHop No.\t\t\tIP Address\t\t\tISP\t\t\tMethod\n')
+        descfile.write(str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind]+'\n</pre>'))
+        descfile.close()
+        pnt = kml.newpoint(name="R"+str(ind), description="", coords=[(0,0)])
+        descfile = open ('Desc'+str(ind)+'.txt', 'r')
+        pnt.description = descfile.read()
+        pnt.coords = [z[ind]]
+        descfile.close()
+kml.save("route1.kml")
 
 os.chdir(os.pardir) # Going Back to /FYP
