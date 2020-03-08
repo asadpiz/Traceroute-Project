@@ -34,7 +34,7 @@ public partial class MainPage : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        string IP = "111.68.97.27";
+        string IP = "182.177.24.71";
         //////////////////////////////////////////////////////////REVERSE TRACEROUTE ///////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,138 +65,138 @@ public partial class MainPage : System.Web.UI.Page
                 }
 
                 File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("128.125.137.243",dirname);
+                //Traceroute("128.125.137.243",dirname);
                 break;
-            case "University of Washington (AS73) Seattle, WA, US":
-                string PsURL4 = "http://www.washington.edu/networking/tools/traceroute?search_address=myIP&max_hop_value=30&wait_time_value=2&number_query_value=3&number_out_value=3&Submit=Submit&.cgifields=number_query&.cgifields=wait_time&.cgifields=numeric_address&.cgifields=number_out&.cgifields=max_hop";
-                PsURL4 = PsURL4.Replace("myIP", IP);
-                WebRequest objRequest4 = HttpWebRequest.Create(PsURL4);
-                objResponse = objRequest4.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("128.95.155.134", dirname);
-                break;
-            case "RUSnet (AS3277) Saint Petersburg, 66, RU":
-                string PsURL5 = "http://traceroute.rusnet.ru/?myIP";
-                PsURL5 = PsURL5.Replace("myIP", IP);
-                WebRequest objRequest5 = HttpWebRequest.Create(PsURL5);
-                objResponse = objRequest5.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("194.85.4.53", dirname);
-                break;
-            case "Daresbury Laboratory (AS786) Didcot, K2, GB":
-                string PsURL6 = "http://icfamon.dl.ac.uk/cgi-bin/traceroute.pl?target=myIP";
-                PsURL6 = PsURL6.Replace("myIP", IP);
-                WebRequest objRequest6 = HttpWebRequest.Create(PsURL6);
-                objResponse = objRequest6.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("130.246.135.153", dirname);
-                break;
-            case "Willamette Valley Internet (AS2914) Stayton, OR, US":
-                string PsURL7 = "http://www.wvi.com/cgi-bin/trace?myIP";
-                PsURL7 = PsURL7.Replace("myIP", IP);
-                WebRequest objRequest7 = HttpWebRequest.Create(PsURL7);
-                objResponse = objRequest7.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("204.119.27.10", dirname);
-                break;
-            case "Stanford University (AS3671) Durham, NC, US":
-                string PsURL8 = "http://www.slac.stanford.edu/cgi-bin/nph-traceroute.pl?target=myIP&function=traceroute";
-                PsURL8 = PsURL8.Replace("myIP", IP);
-                WebRequest objRequest8 = HttpWebRequest.Create(PsURL8);
-                objResponse = objRequest8.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("152.3.104.250", dirname);
-                break;
-            case "Conxion (AS4544) Newton Center, MA, US":
-                string PsURL9 = "http://unixvirt-svca.www.conxion.com/cgi-bin/traceroute?source=svca&target=myIP&probes=3&hops=20&timeout=2&format=graphic&.submit=Trace+another+connection";
-                PsURL9 = PsURL9.Replace("myIP", IP);
-                WebRequest objRequest9 = HttpWebRequest.Create(PsURL9);
-                objResponse = objRequest9.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("216.251.225.207", dirname);
-                break;
-            case "GetNet (AS6091) Phoenix, AZ, US":
-                string PsURL10 = "http://www.getnet.net/cgi-bin/trace?myIP";
-                PsURL10 = PsURL10.Replace("myIP", IP);
-                WebRequest objRequest10 = HttpWebRequest.Create(PsURL10);
-                objResponse = objRequest10.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("216.19.223.20", dirname);
-                break;
-            case "Easynews (AS11588) Phoenix, AZ, US":
-                string PsURL11 = "http://www.easynews.com/trace.html?ip=myIP";
-                PsURL11 = PsURL11.Replace("myIP", IP);
-                WebRequest objRequest11 = HttpWebRequest.Create(PsURL11);
-                objResponse = objRequest11.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("69.16.132.7", dirname);
-                break;
-            case "INFLOW (AS13756/19290) Vancouver, WA, US":
-                string PsURL12 = "http://vger.kernel.org/cgi-bin/nph-traceroute?ASQ=on&OWN=on&MODE=ICMP&DOMAIN=myIP";
-                PsURL12 = PsURL12.Replace("myIP", IP);
-                WebRequest objRequest12 = HttpWebRequest.Create(PsURL12);
-                objResponse = objRequest12.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("198.145.19.196", dirname);
-                break;
-            case "Companhia Portuguesa Radio Marconi (AS8657) Lisboa, 14, PT":
-                string PsURL13 = "http://glass.cprm.net/cgi-bin/traceroute.cgi?myIP";
-                PsURL13 = PsURL13.Replace("myIP", IP);
-                WebRequest objRequest13 = HttpWebRequest.Create(PsURL13);
-                objResponse = objRequest13.GetResponse();
-                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-                {
-                    strResult = sr.ReadToEnd();
-                    sr.Close();
-                }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("195.8.0.51", dirname);
-                break;
+            //case "University of Washington (AS73) Seattle, WA, US":
+            //    string PsURL4 = "http://www.washington.edu/networking/tools/traceroute?search_address=myIP&max_hop_value=30&wait_time_value=2&number_query_value=3&number_out_value=3&Submit=Submit&.cgifields=number_query&.cgifields=wait_time&.cgifields=numeric_address&.cgifields=number_out&.cgifields=max_hop";
+            //    PsURL4 = PsURL4.Replace("myIP", IP);
+            //    WebRequest objRequest4 = HttpWebRequest.Create(PsURL4);
+            //    objResponse = objRequest4.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("128.95.155.134", dirname);
+            //    break;
+            //case "RUSnet (AS3277) Saint Petersburg, 66, RU":
+            //    string PsURL5 = "http://traceroute.rusnet.ru/?myIP";
+            //    PsURL5 = PsURL5.Replace("myIP", IP);
+            //    WebRequest objRequest5 = HttpWebRequest.Create(PsURL5);
+            //    objResponse = objRequest5.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("194.85.4.53", dirname);
+            //    break;
+            //case "Daresbury Laboratory (AS786) Didcot, K2, GB":
+            //    string PsURL6 = "http://icfamon.dl.ac.uk/cgi-bin/traceroute.pl?target=myIP";
+            //    PsURL6 = PsURL6.Replace("myIP", IP);
+            //    WebRequest objRequest6 = HttpWebRequest.Create(PsURL6);
+            //    objResponse = objRequest6.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("130.246.135.153", dirname);
+            //    break;
+            //case "Willamette Valley Internet (AS2914) Stayton, OR, US":
+            //    string PsURL7 = "http://www.wvi.com/cgi-bin/trace?myIP";
+            //    PsURL7 = PsURL7.Replace("myIP", IP);
+            //    WebRequest objRequest7 = HttpWebRequest.Create(PsURL7);
+            //    objResponse = objRequest7.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("204.119.27.10", dirname);
+            //    break;
+            //case "Stanford University (AS3671) Durham, NC, US":
+            //    string PsURL8 = "http://www.slac.stanford.edu/cgi-bin/nph-traceroute.pl?target=myIP&function=traceroute";
+            //    PsURL8 = PsURL8.Replace("myIP", IP);
+            //    WebRequest objRequest8 = HttpWebRequest.Create(PsURL8);
+            //    objResponse = objRequest8.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("152.3.104.250", dirname);
+            //    break;
+            //case "Conxion (AS4544) Newton Center, MA, US":
+            //    string PsURL9 = "http://unixvirt-svca.www.conxion.com/cgi-bin/traceroute?source=svca&target=myIP&probes=3&hops=20&timeout=2&format=graphic&.submit=Trace+another+connection";
+            //    PsURL9 = PsURL9.Replace("myIP", IP);
+            //    WebRequest objRequest9 = HttpWebRequest.Create(PsURL9);
+            //    objResponse = objRequest9.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("216.251.225.207", dirname);
+            //    break;
+            //case "GetNet (AS6091) Phoenix, AZ, US":
+            //    string PsURL10 = "http://www.getnet.net/cgi-bin/trace?myIP";
+            //    PsURL10 = PsURL10.Replace("myIP", IP);
+            //    WebRequest objRequest10 = HttpWebRequest.Create(PsURL10);
+            //    objResponse = objRequest10.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("216.19.223.20", dirname);
+            //    break;
+            //case "Easynews (AS11588) Phoenix, AZ, US":
+            //    string PsURL11 = "http://www.easynews.com/trace.html?ip=myIP";
+            //    PsURL11 = PsURL11.Replace("myIP", IP);
+            //    WebRequest objRequest11 = HttpWebRequest.Create(PsURL11);
+            //    objResponse = objRequest11.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("69.16.132.7", dirname);
+            //    break;
+            //case "INFLOW (AS13756/19290) Vancouver, WA, US":
+            //    string PsURL12 = "http://vger.kernel.org/cgi-bin/nph-traceroute?ASQ=on&OWN=on&MODE=ICMP&DOMAIN=myIP";
+            //    PsURL12 = PsURL12.Replace("myIP", IP);
+            //    WebRequest objRequest12 = HttpWebRequest.Create(PsURL12);
+            //    objResponse = objRequest12.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("198.145.19.196", dirname);
+            //    break;
+            //case "Companhia Portuguesa Radio Marconi (AS8657) Lisboa, 14, PT":
+            //    string PsURL13 = "http://glass.cprm.net/cgi-bin/traceroute.cgi?myIP";
+            //    PsURL13 = PsURL13.Replace("myIP", IP);
+            //    WebRequest objRequest13 = HttpWebRequest.Create(PsURL13);
+            //    objResponse = objRequest13.GetResponse();
+            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+            //    {
+            //        strResult = sr.ReadToEnd();
+            //        sr.Close();
+            //    }
+            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
+            //    Traceroute("195.8.0.51", dirname);
+            //    break;
 
         }
 
@@ -206,11 +206,11 @@ public partial class MainPage : System.Web.UI.Page
         rTrfile.Close();
 
         string Rlinepattern = @"(?<linegroup>[ \n]\d+  .*)";
-        string Rrttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
+        string Rrttpattern  = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
 
         ////////////// IP & STAR patterns declared inside the Loop /////////////
 
-        List<string> RipS = new List<string>();
+        List<string> RipS    = new List<string>();
         List<string> Rrttave = new List<string>();
 
         /// !!!!!!!!!!!!!!!!!!! HOP FLAG !!!!!!!!!!!!!!!!!!!!!!!!!! ////////////////////////////////////////
@@ -218,13 +218,13 @@ public partial class MainPage : System.Web.UI.Page
         MatchCollection Rtrline = Regex.Matches(Rtext, Rlinepattern);
         foreach (Match Rlinematch in Rtrline)
         {
-            float Rsumm = 0;
-            int Rstar = 0;
-            int Rlength = 0;
-            float RRave = 0;
-            float Rrtt11 = 0;
+            float Rsumm     = 0;
+            int Rstar       = 0;
+            int Rlength     = 0;
+            float RRave     = 0;
+            float Rrtt11    = 0;
 
-            string Rline = Rlinematch.Value;
+            string Rline     = Rlinematch.Value;
             ListBox1.Visible = true;
             ListBox1.Items.Add(Rline);
 
@@ -245,7 +245,7 @@ public partial class MainPage : System.Web.UI.Page
             Match Rmatchstar = Regex.Match(Rline, @"(\d)+  \* \* \*");
             if (Rmatchstar.Success)
             {
-                RipS.Add("0");
+                RipS.Add("Destination Unreachable");
                 Rrttave.Add("0");
                 Rstar = 1;
             }
@@ -274,7 +274,7 @@ public partial class MainPage : System.Web.UI.Page
         List<string> Rlonlat = new List<string>();
         foreach (string item in RipS)
         {
-            if (item != "0")
+            if (item != "Destination Unreachable")
             {
                 string URL1 = "http://www.geoiptool.com/en/?IP=IPADD";
                 URL1 = URL1.Replace("IPADD", item);
@@ -320,13 +320,13 @@ public partial class MainPage : System.Web.UI.Page
     }
 
 
-    /////////////////////////////////////////// FORWARD TRACEROUTE //////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////// FORWARD TRACEROUTE //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void Traceroute(string ipAddressOrHostName,string dirname)
+    public void Traceroute(string ipAddressOrHostName, string dirname)
     {
-        
+
         IPAddress ipAddress = Dns.GetHostEntry(ipAddressOrHostName).AddressList[0];
         StringBuilder traceResults = new StringBuilder();
         using (Ping pingSender = new Ping())
@@ -349,7 +349,7 @@ public partial class MainPage : System.Web.UI.Page
                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"), string.Format("{0}\t{1}ms \t{2}\n", i, stopWatch.ElapsedMilliseconds, pingReply.Address + Environment.NewLine));
                 if (pingReply.Status == IPStatus.Success)
                 {
-                    File.AppendAllText(Server.MapPath("~/App_Data/"+dirname+"/ftr.txt"), "Trace complete.");
+                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"), "Trace complete.");
                     break;
                 }
                 pingOptions.Ttl++;
@@ -450,7 +450,7 @@ public partial class MainPage : System.Web.UI.Page
         }
 
 
-        GenerateFMap(Flonlat, FipS, Frttave,dirname);
+        GenerateFMap(Flonlat, FipS, Frttave, dirname);
     }
 
 
@@ -473,20 +473,22 @@ public partial class MainPage : System.Web.UI.Page
 
 
         int m = 0;
-        int IDpp = 0;
+        int IDpp = 60;
         double longg = 0;
         double lat = 0;
-
         string ll1 = "0";
         string ll2 = "0";
-        List<string> longlatlist = new List<string>();
+
+        List<string> Flonglatlist = new List<string>();
+        List<string> zeroballoonlist = new List<string>();
 
         int k = 0;
-        int repeat = 0;
-        int rep2 = 1;
+        int Frepeat = 0;
+        int Frep2 = 1;
+        int zeroflag = 0;
 
 
-        foreach (double prime in test) 
+        foreach (double prime in test)
         {
             if (m < 1)
             {
@@ -498,78 +500,116 @@ public partial class MainPage : System.Web.UI.Page
             {
                 lat = prime;
                 ll2 = Convert.ToString(lat);
-                ll2 = ll1 +"_"+ ll2;
-                longlatlist.Add(ll2);
+                ll2 = ll1 + "_" + ll2;
+                Flonglatlist.Add(ll2);
                 m = 0;
             }
         }
-        for (int ind = 0; ind < longlatlist.Count; ind++)
+        for (int ind = 0; ind < Flonglatlist.Count; ind++)
         {
-            rep2 = 1;
-            if (ind > 0)
+            Frep2 = 1;
+            if (Flonglatlist[ind] == "0_0")
             {
-                k = 0;
-                while ((k < ind)& (rep2>0))
+                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind]  + "\t\t\t" + Frttave[ind] + "\n</pre>");
+                zeroflag = 1;
+            }
+            else
+            {
+                if (ind > 0)
                 {
-                    if (longlatlist[ind] == longlatlist[k])
+                    k = 0;
+                    while ((k < ind) & (Frep2 > 0))
                     {
-                        string filename = "Desc" + k.ToString() + ".txt";
-                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + "\t\t\t" + Frttave[ind] + "\n</pre>";
-                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
+                        if (Flonglatlist[ind] == Flonglatlist[k])
+                        {
 
-                        System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/"+dirname +"/"+ filename));
-                        string Fdesctext = descfile.ReadToEnd();
-                        descfile.Close();
+                            string filename = "FDesc" + k.ToString() + ".txt";
+                            if (zeroflag == 1)
+                            {
+                                foreach (string inf in zeroballoonlist)
+                                {
+                                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
+                                }
+                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
+                                zeroflag = 0;
+                            }
+                            else
+                            {
+                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
+                            }
 
-                        string[] words = longlatlist[ind].Split('_');
-                        longg = Convert.ToDouble(words[0]);
-                        lat = Convert.ToDouble(words[1]);
+                            System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                            string Fdesctext = descfile.ReadToEnd();
+                            descfile.Close();
 
-                        string idpps = Convert.ToString(IDpp);
-                        GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Fdesctext));
-                        PL1.Points.Add(new GooglePoint(idpps, lat, longg));
-                        GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
-                        repeat = repeat + 1;
-                        rep2 = 0;
+                            string[] words = Flonglatlist[ind].Split('_');
+                            longg = Convert.ToDouble(words[0]);
+                            lat = Convert.ToDouble(words[1]);
+
+                            string idpps = Convert.ToString(IDpp);
+                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/satellite.png", Fdesctext));
+                            PL1.Points.Add(new GooglePoint(idpps, lat, longg));
+                            GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
+                            Frepeat = Frepeat + 1;
+                            Frep2 = 0;
+                        }
+                        else
+                        {
+                            k = k + 1;
+                            Frepeat = 0;
+                        }
+                    }
+                }
+
+                if (Frepeat == 0)
+                {
+
+                    string filename = "FDesc" + ind.ToString() + ".txt";
+                    string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
+                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
+                    if (zeroflag == 1)
+                    {
+                        foreach (string inf in zeroballoonlist)
+                        {
+                            File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
+                        }
+                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
+                        zeroflag = 0;
                     }
                     else
                     {
-                        k = k + 1;
-                        repeat = 0;
+                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                     }
+
+                    System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                    string Fdesctext = descfile.ReadToEnd();
+                    descfile.Close();
+
+                    string[] words = Flonglatlist[ind].Split('_');
+                    longg = Convert.ToDouble(words[0]);
+                    lat = Convert.ToDouble(words[1]);
+
+                    string idpps = Convert.ToString(IDpp);
+                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/satellite.png", Fdesctext));
+                    PL1.Points.Add(new GooglePoint(idpps, lat, longg));
+                    GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                 }
-            } 
-                   
-            if (repeat == 0)
-            {
-                string filename = "Desc" + ind.ToString() + ".txt";
-                string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
-                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind]+ "\t\t\t" + Frttave[ind] + "\n</pre>";
-                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
-                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
-
-                System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname +"/"+ filename));
-                string Fdesctext = descfile.ReadToEnd();
-                descfile.Close();
-
-                string[] words = longlatlist[ind].Split('_');
-                longg = Convert.ToDouble(words[0]);
-                lat = Convert.ToDouble(words[1]);
-
-                string idpps = Convert.ToString(IDpp);
-                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Fdesctext));
-                PL1.Points.Add(new GooglePoint(idpps, lat, longg));
-                GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
+                IDpp = IDpp + 1;
             }
-            IDpp = IDpp + 1;
+
 
         }
-   
         GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL1);
     }
 
     void GenerateRMap(List<string> Rlonlat, List<string> RipS, List<string> Rrttave, string dirname)
     {
+
+
         List<double> test = Rlonlat.Select(x => double.Parse(x)).ToList();
 
         GooglePolyline PL2 = new GooglePolyline();
@@ -586,10 +626,12 @@ public partial class MainPage : System.Web.UI.Page
         string ll2 = "0";
 
         List<string> Rlonglatlist = new List<string>();
+        List<string> zeroballoonlist = new List<string>();
 
         int k = 0;
         int Rrepeat = 0;
         int Rrep2 = 1;
+        int zeroflag = 0;
 
 
         foreach (double prime in test)
@@ -610,64 +652,101 @@ public partial class MainPage : System.Web.UI.Page
             }
         }
         for (int ind = 0; ind < Rlonglatlist.Count; ind++)
-        {
+        {   
             Rrep2 = 1;
-            if (ind > 0)
+            if (Rlonglatlist[ind] == "0_0")
             {
-                k = 0;
-                while ((k < ind) & (Rrep2 > 0))
+                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>");
+                zeroflag =1;
+            }
+            else
+            {
+                if (ind > 0)
                 {
-                    if (Rlonglatlist[ind] == Rlonglatlist[k])
+                    k = 0;
+                    while ((k < ind) & (Rrep2 > 0))
                     {
-                        string filename = "RDesc" + k.ToString() + ".txt";
-                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
-                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
+                        if (Rlonglatlist[ind] == Rlonglatlist[k])
+                        {
 
-                        System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname +"/"+ filename));
-                        string Rdesctext = descfile.ReadToEnd();
-                        descfile.Close();
+                            string filename = "RDesc" + k.ToString() + ".txt";
+                            if (zeroflag == 1)
+                            {
+                                foreach (string inf in zeroballoonlist)
+                                {
+                                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
+                                }
+                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
+                                zeroflag = 0;
+                            }
+                            else
+                            {
+                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
+                            }
 
-                        string[] words = Rlonglatlist[ind].Split('_');
-                        longg = Convert.ToDouble(words[0]);
-                        lat = Convert.ToDouble(words[1]);
+                            System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                            string Rdesctext = descfile.ReadToEnd();
+                            descfile.Close();
 
-                        string idpps = Convert.ToString(IDpp);
-                        GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
-                        PL2.Points.Add(new GooglePoint(idpps, lat, longg));
-                        GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
-                        Rrepeat = Rrepeat + 1;
-                        Rrep2 = 0;
+                            string[] words = Rlonglatlist[ind].Split('_');
+                            longg = Convert.ToDouble(words[0]);
+                            lat = Convert.ToDouble(words[1]);
+
+                            string idpps = Convert.ToString(IDpp);
+                            GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
+                            PL2.Points.Add(new GooglePoint(idpps, lat, longg));
+                            GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
+                            Rrepeat = Rrepeat + 1;
+                            Rrep2 = 0;
+                        }
+                        else
+                        {
+                            k = k + 1;
+                            Rrepeat = 0;
+                        }
+                    }
+                }
+
+                if (Rrepeat == 0)
+                {
+
+                    string filename = "RDesc" + ind.ToString() + ".txt";
+                    string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
+                    File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
+                    if (zeroflag == 1)
+                    {
+                        foreach (string inf in zeroballoonlist)
+                        {
+                            File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
+                        }
+                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
+                        zeroflag = 0;
                     }
                     else
                     {
-                        k = k + 1;
-                        Rrepeat = 0;
+                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                        File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                     }
+
+                    System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                    string Rdesctext = descfile.ReadToEnd();
+                    descfile.Close();
+
+                    string[] words = Rlonglatlist[ind].Split('_');
+                    longg = Convert.ToDouble(words[0]);
+                    lat = Convert.ToDouble(words[1]);
+
+                    string idpps = Convert.ToString(IDpp);
+                    GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
+                    PL2.Points.Add(new GooglePoint(idpps, lat, longg));
+                    GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                 }
+                IDpp = IDpp + 1;
             }
 
-            if (Rrepeat == 0)
-            {
-                string filename = "RDesc" + ind.ToString() + ".txt";
-                string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
-                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>";
-                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
-                File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
-
-                System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname +"/"+ filename));
-                string Rdesctext = descfile.ReadToEnd();
-                descfile.Close();
-
-                string[] words = Rlonglatlist[ind].Split('_');
-                longg = Convert.ToDouble(words[0]);
-                lat = Convert.ToDouble(words[1]);
-
-                string idpps = Convert.ToString(IDpp);
-                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
-                PL2.Points.Add(new GooglePoint(idpps, lat, longg));
-                GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
-            }
-            IDpp = IDpp + 1;
 
         }
         GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL2);

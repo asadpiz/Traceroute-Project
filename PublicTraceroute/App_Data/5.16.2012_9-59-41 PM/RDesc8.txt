@@ -1,0 +1,6 @@
+<pre>
+Hop No.			IP Address			Average RTT
+<pre>8			202.125.128.173			295.7594 ms
+</pre><pre>9			221.120.254.13						294.4517 ms
+</pre><pre>10			221.120.253.2						351.9767 ms
+</pre>
