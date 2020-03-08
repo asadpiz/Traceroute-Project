@@ -1,0 +1,7 @@
+<pre>
+Hop No.			IP Address			Average RTT			Method
+<pre>0			98.137.149.56			110.9617 ms			 dst
+</pre><pre>1			67.195.130.110			120.9397 ms			 sym
+</pre><pre>2			98.136.16.31			114.4773 ms			 -sym
+</pre><pre>3			216.115.107.83			132.4647 ms			 -sym
+</pre>

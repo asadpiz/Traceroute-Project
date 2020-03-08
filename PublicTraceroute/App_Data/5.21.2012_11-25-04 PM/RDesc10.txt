@@ -1,0 +1,11 @@
+<pre>
+Hop No.			IP Address			Average RTT			Method
+<pre>10			203.105.72.17			 -rr
+</pre><pre>11			203.178.141.142 -rr
+</pre><pre>12			203.178.136.65 rr
+</pre><pre>13			203.178.136.73 -rr
+</pre><pre>14			203.178.136.93 sym
+</pre><pre>15			203.178.137.75 -sym
+</pre><pre>16			203.178.143.84 rr
+</pre><pre>17			203.178.143.10 -rr
+</pre>

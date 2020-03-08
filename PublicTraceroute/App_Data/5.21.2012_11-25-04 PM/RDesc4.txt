@@ -1,0 +1,7 @@
+<pre>
+Hop No.			IP Address			Average RTT			Method
+<pre>4			4.71.112.14			 -sym
+</pre><pre>5			4.69.152.5 -sym
+</pre><pre>6			4.69.152.197 rr
+</pre><pre>7			4.68.4.9 -rr
+</pre>
