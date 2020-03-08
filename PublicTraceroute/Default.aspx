@@ -12,24 +12,35 @@
         .style3
         {
             height: 255px;
-            width: 74%;
+            width: 100%;
         }
         .style4
     {
-        width: 27%;
+        width: 100%;
     }
     .style5
     {
-        width: 74%;
-    }
+            width: 60%;
+        }
     .style6
     {
         width: 1%;
     }
+        .style7
+        {
+            height: 21px;
+        }
     </style>
 </asp:Content>
+
+	  
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-    <table style="width:60%;">
+<!-- BEGIN geoiptool.com -->
+<script language="JavaScript"
+src="http://www.geoiptool.com/webjs.php?xl=en&xt=1&xw=200&xh=275"></script>
+<noscript><a target="_blank" href="http://www.geoiptool.com/">Geo Web Tool</a></noscript>
+<!-- END geoiptool.com -->   
+    <table style="width:100%;">
     <tr>
         <td class="style3">
             <asp:Label ID="Label2" runat="server" Font-Bold="True" ForeColor="#003366" 
@@ -57,8 +68,7 @@
     </tr>
     <tr>
         <td colspan="3">
-             Select A Public Server from the DropDown List Click Show Route To Display a 
-             Complete Internet Path from the Public Server to our Web Server.<br />
+             <br />
 
             </td>
     </tr>
@@ -75,17 +85,23 @@
             &nbsp;</td>
     </tr>
     <tr>
-        <td colspan="3">
-            &nbsp;</td>
+        <td colspan="3" class="style7">
+        
+      
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+            </td>
     </tr>
     <tr>
         <td class="style5">
             <asp:ListBox ID="ListBox1" runat="server" SelectionMode="Multiple" 
-                Visible="False" Width="350px" Height="500px" style="margin-bottom: 6px"></asp:ListBox>
+                Visible="False" Width="200px" Height="500px" style="margin-bottom: 6px"></asp:ListBox>
+        <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server" />
+
         </td>
         <td class="style4">
             <asp:ListBox ID="ListBox2" runat="server" SelectionMode="Multiple" 
-                Visible="False" Width="200px" Height="500px"></asp:ListBox>
+                Visible="False" Width="200px" Height="500px" style="margin-left: 0px"></asp:ListBox>
         </td>
         <td class="style6">
             &nbsp;</td>
@@ -94,12 +110,9 @@
         <td class="style5">
         
       
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
     <h3><a href="Default.aspx">Back</a></h3>
     <h3>Internet Path</h3>
     <div>
-        <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server" />
 
     </div>
     
@@ -107,6 +120,7 @@
         <td class="style4">
             &nbsp;</td>
     </tr>
+
 </table>
 </asp:Content>
 
