@@ -46,20 +46,32 @@ height:1200px;
     
         <span class="style1">Graphcial Forward/Reverse Traceroute</span><br />
         <br />
-        Copy &amp; Paste the Traceroute/<asp:HyperLink ID="HyperLink1" runat="server" 
-            NavigateUrl="http://revtr.cs.washington.edu/">Reverse Traceroute</asp:HyperLink>
-&nbsp;Results in the Box Below to show them Graphically<br />
-        <br />
+         1. Issue Traceroute To any Arbitrary Destination from our Server.<br />
+&nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="44px" Width="307px" 
+             AutoCompleteType="Homepage"></asp:TextBox>
+         <asp:Button ID="Button3" runat="server" Text="Show Trace" Width="151px" 
+             Height="38px" onclick="Button3_Click" />
+         <br />
+         <br />
+        2. Issue Reverse Traceroute From Any Arbitrary Destination towards anyone of the Following 3 Servers
 <div id='outerdiv'>
 
   <iframe id='inneriframe' name='content' marginheight="0px" marginwidth="0px" runat="server" title="Washigton.edu" type="text/html" width="500" height="278" src="http://revtr.cs.washington.edu" frameborder="0" align="center" >
   </iframe>
 
 </div>
-      <div align="center">
+         <br />
     <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
+         <br />
     <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server" />
+          <br />
+         3. Copy &amp; Paste the Traceroute/<asp:HyperLink ID="HyperLink1" runat="server" 
+            NavigateUrl="http://revtr.cs.washington.edu/">Reverse Traceroute</asp:HyperLink>
+&nbsp;Results in the Box Below to show them Graphically<br />
+        <br />
+
+      <div align="center">
           <span class="style2">Paste Trace Results In this Box<br />
           </span>
           <asp:FileUpload id="FileUploadControl" runat="server" />

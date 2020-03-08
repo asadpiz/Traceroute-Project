@@ -1,12 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="MainPage" %>
 <%@ Register Src="~/GoogleMapForASPNet.ascx" TagName="GoogleMapForASPNet" TagPrefix="uc1" %>
-<script runat="server">
-
-    protected void TextBox1_TextChanged(object sender, EventArgs e)
-    {
-
-    }
-</script>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <style type="text/css">
         .style3
