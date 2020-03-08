@@ -1,0 +1,44 @@
+<title>traceroute from 128.125.137.243 (www.usc.edu) to  182.177.10.49 (182.177.10.49) for 182.177.10.49</title>
+<div align='center'><table border='1'><td align='center'><h2>traceroute from 128.125.137.243 (www.usc.edu) to  182.177.10.49 (182.177.10.49) for 182.177.10.49</h2>
+To perform a
+       <!-- a href='http://boardwatch.internet.com/mag/96/dec/bwm38.html' -->
+        traceroute
+        from www.usc.edu,
+        enter the desired target
+       <a href='http://webopedia.internet.com/TERM/d/domain_name.html'>host.domain</a>
+       (e.g. www.yahoo.com) or
+       <a href='http://aol.pcwebopedia.com/TERM/I/IP_address.html'>Internet
+       address</a> (e.g. 137.138.28.228) in the box
+       below:
+       <form action='/cgi-bin/traceroute' method='GET'>
+       Enter target name or address:
+       <input type='text' size='30' name='target'> then push 'Enter' key.
+       </form></tr></table></div>
+<table bgcolor='yellow'><tr><td align='center'><font color=red><b>
+Please note that traceroutes can appear similar 
+to port scans. If you see a suspected port scan alert, 
+for example from your firewall, with 
+a series of ports in the range 33434 - 33465, coming 
+from www.usc.edu it is probably a reverse traceroute from our 
+web based reverse traceroute server. Please do NOT report this to 
+us, it will almost certainly be a waste of both of our times. 
+For more on this see<br>
+<a href='http://www.slac.stanford.edu/comp/net/wan-mon/traceroute-srv.html#security'>
+Traceroute security issues</a>.</b></font></td></tr></table>
+<pre>
+Executing 'traceroute -m 30 -q 3 -f 3 182.177.10.49'<br>
+traceroute to 182.177.10.49 (182.177.10.49), 30 hops max, 40 byte packets
+ 3  v249-gw-6 (68.181.194.65)  0.682 ms  0.716 ms  0.626 ms
+ 4  lax-dc1--losnettos-dc.cenic.net (137.164.23.225)  0.600 ms  0.499 ms  0.632 ms
+ 5  dc-lax-core2--lax-agg1-ge.cenic.net (137.164.46.107)  0.833 ms  0.947 ms  0.884 ms
+ 6  dc-lax-px1--lax-core2-10ge-2.cenic.net (137.164.46.153)  0.872 ms  0.724 ms  0.632 ms
+ 7  xe-9-2-0.0.lsan0.tr-cps.internet2.edu (64.57.20.226)  0.833 ms  0.787 ms  0.933 ms
+ 8  LAX-GE1.tm.net.my (206.223.123.94)  1.846 ms  1.651 ms  1.827 ms
+ 9  * * *
+10  1.9.241.62 (1.9.241.62)  281.309 ms  280.637 ms 1.9.241.14 (1.9.241.14)  272.325 ms
+11  static-10GE-KHI275-P01-SwA.pie.net.pk (202.125.128.173)  298.327 ms  291.835 ms  282.123 ms
+12  rwp44.pie.net.pk (221.120.254.13)  309.750 ms  309.631 ms  302.266 ms
+13  rwp44.pie.net.pk (221.120.253.2)  317.592 ms  303.600 ms  304.200 ms
+14  203.99.170.233 (203.99.170.233)  298.864 ms  293.511 ms  294.483 ms
+15  * * *
+16  * *

@@ -461,11 +461,11 @@ public partial class MainPage : System.Web.UI.Page
 
         GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint("0", 0, 0);
 
-        GooglePolyline PL1 = new GooglePolyline();
+        //GooglePolyline PL1 = new GooglePolyline();
 
-        PL1.ID = "PL1";
-        PL1.ColorCode = "#FFF014";
-        PL1.Width = 5;
+        //PL1.ID = "PL1";
+        //PL1.ColorCode = "#FFF014";
+        //PL1.Width = 5;
 
 
         int m = 0;
@@ -477,6 +477,7 @@ public partial class MainPage : System.Web.UI.Page
 
         List<string> Flonglatlist = new List<string>();
         List<string> zeroballoonlist = new List<string>();
+        List<double> rttcompare = new List<double>();
 
         int k = 0;
         int Frepeat = 0;
@@ -546,7 +547,7 @@ public partial class MainPage : System.Web.UI.Page
 
                             string idpps = Convert.ToString(IDpp);
                             GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/satellite.png", Fdesctext));
-                            PL1.Points.Add(new GooglePoint(idpps, lat, longg));
+                            //PL1.Points.Add(new GooglePoint(idpps, lat, longg));
                             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                             Frepeat = Frepeat + 1;
                             Frep2 = 0;
@@ -591,7 +592,7 @@ public partial class MainPage : System.Web.UI.Page
 
                     string idpps = Convert.ToString(IDpp);
                     GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/satellite.png", Fdesctext));
-                    PL1.Points.Add(new GooglePoint(idpps, lat, longg));
+                    //PL1.Points.Add(new GooglePoint(idpps, lat, longg));
                     GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                 }
                 IDpp = IDpp + 1;
@@ -599,7 +600,95 @@ public partial class MainPage : System.Web.UI.Page
 
 
         }
-        GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL1);
+        for (int indx = 0; indx < Frttave.Count; indx++)
+        {
+            string Rrtttemp = Frttave[indx];
+            string[] numbers = Regex.Split(Rrtttemp, @"\D+");
+            foreach (string value in numbers)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    int i = int.Parse(value);
+                    rttcompare.Add(i);
+                }
+            }
+        }
+
+        int idline = 0;
+
+        for(int indx = 0; indx < Flonglatlist.Count; indx++)
+        {
+           if (indx!=0)
+           {
+               if (Flonglatlist[indx] == "0_0")
+               {
+                   continue;
+               }
+               else
+               {
+                   int prevll = indx;
+                   prevll = prevll - 1;
+                   while (prevll >= 0)
+                   {
+                       if (Flonglatlist[prevll] == "0_0")
+                       {
+                           prevll = prevll - 1;
+                       }
+                       else
+                       {
+                           idline = idline +1;
+                           string idl = Convert.ToString(idline);
+                           GooglePolyline PL1 = new GooglePolyline();
+                           double sss = rttcompare[indx];
+                           if (sss <=100 )
+                           {
+                               PL1.ColorCode = "#FFF014";
+                           }
+                           else if ((sss >100) & (sss <= 200))
+                           {
+                               PL1.ColorCode = "#00FF78";
+                           }
+                           else if ((sss > 200) & (sss <= 300))
+                           {
+                               PL1.ColorCode = "#FFF014";
+                           }
+                           else if ((sss > 300) & (sss <= 400))
+                           {
+                               PL1.ColorCode = "#FF7814";
+                           }
+                           else if (sss > 400)
+                           {
+                               PL1.ColorCode = "#FF0014";
+                           }
+
+                           PL1.ID = "PL1";
+                           PL1.Width = 5;
+                           string[] words2 = Flonglatlist[prevll].Split('_');
+                           double longg0 = Convert.ToDouble(words2[0]);
+                           double lat0 = Convert.ToDouble(words2[1]);
+                           PL1.Points.Add(new GooglePoint(idl, lat0, longg0));
+
+                           string[] words = Flonglatlist[indx].Split('_');
+                           double longg1 = Convert.ToDouble(words[0]);
+                           double lat1 = Convert.ToDouble(words[1]);
+                           PL1.Points.Add(new GooglePoint(idl, lat1, longg1));
+                           GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL1);
+                           break;
+
+                       }
+                    }
+ 
+                   }
+
+
+                   
+               }
+
+        }
+
+  
+        
+
     }
 
     void GenerateRMap(List<string> Rlonlat, List<string> RipS, List<string> Rrttave, string dirname)
@@ -607,11 +696,6 @@ public partial class MainPage : System.Web.UI.Page
 
 
         List<double> test = Rlonlat.Select(x => double.Parse(x)).ToList();
-
-        GooglePolyline PL2 = new GooglePolyline();
-        PL2.ID = "PL2";
-        PL2.ColorCode = "#000000";
-        PL2.Width = 5;
 
 
         int m = 0;
@@ -623,6 +707,7 @@ public partial class MainPage : System.Web.UI.Page
 
         List<string> Rlonglatlist = new List<string>();
         List<string> zeroballoonlist = new List<string>();
+        List<double> Rrttcompare = new List<double>();
 
         int k = 0;
         int Rrepeat = 0;
@@ -692,7 +777,6 @@ public partial class MainPage : System.Web.UI.Page
 
                             string idpps = Convert.ToString(IDpp);
                             GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
-                            PL2.Points.Add(new GooglePoint(idpps, lat, longg));
                             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                             Rrepeat = Rrepeat + 1;
                             Rrep2 = 0;
@@ -737,7 +821,6 @@ public partial class MainPage : System.Web.UI.Page
 
                     string idpps = Convert.ToString(IDpp);
                     GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/snow.png", Rdesctext));
-                    PL2.Points.Add(new GooglePoint(idpps, lat, longg));
                     GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                 }
                 IDpp = IDpp + 1;
@@ -745,8 +828,90 @@ public partial class MainPage : System.Web.UI.Page
 
 
         }
-        GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL2);
+        for (int indx = 0; indx < Rrttave.Count; indx++)
+        {
+            string Rrtttemp = Rrttave[indx];
+            string[] numbers = Regex.Split(Rrtttemp, @"\D+");
+            foreach (string value in numbers)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    int i = int.Parse(value);
+                    Rrttcompare.Add(i);
+                }
+            }
+        }
+        int idline = 0;
 
+        for (int indx = 0; indx < Rlonglatlist.Count; indx++)
+        {
+            if (indx != 0)
+            {
+                if (Rlonglatlist[indx] == "0_0")
+                {
+                    continue;
+                }
+                else
+                {
+                    int prevll = indx;
+                    prevll = prevll - 1;
+                    while (prevll >= 0)
+                    {
+                        if (Rlonglatlist[prevll] == "0_0")
+                        {
+                            prevll = prevll - 1;
+                        }
+                        else
+                        {
+                            idline = idline + 1;
+                            string idl = Convert.ToString(idline);
+                            GooglePolyline PL2 = new GooglePolyline();
+                            double sss = Rrttcompare[indx];
+                            if (sss <= 100)
+                            {
+                                PL2.ColorCode = "#007814";
+                            }
+                            else if ((sss > 100) & (sss <= 200))
+                            {
+                                PL2.ColorCode = "#F0780A";
+                            }
+                            else if ((sss > 200) & (sss <= 300))
+                            {
+                                PL2.ColorCode = "#1400F0";
+                            }
+                            else if ((sss > 300) & (sss <= 400))
+                            {
+                                PL2.ColorCode = "#FA0014";
+                            }
+                            else if (sss > 400)
+                            {
+                                PL2.ColorCode = "#000000";
+                            }
+
+                            PL2.ID = "PL2";
+                            PL2.Width = 5;
+                            string[] words2 = Rlonglatlist[prevll].Split('_');
+                            double longg0 = Convert.ToDouble(words2[0]);
+                            double lat0 = Convert.ToDouble(words2[1]);
+                            PL2.Points.Add(new GooglePoint(idl, lat0, longg0));
+
+                            string[] words = Rlonglatlist[indx].Split('_');
+                            double longg1 = Convert.ToDouble(words[0]);
+                            double lat1 = Convert.ToDouble(words[1]);
+                            PL2.Points.Add(new GooglePoint(idl, lat1, longg1));
+                            GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL2);
+                            break;
+
+                        }
+                    }
+
+                }
+
+
+
+            }
+
+        }
     }
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
