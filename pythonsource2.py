@@ -2,6 +2,7 @@ import os
 import re
 import urllib
 import simplekml
+import subprocess
 
 os.chdir ("RTr Probes") # Entering /FYP/Rtr Probes
 
@@ -11,7 +12,7 @@ ispS= []
 lonlat= []
 rttave = []
 
-ip = open ('1.txt', 'r')
+ip = open ('1-2.txt', 'r')
 web = open ('geoip.txt', 'w+')
 isp = open ('isp.txt','w+')
 
@@ -60,19 +61,19 @@ for same3 in regObj3.finditer(text3):
     isp11 = isp11.strip ('OrgName:        \n')
     ispS.append(isp11)
 isp.close()
-####                Method              ####
-method = open ('1.txt', 'r')
+####                FINDING Method              ####
+method = open ('1-2.txt', 'r')
 tag = []
 text5 = method.read()
 bytePattern5 = '(-?(dst\\n|sym\\n|tr\\n|rr\\n|t\\ns))'
 regObj5 = re.compile(bytePattern5)
 for same5 in regObj5.finditer(text5):
-    print (same5.group())
+##    print (same5.group())
     met = same5.group()
     tag.append(met)
 method.close()
-####                Finding RTT                 ####
-rtt = open ('1.txt', 'r')
+####                FINDING RTT                 ####
+rtt = open ('1-2.txt', 'r')
 text4 = rtt.read()
 rtttemp = []
 bytePattern4 = '(\d*[.]\d* ms)'
@@ -81,9 +82,17 @@ for same4 in regObj4.finditer(text4):
     #print (same4.group())
     rtt11 = same4.group()
     rtt11 = rtt11.strip (' ms')
+    rtt11 = float (rtt11)
     rtttemp.append(rtt11)
 rtt.close()
-
+count = 0
+summ = 0
+for value in range(0,len(rtttemp),3):
+    summ = rtttemp[value] + rtttemp[value+1] +rtttemp[value+2]
+    ave = summ/3.0
+    ave = str (ave) + " ms"
+    rttave.append (ave)
+    
 ####                GENERATING KML File                 ####
 kml = simplekml.Kml()
 m = 0
@@ -112,12 +121,8 @@ for ind in range(len(z)):
         ## Checking For Repeatition ##
         while (k<ind):
             if (z[ind]==z[k]):
-                print ('repeat')
-                print (ind)
-                print (z[ind])
-                print (k)
                 descfile = open ('Desc'+str(k)+'.txt', 'a')
-                descfile.write('<pre>'+str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind]+'\n</pre>'))
+                descfile.write('<pre>'+str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind]+'\t\t\t'+rttave[ind]+'\n</pre>'))
                 descfile.close()
                 pnt = kml.newpoint(description="", coords=[(0,0)])
                 descfile = open ('Desc'+str(k)+'.txt', 'r')
@@ -130,12 +135,9 @@ for ind in range(len(z)):
                 k = k+1
                 repeat = 0
     if (repeat == 0):
-        print ('First Element')
-        print (ind)
-        print (z[ind])
         descfile = open ('Desc'+str(ind)+'.txt', 'w')
-        descfile.write('<pre>\nHop No.\t\t\tIP Address\t\t\tISP\t\t\tMethod\n')
-        descfile.write(str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind]+'\n</pre>'))
+        descfile.write('<pre>\nHop No.\t\t\tIP Address\t\t\tISP\t\t\tMethod\t\t\tAverage RTT\n')
+        descfile.write(str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind]+'\t\t\t'+rttave[ind]+'\n</pre>'))
         descfile.close()
         pnt = kml.newpoint(name="R"+str(ind), description="", coords=[(0,0)])
         descfile = open ('Desc'+str(ind)+'.txt', 'r')
@@ -143,5 +145,6 @@ for ind in range(len(z)):
         pnt.coords = [z[ind]]
         descfile.close()
 kml.save("route1.kml")
+os.startfile('route1.kml')
 
 os.chdir(os.pardir) # Going Back to /FYP
