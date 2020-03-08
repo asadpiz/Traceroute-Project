@@ -13,9 +13,9 @@
     <div class="page">
         <div class="header">
             <div class="title">
-                <h1>
-                    Public Server Graphic Internet Route
-                </h1>
+               
+                <asp:Image ID="Image1" ImageUrl="Images/logo1.jpg" runat="server" 
+                    Height="217px"   width="1200px" />  
             </div>
             <div class="loginDisplay">
             </div>

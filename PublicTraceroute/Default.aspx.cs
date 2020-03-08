@@ -34,7 +34,7 @@ public partial class MainPage : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        string IP = "39.47.25.19";
+        string IP = "65.182.101.243";
         //////////////////////////////////////////////////////////REVERSE TRACEROUTE ///////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,8 +45,6 @@ public partial class MainPage : System.Web.UI.Page
         timendate = regex.Replace(timendate, "_", 1);
         timendate = timendate.Replace("/", ".");
         timendate = timendate.Replace(":", "-");
-
-       
         string dirname =  timendate;
 
         System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/"+dirname));
@@ -65,138 +63,139 @@ public partial class MainPage : System.Web.UI.Page
                 }
 
                 File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-                Traceroute("128.125.137.243",dirname);
+               Traceroute("128.125.137.243",dirname);
+               
+               break;
+            case "University of Washington (AS73) Seattle, WA, US":
+                string PsURL4 = "http://www.washington.edu/networking/tools/traceroute?search_address=myIP&max_hop_value=30&wait_time_value=2&number_query_value=3&number_out_value=3&Submit=Submit&.cgifields=number_query&.cgifields=wait_time&.cgifields=numeric_address&.cgifields=number_out&.cgifields=max_hop";
+                PsURL4 = PsURL4.Replace("myIP", IP);
+                WebRequest objRequest4 = HttpWebRequest.Create(PsURL4);
+                objResponse = objRequest4.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("128.95.155.134", dirname);
                 break;
-            //case "University of Washington (AS73) Seattle, WA, US":
-            //    string PsURL4 = "http://www.washington.edu/networking/tools/traceroute?search_address=myIP&max_hop_value=30&wait_time_value=2&number_query_value=3&number_out_value=3&Submit=Submit&.cgifields=number_query&.cgifields=wait_time&.cgifields=numeric_address&.cgifields=number_out&.cgifields=max_hop";
-            //    PsURL4 = PsURL4.Replace("myIP", IP);
-            //    WebRequest objRequest4 = HttpWebRequest.Create(PsURL4);
-            //    objResponse = objRequest4.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("128.95.155.134", dirname);
-            //    break;
-            //case "RUSnet (AS3277) Saint Petersburg, 66, RU":
-            //    string PsURL5 = "http://traceroute.rusnet.ru/?myIP";
-            //    PsURL5 = PsURL5.Replace("myIP", IP);
-            //    WebRequest objRequest5 = HttpWebRequest.Create(PsURL5);
-            //    objResponse = objRequest5.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("194.85.4.53", dirname);
-            //    break;
-            //case "Daresbury Laboratory (AS786) Didcot, K2, GB":
-            //    string PsURL6 = "http://icfamon.dl.ac.uk/cgi-bin/traceroute.pl?target=myIP";
-            //    PsURL6 = PsURL6.Replace("myIP", IP);
-            //    WebRequest objRequest6 = HttpWebRequest.Create(PsURL6);
-            //    objResponse = objRequest6.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("130.246.135.153", dirname);
-            //    break;
-            //case "Willamette Valley Internet (AS2914) Stayton, OR, US":
-            //    string PsURL7 = "http://www.wvi.com/cgi-bin/trace?myIP";
-            //    PsURL7 = PsURL7.Replace("myIP", IP);
-            //    WebRequest objRequest7 = HttpWebRequest.Create(PsURL7);
-            //    objResponse = objRequest7.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("204.119.27.10", dirname);
-            //    break;
-            //case "Stanford University (AS3671) Durham, NC, US":
-            //    string PsURL8 = "http://www.slac.stanford.edu/cgi-bin/nph-traceroute.pl?target=myIP&function=traceroute";
-            //    PsURL8 = PsURL8.Replace("myIP", IP);
-            //    WebRequest objRequest8 = HttpWebRequest.Create(PsURL8);
-            //    objResponse = objRequest8.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("152.3.104.250", dirname);
-            //    break;
-            //case "Conxion (AS4544) Newton Center, MA, US":
-            //    string PsURL9 = "http://unixvirt-svca.www.conxion.com/cgi-bin/traceroute?source=svca&target=myIP&probes=3&hops=20&timeout=2&format=graphic&.submit=Trace+another+connection";
-            //    PsURL9 = PsURL9.Replace("myIP", IP);
-            //    WebRequest objRequest9 = HttpWebRequest.Create(PsURL9);
-            //    objResponse = objRequest9.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("216.251.225.207", dirname);
-            //    break;
-            //case "GetNet (AS6091) Phoenix, AZ, US":
-            //    string PsURL10 = "http://www.getnet.net/cgi-bin/trace?myIP";
-            //    PsURL10 = PsURL10.Replace("myIP", IP);
-            //    WebRequest objRequest10 = HttpWebRequest.Create(PsURL10);
-            //    objResponse = objRequest10.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("216.19.223.20", dirname);
-            //    break;
-            //case "Easynews (AS11588) Phoenix, AZ, US":
-            //    string PsURL11 = "http://www.easynews.com/trace.html?ip=myIP";
-            //    PsURL11 = PsURL11.Replace("myIP", IP);
-            //    WebRequest objRequest11 = HttpWebRequest.Create(PsURL11);
-            //    objResponse = objRequest11.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("69.16.132.7", dirname);
-            //    break;
-            //case "INFLOW (AS13756/19290) Vancouver, WA, US":
-            //    string PsURL12 = "http://vger.kernel.org/cgi-bin/nph-traceroute?ASQ=on&OWN=on&MODE=ICMP&DOMAIN=myIP";
-            //    PsURL12 = PsURL12.Replace("myIP", IP);
-            //    WebRequest objRequest12 = HttpWebRequest.Create(PsURL12);
-            //    objResponse = objRequest12.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("198.145.19.196", dirname);
-            //    break;
-            //case "Companhia Portuguesa Radio Marconi (AS8657) Lisboa, 14, PT":
-            //    string PsURL13 = "http://glass.cprm.net/cgi-bin/traceroute.cgi?myIP";
-            //    PsURL13 = PsURL13.Replace("myIP", IP);
-            //    WebRequest objRequest13 = HttpWebRequest.Create(PsURL13);
-            //    objResponse = objRequest13.GetResponse();
-            //    using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
-            //    {
-            //        strResult = sr.ReadToEnd();
-            //        sr.Close();
-            //    }
-            //    File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-            //    Traceroute("195.8.0.51", dirname);
-            //    break;
+            case "RUSnet (AS3277) Saint Petersburg, 66, RU":
+                string PsURL5 = "http://traceroute.rusnet.ru/?myIP";
+                PsURL5 = PsURL5.Replace("myIP", IP);
+                WebRequest objRequest5 = HttpWebRequest.Create(PsURL5);
+                objResponse = objRequest5.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("194.85.4.53", dirname);
+                break;
+            case "Daresbury Laboratory (AS786) Didcot, K2, GB":
+                string PsURL6 = "http://icfamon.dl.ac.uk/cgi-bin/traceroute.pl?target=myIP";
+                PsURL6 = PsURL6.Replace("myIP", IP);
+                WebRequest objRequest6 = HttpWebRequest.Create(PsURL6);
+                objResponse = objRequest6.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("130.246.135.153", dirname);
+                break;
+            case "Willamette Valley Internet (AS2914) Stayton, OR, US":
+                string PsURL7 = "http://www.wvi.com/cgi-bin/trace?myIP";
+                PsURL7 = PsURL7.Replace("myIP", IP);
+                WebRequest objRequest7 = HttpWebRequest.Create(PsURL7);
+                objResponse = objRequest7.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("204.119.27.10", dirname);
+                break;
+            case "Stanford University (AS3671) Durham, NC, US":
+                string PsURL8 = "http://www.slac.stanford.edu/cgi-bin/nph-traceroute.pl?target=myIP&function=traceroute";
+                PsURL8 = PsURL8.Replace("myIP", IP);
+                WebRequest objRequest8 = HttpWebRequest.Create(PsURL8);
+                objResponse = objRequest8.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("152.3.104.250", dirname);
+                break;
+            case "Conxion (AS4544) Newton Center, MA, US":
+                string PsURL9 = "http://unixvirt-svca.www.conxion.com/cgi-bin/traceroute?source=svca&target=myIP&probes=3&hops=20&timeout=2&format=graphic&.submit=Trace+another+connection";
+                PsURL9 = PsURL9.Replace("myIP", IP);
+                WebRequest objRequest9 = HttpWebRequest.Create(PsURL9);
+                objResponse = objRequest9.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("216.251.225.207", dirname);
+                break;
+            case "GetNet (AS6091) Phoenix, AZ, US":
+                string PsURL10 = "http://www.getnet.net/cgi-bin/trace?myIP";
+                PsURL10 = PsURL10.Replace("myIP", IP);
+                WebRequest objRequest10 = HttpWebRequest.Create(PsURL10);
+                objResponse = objRequest10.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("216.19.223.20", dirname);
+                break;
+            case "Easynews (AS11588) Phoenix, AZ, US":
+                string PsURL11 = "http://www.easynews.com/trace.html?ip=myIP";
+                PsURL11 = PsURL11.Replace("myIP", IP);
+                WebRequest objRequest11 = HttpWebRequest.Create(PsURL11);
+                objResponse = objRequest11.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("69.16.132.7", dirname);
+                break;
+            case "INFLOW (AS13756/19290) Vancouver, WA, US":
+                string PsURL12 = "http://vger.kernel.org/cgi-bin/nph-traceroute?ASQ=on&OWN=on&MODE=ICMP&DOMAIN=myIP";
+                PsURL12 = PsURL12.Replace("myIP", IP);
+                WebRequest objRequest12 = HttpWebRequest.Create(PsURL12);
+                objResponse = objRequest12.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("198.145.19.196", dirname);
+                break;
+            case "Companhia Portuguesa Radio Marconi (AS8657) Lisboa, 14, PT":
+                string PsURL13 = "http://glass.cprm.net/cgi-bin/traceroute.cgi?myIP";
+                PsURL13 = PsURL13.Replace("myIP", IP);
+                WebRequest objRequest13 = HttpWebRequest.Create(PsURL13);
+                objResponse = objRequest13.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    strResult = sr.ReadToEnd();
+                    sr.Close();
+                }
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("195.8.0.51", dirname);
+                break;
 
         }
 
@@ -345,7 +344,7 @@ public partial class MainPage : System.Web.UI.Page
                 PingReply pingReply = pingSender.Send(ipAddress, 5000, new byte[32], pingOptions);
                 stopWatch.Stop();
                 ListBox2.Visible = true;
-                ListBox2.Items.Add(string.Format("{0}\t{1} ms\t{2}\n", i, stopWatch.ElapsedMilliseconds, pingReply.Address));
+                ListBox2.Items.Add(string.Format("{0}\t{1} \t{2} ms\n", i, pingReply.Address, stopWatch.ElapsedMilliseconds));
                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"), string.Format("{0}\t{1}ms \t{2}\n", i, stopWatch.ElapsedMilliseconds, pingReply.Address + Environment.NewLine));
                 if (pingReply.Status == IPStatus.Success)
                 {
@@ -656,7 +655,7 @@ public partial class MainPage : System.Web.UI.Page
             Rrep2 = 1;
             if (Rlonglatlist[ind] == "0_0")
             {
-                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>");
+                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>");
                 zeroflag =1;
             }
             else
@@ -676,13 +675,13 @@ public partial class MainPage : System.Web.UI.Page
                                 {
                                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                                 }
-                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                                 zeroflag = 0;
                             }
                             else
                             {
-                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                             }
 
@@ -721,7 +720,7 @@ public partial class MainPage : System.Web.UI.Page
                         {
                             File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                         }
-                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>";
                         File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                         zeroflag = 0;
                     }
