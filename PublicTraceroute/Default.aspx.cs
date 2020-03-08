@@ -305,27 +305,6 @@ public partial class MainPage : System.Web.UI.Page
                 Rlonlat.Add("0");
             }
         }
-
-        //System.IO.StreamReader geoipfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/RLongLat.txt"));
-        //string RLLtext = geoipfile.ReadToEnd();
-        //geoipfile.Close();
-
-        //MatchCollection Rlonglat = Regex.Matches(RLLtext, @"(?<linegroup>[\n].*)");
-        //foreach (Match Rlinematch in Rlonglat)
-        //{
-        //    string eline = Rlinematch.Value;
-        //    Match Fmatchms = Regex.Match(eline, @"(>-?\d{1,3}<)|(>-?\d{1,3}[.]\d{0,4}<)");
-        //    if (Fmatchms.Success)
-        //    {
-        //        string lltemp = Fmatchms.Value;
-        //        char Rendchar = '<';
-        //        char Rstartchar = '>';
-        //        string lltrimen = lltemp.TrimEnd(Rendchar);
-        //        string lltrimst = lltrimen.TrimStart(Rstartchar);
-        //        Rlonlat.Add(lltrimst);
-        //    }
-
-        //}
         GenerateRMap(Rlonlat, RipS, Rrttave);
     }
 
@@ -477,7 +456,7 @@ public partial class MainPage : System.Web.UI.Page
         GooglePolyline PL1 = new GooglePolyline();
 
         PL1.ID = "PL1";
-        PL1.ColorCode = "#000000";
+        PL1.ColorCode = "#FFF014";
         PL1.Width = 5;
 
 
@@ -495,7 +474,7 @@ public partial class MainPage : System.Web.UI.Page
         int rep2 = 1;
 
 
-        foreach (double prime in test)
+        foreach (double prime in test) 
         {
             if (m < 1)
             {
@@ -507,7 +486,7 @@ public partial class MainPage : System.Web.UI.Page
             {
                 lat = prime;
                 ll2 = Convert.ToString(lat);
-                ll2 = ll1 + "_" + ll2;
+                ll2 = ll1 +"_"+ ll2;
                 longlatlist.Add(ll2);
                 m = 0;
             }
@@ -518,7 +497,7 @@ public partial class MainPage : System.Web.UI.Page
             if (ind > 0)
             {
                 k = 0;
-                while ((k < ind) & (rep2 > 0))
+                while ((k < ind)& (rep2>0))
                 {
                     if (longlatlist[ind] == longlatlist[k])
                     {
@@ -535,7 +514,7 @@ public partial class MainPage : System.Web.UI.Page
                         lat = Convert.ToDouble(words[1]);
 
                         string idpps = Convert.ToString(IDpp);
-                        GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "", Fdesctext));
+                        GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/greenrouter.png", Fdesctext));
                         PL1.Points.Add(new GooglePoint(idpps, lat, longg));
                         GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
                         repeat = repeat + 1;
@@ -547,13 +526,13 @@ public partial class MainPage : System.Web.UI.Page
                         repeat = 0;
                     }
                 }
-            }
-
+            } 
+                   
             if (repeat == 0)
             {
                 string filename = "Desc" + ind.ToString() + ".txt";
                 string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
-                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind]+ "\t\t\t" + Frttave[ind] + "\n</pre>";
                 File.AppendAllText(Server.MapPath("~/App_Data/" + filename), heading);
                 File.AppendAllText(Server.MapPath("~/App_Data/" + filename), ballooninfo);
 
@@ -566,14 +545,14 @@ public partial class MainPage : System.Web.UI.Page
                 lat = Convert.ToDouble(words[1]);
 
                 string idpps = Convert.ToString(IDpp);
-                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "", Fdesctext));
+                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/greenrouter.png", Fdesctext));
                 PL1.Points.Add(new GooglePoint(idpps, lat, longg));
                 GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
             }
             IDpp = IDpp + 1;
 
         }
-
+   
         GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL1);
     }
 
@@ -583,43 +562,105 @@ public partial class MainPage : System.Web.UI.Page
 
         GooglePolyline PL2 = new GooglePolyline();
         PL2.ID = "PL2";
-        //Give Hex code for line color
-        PL2.ColorCode = "#0000FF";
-        //Specify width for line
-        PL2.Width = 10;
+        PL2.ColorCode = "#B47882";
+        PL2.Width = 5;
 
 
         int m = 0;
-        int km = 0;
         int IDpp = 60;
         double longg = 0;
         double lat = 0;
-        foreach (double prime in test) // Loop through List with foreach
+        string ll1 = "0";
+        string ll2 = "0";
+
+        List<string> Rlonglatlist = new List<string>();
+
+        int k = 0;
+        int Rrepeat = 0;
+        int Rrep2 = 1;
+
+
+        foreach (double prime in test)
         {
             if (m < 1)
             {
                 longg = prime;
                 m = 1;
+                ll1 = Convert.ToString(longg);
             }
             else if (m > 0)
             {
                 lat = prime;
+                ll2 = Convert.ToString(lat);
+                ll2 = ll1 + "_" + ll2;
+                Rlonglatlist.Add(ll2);
                 m = 0;
-                km = 1;
             }
-            if (km > 0)
+        }
+        for (int ind = 0; ind < Rlonglatlist.Count; ind++)
+        {
+            Rrep2 = 1;
+            if (ind > 0)
             {
+                k = 0;
+                while ((k < ind) & (Rrep2 > 0))
+                {
+                    if (Rlonglatlist[ind] == Rlonglatlist[k])
+                    {
+                        string filename = "RDesc" + k.ToString() + ".txt";
+                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                        File.AppendAllText(Server.MapPath("~/App_Data/" + filename), ballooninfo);
+
+                        System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + filename));
+                        string Rdesctext = descfile.ReadToEnd();
+                        descfile.Close();
+
+                        string[] words = Rlonglatlist[ind].Split('_');
+                        longg = Convert.ToDouble(words[0]);
+                        lat = Convert.ToDouble(words[1]);
+
+                        string idpps = Convert.ToString(IDpp);
+                        GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/blue router.png", Rdesctext));
+                        PL2.Points.Add(new GooglePoint(idpps, lat, longg));
+                        GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
+                        Rrepeat = Rrepeat + 1;
+                        Rrep2 = 0;
+                    }
+                    else
+                    {
+                        k = k + 1;
+                        Rrepeat = 0;
+                    }
+                }
+            }
+
+            if (Rrepeat == 0)
+            {
+                string filename = "RDesc" + ind.ToString() + ".txt";
+                string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
+                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                File.AppendAllText(Server.MapPath("~/App_Data/" + filename), heading);
+                File.AppendAllText(Server.MapPath("~/App_Data/" + filename), ballooninfo);
+
+                System.IO.StreamReader descfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + filename));
+                string Rdesctext = descfile.ReadToEnd();
+                descfile.Close();
+
+                string[] words = Rlonglatlist[ind].Split('_');
+                longg = Convert.ToDouble(words[0]);
+                lat = Convert.ToDouble(words[1]);
+
                 string idpps = Convert.ToString(IDpp);
-                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "", ""));
+                GoogleMapForASPNet1.GoogleMapObject.Points.Add(new GooglePoint(idpps, lat, longg, "icons/blue router.png", Rdesctext));
                 PL2.Points.Add(new GooglePoint(idpps, lat, longg));
                 GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint(idpps, lat, longg);
-                km = 0;
-                IDpp = IDpp - 1;
             }
+            IDpp = IDpp + 1;
 
         }
         GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL2);
-    }
+
+   }
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
 
