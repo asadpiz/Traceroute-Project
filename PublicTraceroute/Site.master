@@ -1,6 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head runat="server">
@@ -14,9 +13,9 @@
     <div class="page">
         <div class="header">
             <div class="title">
-                <h1>
-                    Public Server Graphic Internet Route
-                </h1>
+               
+                <asp:Image ID="Image1" ImageUrl="Images/logo1.jpg" runat="server" 
+                    Height="217px"   width="1200px" />  
             </div>
             <div class="loginDisplay">
             </div>
@@ -36,8 +35,6 @@
         </div>
     </div>
     <div class="footer">
-        
-        <asp:Button ID="Button1" runat="server" Text="Button" />
         
     </div>
     </form>
