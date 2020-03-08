@@ -1,0 +1,5 @@
+<table border=0><tr><td>Table cell 1</td><td>Table cell 2</td></tr></table><pre>4			4.71.112.14			150.199 ms			 -sym
+</pre><pre>5			4.69.152.5			121.3117 ms			 -sym
+</pre><pre>6			4.69.152.197			115.6193 ms			 rr
+</pre><pre>7			4.68.4.9			126.0913 ms			 -rr
+</pre>

@@ -1,0 +1,3 @@
+<table border=0><tr><td>Table cell 1</td><td>Table cell 2</td></tr></table><pre>8			129.250.5.53			118.7993 ms			 -rr
+</pre><pre>9			129.250.1.4			2.023 ms			 -rr
+</pre>

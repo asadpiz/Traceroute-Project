@@ -1,0 +1,9 @@
+<table border=0><tr><td>Table cell 1</td><td>Table cell 2</td></tr></table><pre>10			203.105.72.17			4.105667 ms			 -rr
+</pre><pre>11			203.178.141.142			1.699667 ms			 -rr
+</pre><pre>12			203.178.136.65			1.679333 ms			 rr
+</pre><pre>13			203.178.136.73			1.548334 ms			 -rr
+</pre><pre>14			203.178.136.93			0.8233333 ms			 sym
+</pre><pre>15			203.178.137.75			0.2593333 ms			 -sym
+</pre><pre>16			203.178.143.84			0.501 ms			 rr
+</pre><pre>17			203.178.143.10			0.032 ms			 -rr
+</pre>

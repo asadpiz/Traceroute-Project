@@ -63,7 +63,6 @@ public partial class graphictraces : System.Web.UI.Page
             float Frtt11 = 0;
 
             string Fline = Flinematch.Value;
-            ListBox1.Items.Add(Flinematch.Value);
 
             ////////////////////////////////////// Extract IPs Line-By-Line ///////////////////////////////////////////////////////////////////////
 
@@ -76,7 +75,6 @@ public partial class graphictraces : System.Web.UI.Page
                 string Ftrimen = Fiptemp.TrimEnd(Fendchar);
                 string Ftrimst = Ftrimen.TrimStart(Fstartchar);
                 FipS.Add(Ftrimst);
-                ListBox2.Items.Add(Ftrimst);
             }
             else
             {
@@ -205,7 +203,6 @@ public partial class graphictraces : System.Web.UI.Page
             if (method.Success)
             {
                 methodstr.Add(method.Value);
-                //ListBox2.Items.Add(method.Value);
             }
             Match Rmatchip = Regex.Match(Rline, @"\(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\)");
             if (Rmatchip.Success)
@@ -306,7 +303,7 @@ public partial class graphictraces : System.Web.UI.Page
         List<double> test = Flonlat.Select(x => double.Parse(x)).ToList();
         GoogleMapForASPNet1.GoogleMapObject.APIKey = ConfigurationManager.AppSettings["GoogleAPIKey"];
         GoogleMapForASPNet1.GoogleMapObject.APIVersion = "3";
-        GoogleMapForASPNet1.GoogleMapObject.Width = "1000px";
+        GoogleMapForASPNet1.GoogleMapObject.Width = "1500px";
         GoogleMapForASPNet1.GoogleMapObject.Height = "400px";
         GoogleMapForASPNet1.GoogleMapObject.ZoomLevel = 14;
 
@@ -352,7 +349,7 @@ public partial class graphictraces : System.Web.UI.Page
             Frep2 = 1;
             if (Flonglatlist[ind] == "0_0")
             {
-                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>");
+                zeroballoonlist.Add("<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + FipS[ind] + "</td><th width=20%>" + Frttave[ind] + "</td><td width=15%></td></tr>");
                 zeroflag = 1;
             }
             else
@@ -366,21 +363,25 @@ public partial class graphictraces : System.Web.UI.Page
                         {
 
                             string filename = "FDesc" + k.ToString() + ".txt";
+                            System.IO.StreamReader replac = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                            string replactabl = replac.ReadToEnd();
+                            replactabl = replactabl.Replace("</table>", "");
+                            replac.Close();
+                            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), replactabl);
                             if (zeroflag == 1)
                             {
                                 foreach (string inf in zeroballoonlist)
                                 {
                                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
-                                    //////FLUSH THE LIST
                                 }
                                 zeroballoonlist.Clear();
-                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                                string nonzeroinfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + FipS[ind] + "</td><th width=20%>" + Frttave[ind] + "</td><td width=15%></td></tr></table>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                                 zeroflag = 0;
                             }
                             else
                             {
-                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                                string ballooninfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + FipS[ind] + "</td><th width=20%>" + Frttave[ind] + "</td><td width=15%></td></tr></table>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                             }
 
@@ -410,7 +411,7 @@ public partial class graphictraces : System.Web.UI.Page
                 {
 
                     string filename = "FDesc" + ind.ToString() + ".txt";
-                    string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\n";
+                    string heading = "<table width=100% table border=1 cellspacing=5><tr><th width=10%>Hop No</th><th width=35%>IP Address</th><th width=45%>RTT Average</th><th width=10%>Method</th></tr>";
                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
                     if (zeroflag == 1)
                     {
@@ -419,13 +420,13 @@ public partial class graphictraces : System.Web.UI.Page
                             File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                         }
                         zeroballoonlist.Clear();
-                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                        string nonzeroinfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + FipS[ind] + "</td><th width=20%>" + Frttave[ind] + "</td><td width=15%></td></tr></table>";
                         File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                         zeroflag = 0;
                     }
                     else
                     {
-                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>";
+                        string ballooninfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + FipS[ind] + "</td><th width=20%>" + Frttave[ind] + "</td><td width=15%></td></tr></table>";
                         File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                     }
 
@@ -531,7 +532,7 @@ public partial class graphictraces : System.Web.UI.Page
     {
         GoogleMapForASPNet1.GoogleMapObject.APIKey = ConfigurationManager.AppSettings["GoogleAPIKey"];
         GoogleMapForASPNet1.GoogleMapObject.APIVersion = "3";
-        GoogleMapForASPNet1.GoogleMapObject.Width = "1000px";
+        GoogleMapForASPNet1.GoogleMapObject.Width = "1500px";
         GoogleMapForASPNet1.GoogleMapObject.Height = "400px";
         GoogleMapForASPNet1.GoogleMapObject.ZoomLevel = 14;
 
@@ -579,7 +580,7 @@ public partial class graphictraces : System.Web.UI.Page
             Rrep2 = 1;
             if (Rlonglatlist[ind] == "0_0")
             {
-                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\t\t\t" + methodstr[ind] + "\n</pre>");
+                zeroballoonlist.Add("<tr><td width=15%>"+Convert.ToString(ind)+"</td><td width=50%>"+RipS[ind]+"</td><th width=20%>"+Rrttave[ind]+"</td><td width=15%>"+methodstr[ind]+"</td></tr>");
                 zeroflag = 1;
             }
             else
@@ -593,6 +594,12 @@ public partial class graphictraces : System.Web.UI.Page
                         {
 
                             string filename = "RDesc" + k.ToString() + ".txt";
+                            System.IO.StreamReader replac = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/" + filename));
+                            string replactabl = replac.ReadToEnd();
+                            replactabl = replactabl.Replace("</table>", "");
+                            replac.Close();
+                            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), replactabl);
+                            
                             if (zeroflag == 1)
                             {
                                 foreach (string inf in zeroballoonlist)
@@ -600,13 +607,13 @@ public partial class graphictraces : System.Web.UI.Page
                                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                                 }
                                 zeroballoonlist.Clear();
-                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\t\t\t" + methodstr[ind] + "\n</pre>";
+                                string nonzeroinfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + RipS[ind] + "</td><th width=20%>" + Rrttave[ind] + "</td><td width=15%>" + methodstr[ind] + "</td></tr></table>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                                 zeroflag = 0;
                             }
                             else
                             {
-                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\t\t\t" + methodstr[ind] + "\n</pre>";
+                                string ballooninfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + RipS[ind] + "</td><th width=20%>" + Rrttave[ind] + "</td><td width=15%>" + methodstr[ind] + "</td></tr></table>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                             }
 
@@ -636,7 +643,9 @@ public partial class graphictraces : System.Web.UI.Page
                 {
 
                     string filename = "RDesc" + ind.ToString() + ".txt";
-                    string heading = "<pre>\nHop No.\t\t\tIP Address\t\t\tAverage RTT\t\t\tMethod\n";
+                    //string heading = "<table width=" + "100%" + "table border=" + "0" + "cellspacing=" + "5" + "><tr><th width=" + "15%" + ">Hope No</th><th width=" + "50%" + ">IP Address</th><th width=" + "20" + ">RTT Average</th><th width=" + "15" + ">Method</th></tr></table>";
+                    string heading = "<table width=100% table border=1 cellspacing=5><tr><th width=10%>Hop No</th><th width=35%>IP Address</th><th width=45%>RTT Average</th><th width=10%>Method</th></tr>";
+                    
                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), heading);
                     if (zeroflag == 1)
                     {
@@ -645,13 +654,13 @@ public partial class graphictraces : System.Web.UI.Page
                             File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                         }
                         zeroballoonlist.Clear();
-                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\t\t\t" + methodstr[ind] + "\n</pre>";
+                        string nonzeroinfo = "<tr><td width=15%>"+Convert.ToString(ind)+"</td><td width=50%>"+RipS[ind]+"</td><th width=20%>"+Rrttave[ind]+"</td><td width=15%>"+methodstr[ind]+"</td></tr></table>";
                         File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                         zeroflag = 0;
                     }
                     else
                     {
-                        string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\t\t\t" + methodstr[ind] + "\n</pre>";
+                        string ballooninfo = "<tr><td width=15%>" + Convert.ToString(ind) + "</td><td width=50%>" + RipS[ind] + "</td><th width=20%>" + Rrttave[ind] + "</td><td width=15%>" + methodstr[ind] + "</td></tr></table>";
                         File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                     }
 
