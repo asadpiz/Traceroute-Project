@@ -46,6 +46,3 @@ while True:
 p.wait()
 f1.close()
 f2.close()
-
-
-
