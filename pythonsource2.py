@@ -5,20 +5,8 @@ import simplekml
 import subprocess
 import glob
 
-### Function To Remove Files ####
-def grem(path, pattern):
-	pattern = re.compile(pattern)
-	for each in os.listdir(path):
-		if pattern.search(each):
-			name = os.path.join(path, each)
-			try: os.remove(name)
-			except:
-				grem(name, '')
-				os.rmdir(name)
-path = "C:\\Users\\Asad\\Dropbox\\Final Year Project\\SourceCode\\RTr Probes\\"
-os.chdir (path) # Entering Probes Folder
-route = 1
-### Module to Open All Files in a Folder
+os.chdir ("C:\\Users\\Asad\\Dropbox\\Final Year Project\\SourceCode\\Rtr Probes\\BBCSports") # Entering /FYP/Rtr Probes
+
 files = glob.glob('*.txt')
 for fille in files:
     ip = open (fille,'r')
@@ -27,6 +15,7 @@ for fille in files:
     ispS= []
     lonlat= []
     rttave = []
+    tag   =  []
 
     web = open ('geoip.txt', 'w+')
     isp = open ('isp.txt','w+')
@@ -37,6 +26,7 @@ for fille in files:
     logText = ip.read()
     for match in regObj.finditer(logText):
         if i == 2:
+            print match.group()
             ipS.append(match.group())
             URL = 'http://www.geoiptool.com/en/?IP=IPADD'
             URL = URL.replace ('IPADD', match.group())
@@ -49,7 +39,7 @@ for fille in files:
             isp.write ("\n\n---------NEXT IP-----------\n\n")
         else:
             i = i+1
-    #ip.close()
+    ip.close()
     web.close()
     isp.close()
 
@@ -61,6 +51,7 @@ for fille in files:
     for same in regObj2.finditer(text):
         llat = same.group()
         llat = llat.strip ('><')
+        #print (llat)
         lonlat.append(llat)
     web2.close()
     ####                FINDING ISP                 ####
@@ -69,24 +60,19 @@ for fille in files:
     bytePattern3 = '(OrgName:        .*\n)'
     regObj3 = re.compile(bytePattern3)
     for same3 in regObj3.finditer(text3):
+        print (same3.group())
         isp11 = same3.group()
         isp11 = isp11.strip ('OrgName:        \n')
         ispS.append(isp11)
     isp.close()
     ####                FINDING Method              ####
-    #method = open ('1.txt', 'r')
-    tag = []
-    #text5 = ip.read()
-    bytePattern5 = '(-?(dst\\n|sym\\n|tr\\n|rr\\n|t\\ns))'
+    bytePattern5 = '(-?(dst\\n|sym\\n|tr\\n|rr\\n|ts\\n))'
     regObj5 = re.compile(bytePattern5)
     for same5 in regObj5.finditer(logText):
-    ##    print (same5.group())
+        print (same5.group())
         met = same5.group()
         tag.append(met)
-    #method.close()
     ####                FINDING RTT                 ####
-    #rtt = open ('1.txt', 'r')
-    #text4 = rtt.read()
     rtttemp = []
     bytePattern4 = '(\d*[.]\d* ms)'
     regObj4 = re.compile(bytePattern4)
@@ -96,7 +82,6 @@ for fille in files:
         rtt11 = rtt11.strip (' ms')
         rtt11 = float (rtt11)
         rtttemp.append(rtt11)
-   # rtt.close()
     count = 0
     summ = 0
     for value in range(0,len(rtttemp),3):
@@ -125,9 +110,8 @@ for fille in files:
             y = (longg,lat)
             z.append(y)
             km =km-1
-    n = kml.newlinestring(name="Reverse Traceroute"+str(route), description="", coords=[(0,0)])
+    n = kml.newlinestring(name="Reverse Traceroute", description="", coords=[(0,0)])
     n.coords = z
-    ind = 0
     for ind in range(len(z)):
         print (ind)
         if (ind>0):
@@ -136,7 +120,7 @@ for fille in files:
             while (k<ind):
                 if (z[ind]==z[k]):
                     descfile = open ('Desc'+str(k)+'.txt', 'a')
-                    descfile.write('<pre>'+str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind])+'\t\t\t'+rttave[ind]+'\n</pre>')
+                    descfile.write('<pre>'+str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind])+'\t\t\t'+str(rttave[ind])+'\n</pre>')
                     descfile.close()
                     pnt = kml.newpoint(description="", coords=[(0,0)])
                     descfile = open ('Desc'+str(k)+'.txt', 'r')
@@ -151,19 +135,16 @@ for fille in files:
         if (repeat == 0):
             descfile = open ('Desc'+str(ind)+'.txt', 'w')
             descfile.write('<pre>\nHop No.\t\t\tIP Address\t\t\tISP\t\t\tMethod\t\t\tAverage RTT\n')
-            descfile.write(str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind])+'\t\t\t'+rttave[ind]+'\n</pre>')
+            descfile.write(str(ind)+'\t\t\t'+str(ipS[ind])+'\t\t\t'+str(ispS[ind])+'\t\t\t'+str(tag[ind])+'\t\t\t'+ str(rttave[ind])+'\n</pre>')
             descfile.close()
             pnt = kml.newpoint(name="R"+str(ind), description="", coords=[(0,0)])
             descfile = open ('Desc'+str(ind)+'.txt', 'r')
             pnt.description = descfile.read()
             pnt.coords = [z[ind]]
             descfile.close()
-    print ("")
-    os.remove ('geoip.txt')
-    os.remove ('isp.txt')
-    regex = 'Desc.'
-    grem (path, regex)
-    route = route+1
-kml.save("route1.kml")
+    os.remove("geoip.txt")
+    os.remove("isp.txt")
+    kml.save("route1.kml")
 os.startfile('route1.kml')
+
 os.chdir(os.pardir) # Going Back to /FYP
