@@ -12,16 +12,12 @@
         .style3
         {
             height: 255px;
-            width: 100%;
+            width: 90%;
         }
         .style4
     {
         width: 100%;
     }
-    .style5
-    {
-            width: 60%;
-        }
     .style6
     {
         width: 1%;
@@ -30,18 +26,25 @@
         {
             height: 21px;
         }
+        .style8
+        {
+            width: 53%;
+        }
+        .style9
+        {
+            width: 79%;
+        }
     </style>
 </asp:Content>
 
 	  
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-<!-- BEGIN geoiptool.com -->
-<script language="JavaScript"
-src="http://www.geoiptool.com/webjs.php?xl=en&xt=1&xw=200&xh=275"></script>
-<noscript><a target="_blank" href="http://www.geoiptool.com/">Geo Web Tool</a></noscript>
-<!-- END geoiptool.com -->   
-    <table style="width:100%;">
-    <tr>
+
+
+<table>
+<tr>
+<td>
+<tr>
         <td class="style3">
             <asp:Label ID="Label2" runat="server" Font-Bold="True" ForeColor="#003366" 
                 Text="Select a server"></asp:Label>
@@ -59,55 +62,74 @@ src="http://www.geoiptool.com/webjs.php?xl=en&xt=1&xw=200&xh=275"></script>
                 <asp:ListItem>INFLOW (AS13756/19290) Vancouver, WA, US</asp:ListItem>
                 <asp:ListItem>Companhia Portuguesa Radio Marconi (AS8657) Lisboa, 14, PT</asp:ListItem>
             </asp:DropDownList>
-            <asp:Button ID="Button1" runat="server" ForeColor="#003366" 
-                onclick="Button1_Click" Text="Show Route" Width="300px" />
+            &nbsp;<asp:Button ID="Button1" runat="server" ForeColor="#003366" 
+                onclick="Button1_Click" Text="Show Route" Width="207px" />
             <br />
         </td>
         <td class="style4">
             &nbsp;</td>
-    </tr>
-    <tr>
-        <td colspan="3">
-             <br />
-
-            </td>
-    </tr>
-    <tr>
-        <td class="style5">
-            <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Size="Larger" 
-                ForeColor="#003366" Text="Reverse Traceroute"></asp:Label>
-        </td>
         <td class="style4">
-            <asp:Label ID="Label4" runat="server" Font-Bold="True" Font-Size="Larger" 
-                ForeColor="#003366" Text="Forward Traceroute"></asp:Label>
-        </td>
-        <td class="style6">
             &nbsp;</td>
     </tr>
+</td>
+</tr>
+</table>  
+    <table style="width:100%;">
+    
+   
     <tr>
-        <td colspan="3" class="style7">
+        <td colspan="4" class="style7">
         
-      
+      <div align="center">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
+        </asp:ScriptManager></div>
             </td>
+          
+  
     </tr>
     <tr>
-        <td class="style5">
+    <td colspan="4">
+    <div align="center">
+    <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server" />
+    </div>
+    
+    </td>
+    </tr>
+
+    <tr>
+   
+        <td class="style8">
+        <div align="right">
+        <asp:Label ID="Label1" runat="server" Text="REVERSE TRACEROUTE ." Font-Bold="True" 
+                Font-Size="Larger" ForeColor="Blue"></asp:Label>
+        </div>
+       
+        <div align="right">
+            
             <asp:ListBox ID="ListBox1" runat="server" SelectionMode="Multiple" 
-                Visible="False" Width="200px" Height="500px" style="margin-bottom: 6px"></asp:ListBox>
-        <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server" />
+                Visible="False" Width="600px" Height="300px" 
+                style="margin-bottom: 6px; margin-right: 0px;" ViewStateMode="Enabled"></asp:ListBox>
+                </div>
+        
 
         </td>
         <td class="style4">
+        <div align="left">
+             <asp:Label ID="Label3" runat="server" Text=" FORWARD TRACEROUTE ." 
+                 Font-Bold="True" Font-Size="Larger" ForeColor="Red"></asp:Label>
+                </div>
+        <div align="left">
+           
             <asp:ListBox ID="ListBox2" runat="server" SelectionMode="Multiple" 
-                Visible="False" Width="200px" Height="500px" style="margin-left: 0px"></asp:ListBox>
+                Visible="False" Width="400px" Height="300px" style="margin-left: 0px"></asp:ListBox>
+                </div>
+            
         </td>
         <td class="style6">
             &nbsp;</td>
     </tr>
     <tr>
-        <td class="style5">
+        <td class="style8">
         
       
     <h3><a href="Default.aspx">Back</a></h3>
@@ -117,8 +139,17 @@ src="http://www.geoiptool.com/webjs.php?xl=en&xt=1&xw=200&xh=275"></script>
     </div>
     
            </td>
-        <td class="style4">
-            &nbsp;</td>
+           </tr>
+           <tr>
+        <td class="style9" colspan="2">
+        <div align="center">
+        <!-- BEGIN geoiptool.com -->
+<script language="JavaScript"
+src="http://www.geoiptool.com/webjs.php?xl=en&xt=1&xw=200&xh=275"></script>
+<noscript><a target="_blank" href="http://www.geoiptool.com/">Geo Web Tool</a></noscript>
+<!-- END geoiptool.com --> </div>
+            </td>
+        
     </tr>
 
 </table>

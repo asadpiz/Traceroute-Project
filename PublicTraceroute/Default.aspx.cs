@@ -29,25 +29,25 @@ public partial class MainPage : System.Web.UI.Page
     {
 
     }
-
-
     protected void Button1_Click(object sender, EventArgs e)
     {
-
-        string IP = "65.182.101.243";
+        string IP = "182.177.10.49";
         //////////////////////////////////////////////////////////REVERSE TRACEROUTE ///////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         string Result = DropDownList1.SelectedItem.Value.ToString();
+       
+        //////////////////////////////////////////GENERATING Directory Name//////////////////////////////////////////////////
         DateTime now = DateTime.Now;
         string timendate = DateTime.Now.ToString();
         Regex regex = new Regex(" ");
         timendate = regex.Replace(timendate, "_", 1);
         timendate = timendate.Replace("/", ".");
         timendate = timendate.Replace(":", "-");
-        string dirname =  timendate;
-
-        System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/"+dirname));
+        string dirname = timendate;
+        System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
+        
+        
         switch (Result)
         {
 
@@ -61,11 +61,9 @@ public partial class MainPage : System.Web.UI.Page
                     strResult = sr.ReadToEnd();
                     sr.Close();
                 }
-
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"), strResult);
-               Traceroute("128.125.137.243",dirname);
-               
-               break;
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
+                Traceroute("128.125.137.243", dirname);
+                break;
             case "University of Washington (AS73) Seattle, WA, US":
                 string PsURL4 = "http://www.washington.edu/networking/tools/traceroute?search_address=myIP&max_hop_value=30&wait_time_value=2&number_query_value=3&number_out_value=3&Submit=Submit&.cgifields=number_query&.cgifields=wait_time&.cgifields=numeric_address&.cgifields=number_out&.cgifields=max_hop";
                 PsURL4 = PsURL4.Replace("myIP", IP);
@@ -196,20 +194,19 @@ public partial class MainPage : System.Web.UI.Page
                 File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"), strResult);
                 Traceroute("195.8.0.51", dirname);
                 break;
-
         }
 
 
-        System.IO.StreamReader rTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/"+dirname+"/revtr.txt"));
+        System.IO.StreamReader rTrfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/revtr.txt"));
         string Rtext = rTrfile.ReadToEnd();
         rTrfile.Close();
 
         string Rlinepattern = @"(?<linegroup>[ \n]\d+  .*)";
-        string Rrttpattern  = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
+        string Rrttpattern = @"(?<rttgroup>\d*[.]\d* ms)|(\d+ ms)";
 
         ////////////// IP & STAR patterns declared inside the Loop /////////////
 
-        List<string> RipS    = new List<string>();
+        List<string> RipS = new List<string>();
         List<string> Rrttave = new List<string>();
 
         /// !!!!!!!!!!!!!!!!!!! HOP FLAG !!!!!!!!!!!!!!!!!!!!!!!!!! ////////////////////////////////////////
@@ -217,13 +214,13 @@ public partial class MainPage : System.Web.UI.Page
         MatchCollection Rtrline = Regex.Matches(Rtext, Rlinepattern);
         foreach (Match Rlinematch in Rtrline)
         {
-            float Rsumm     = 0;
-            int Rstar       = 0;
-            int Rlength     = 0;
-            float RRave     = 0;
-            float Rrtt11    = 0;
+            float Rsumm = 0;
+            int Rstar = 0;
+            int Rlength = 0;
+            float RRave = 0;
+            float Rrtt11 = 0;
 
-            string Rline     = Rlinematch.Value;
+            string Rline = Rlinematch.Value;
             ListBox1.Visible = true;
             ListBox1.Items.Add(Rline);
 
@@ -284,22 +281,22 @@ public partial class MainPage : System.Web.UI.Page
                     strResult = sr.ReadToEnd();
                     sr.Close();
                 }
-                File.WriteAllText(Server.MapPath("~/App_Data/"+dirname+"/RLongLat.txt"), strResult);
+                File.WriteAllText(Server.MapPath("~/App_Data/" + dirname + "/RLongLat.txt"), strResult);
 
-                System.IO.StreamReader geoipfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/"+dirname+"/RLongLat.txt"));
+                System.IO.StreamReader geoipfile = new System.IO.StreamReader(Server.MapPath("~/App_Data/" + dirname + "/RLongLat.txt"));
                 string RLLtext = geoipfile.ReadToEnd();
                 geoipfile.Close();
                 int found_match = 0;
                 MatchCollection Rlonglat = Regex.Matches(RLLtext, @"(>-?\d{1,3}<)|(>-?\d{1,3}[.]\d{0,4}<)");
                 foreach (Match Rll in Rlonglat)
                 {
-                        string lltemp = Rll.Value;
-                        char Rendchar = '<';
-                        char Rstartchar = '>';
-                        string lltrimen = lltemp.TrimEnd(Rendchar);
-                        string lltrimst = lltrimen.TrimStart(Rstartchar);
-                        Rlonlat.Add(lltrimst);
-                        found_match = found_match + 1;
+                    string lltemp = Rll.Value;
+                    char Rendchar = '<';
+                    char Rstartchar = '>';
+                    string lltrimen = lltemp.TrimEnd(Rendchar);
+                    string lltrimst = lltrimen.TrimStart(Rstartchar);
+                    Rlonlat.Add(lltrimst);
+                    found_match = found_match + 1;
                 }
                 if (found_match != 2) // If Longitude Latitude are not found by GEOIPtool
                 {
@@ -315,7 +312,7 @@ public partial class MainPage : System.Web.UI.Page
                 Rlonlat.Add("0");
             }
         }
-        GenerateRMap(Rlonlat, RipS, Rrttave,dirname);
+        GenerateRMap(Rlonlat, RipS, Rrttave, dirname);
     }
 
 
@@ -382,7 +379,7 @@ public partial class MainPage : System.Web.UI.Page
             }
             else
             {
-                FipS.Add("0");
+                FipS.Add("Destination Unreachable");
                 Frttave.Add("0");
                 // ListBox2.Items.Add("NO RTT FOR U");
                 star = 1;
@@ -405,7 +402,7 @@ public partial class MainPage : System.Web.UI.Page
         List<string> Flonlat = new List<string>();
         foreach (string item in FipS)
         {
-            if (item != "0")
+            if (item != "Destination Unreachable")
             {
                 string URL1 = "http://www.geoiptool.com/en/?IP=IPADD";
                 URL1 = URL1.Replace("IPADD", item);
@@ -509,7 +506,7 @@ public partial class MainPage : System.Web.UI.Page
             Frep2 = 1;
             if (Flonglatlist[ind] == "0_0")
             {
-                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind]  + "\t\t\t" + Frttave[ind] + "\n</pre>");
+                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + FipS[ind] + "\t\t\t" + Frttave[ind] + "\n</pre>");
                 zeroflag = 1;
             }
             else
@@ -651,12 +648,12 @@ public partial class MainPage : System.Web.UI.Page
             }
         }
         for (int ind = 0; ind < Rlonglatlist.Count; ind++)
-        {   
+        {
             Rrep2 = 1;
             if (Rlonglatlist[ind] == "0_0")
             {
-                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>");
-                zeroflag =1;
+                zeroballoonlist.Add("<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>");
+                zeroflag = 1;
             }
             else
             {
@@ -675,13 +672,13 @@ public partial class MainPage : System.Web.UI.Page
                                 {
                                     File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                                 }
-                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                                string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                                 zeroflag = 0;
                             }
                             else
                             {
-                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                                string ballooninfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>";
                                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), ballooninfo);
                             }
 
@@ -720,7 +717,7 @@ public partial class MainPage : System.Web.UI.Page
                         {
                             File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), inf);
                         }
-                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind]  + "\t\t\t" + Rrttave[ind] + "\n</pre>";
+                        string nonzeroinfo = "<pre>" + Convert.ToString(ind) + "\t\t\t" + RipS[ind] + "\t\t\t" + Rrttave[ind] + "\n</pre>";
                         File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/" + filename), nonzeroinfo);
                         zeroflag = 0;
                     }
@@ -750,7 +747,7 @@ public partial class MainPage : System.Web.UI.Page
         }
         GoogleMapForASPNet1.GoogleMapObject.Polylines.Add(PL2);
 
-   }
+    }
     protected void TextBox1_TextChanged(object sender, EventArgs e)
     {
 

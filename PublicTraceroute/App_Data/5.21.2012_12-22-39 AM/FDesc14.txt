@@ -1,0 +1,8 @@
+<pre>
+Hop No.			IP Address			Average RTT
+<pre>0			192.168.1.1			49ms 
+</pre><pre>2			10.1.1.6			106ms 
+</pre><pre>13			Destination Unreachable			0
+</pre><pre>14			130.152.181.188			495ms 
+</pre><pre>15			130.152.181.131			414ms 
+</pre>

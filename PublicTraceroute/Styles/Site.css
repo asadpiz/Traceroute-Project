@@ -250,7 +250,7 @@ div.accountInfo
     display: block;
     float: left;
     text-align: left;
-    width: 1109px;
+    width: auto;
     color: #FF00FF;
 }
 
