@@ -1,0 +1,45 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="sitemaster.master.cs" Inherits="testmaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head id="Head1" runat="server">
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Visual Internet Trace</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="logo">
+<h1><a href="#">ViZiTrace</a></h1>
+</div>
+<div id="menu">
+	<ul>
+		<li class="first"><a href="http://traceroute.cognet.seecs.nust.edu.pk/index.aspx" accesskey="1" title="">Home</a></li>
+		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vtr.aspx" accesskey="2" title="">Traceroute</a></li>
+        <li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vrtr.aspx" accesskey="3" title="">Reverse Traceroute</a></li>
+		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/publicserver.aspx" accesskey="4" title="">AS Topology</a></li>
+		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/TopSites.aspx"accesskey="5" title="">Top 50 Sites Analysis</a></li>
+		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/usage.aspx" accesskey="6" title="">Usage</a></li>
+        <li><a href="http://traceroute.cognet.seecs.nust.edu.pk/about.aspx"accesskey="7" title="">About Us</a></li>
+	</ul>
+</div>
+<hr />
+<div id="banner"><img src="images/banner.jpg" alt="" width="960" height="200" /></div>
+<!-- start page -->
+<div id="page">
+ <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+	<!-- start content -->
+	<!-- end sidebar -->
+</div>
+<!-- end page -->
+<div id="footer">
+	<p class="legal" style="color: #000000">Copyright (c) 2012 
+        <a href="http://traceroute.cognet.seecs.nust.edu.pk/index.aspx">ViZiTrace</a>. All rights reserved.</p>
+	<p class="credit">Designed by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> + <a href="http://nicecsstemplates.com/" title="nice free css templates">CSS Templates For Free</a></p>
+</div>
+</body>
+</html>
