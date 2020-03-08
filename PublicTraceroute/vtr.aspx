@@ -113,16 +113,20 @@ height:1200px;
     </div>
 <div id="page">
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
    <div>
         <div>
             <ul class="style9">
                 <li><span class="style13"><strong>Issue Traceroute To any Arbitrary Destination from our Server.</strong></span><br />&nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="27px" Width="307px" 
              AutoCompleteType="Homepage" BackColor="Fuchsia"></asp:TextBox>
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="Button3" runat="server" Text="Show Trace" Width="74px" 
-             Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled" onclick="Button3_Click"  />
+
+            <asp:Button ID="Button3" runat="server" Text="Show Trace" Width="74px" 
+                     Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
+                        CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
+                        ViewStateMode="Enabled" onclick="Button3_Click"  />
+                     
                     &nbsp;&nbsp;&nbsp;
                     <asp:Button ID="Button4" runat="server" Text="Show More" Width="74px" 
              Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
@@ -131,18 +135,10 @@ height:1200px;
                     <br />
                     <br /></li>
             </ul>
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
-         <br />
-         <asp:Timer runat="server" Interval="5000" ID="Timer1"></asp:Timer>
-     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-         <ContentTemplate>
-                <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
-        </ContentTemplate>    
-        <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="Timer1" EventName="Tick" />
-        </Triggers>  
-     </asp:UpdatePanel>
+
+         <br /> 
+    <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
+
             <br />
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/legend.jpg" />
             <ul class="style9">

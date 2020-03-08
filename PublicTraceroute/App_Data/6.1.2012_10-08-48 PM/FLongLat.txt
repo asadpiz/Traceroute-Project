@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="DESCRIPTION" content="My IP Address Lookup and GeoTargeting information">
+<META NAME="KEYWORDS" CONTENT="geographical, geografica, mapa, google map, google maps, maps, map, ip, hostname, city, location, ip address, direccion ip">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Geo IP  Tool -  View my IP information</title>
+<link href="/images/estilos.css" rel="stylesheet" type="text/css">
+<link rel="image_src" href="http://geoiptool.com/images/screen.png" />
+
+<script type="text/javascript" src="http://vk.com/js/api/share.js?11" charset="windows-1251"></script>
+
+
+<script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAn1GGTNuR0Ls78lQTSm1aZxRSKfi1QmGD0_ReqqiCC-wtqSg_3BSEC0xGArCDV8JW8hevPr9QtQYeJQ" type="text/javascript"></script>
+</head>
+<body>
+
+<script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAn1GGTNuR0Ls78lQTSm1aZxRSKfi1QmGD0_ReqqiCC-wtqSg_3BSEC0xGArCDV8JW8hevPr9QtQYeJQ" type="text/javascript"></script>
+
+<script language="javascript">
+function addEngine()
+{
+	if ((typeof window.sidebar == "object") && (typeof window.sidebar.addSearchEngine == "function"))
+	{
+		window.sidebar.addSearchEngine(
+		"http://www.geoiptool.com/firefox/geoiptool.src",
+		"http://www.geoiptool.com/firefox/geoiptool.gif",
+		"Geo IP Tool",
+		"General" );
+	}
+	else
+	{
+		alert("Este plug-in es para Mozilla FireFox! (http://mozilla.org/productos/firefox)");
+	}
+}
+</script>
+
+<table width="786" border="0" align="center" cellpadding="4" cellspacing="0">
+  <tr>
+    <td width="385" height="65" valign="middle">
+	 <a href="/en/">
+	 <img src="/images/logo.gif" width="264" height="44" vspace="5" border="0"/>	 </a>	 </td>
+    <td width="401" align="right" valign="bottom">
+	<span class="arial">language:</span>
+		    <a href="/en/"><img src="/flags/us.gif" width="16" height="11" align="absmiddle"  alt="English" title="English" border="0"/></a>
+		    <a href="/es/"><img src="/flags/es.gif" width="16" height="11" align="absmiddle" alt="Spanish" title="Spanish" border="0"/></a>
+			<a href="/ru/"><img src="/flags/ru.gif" width="16" height="11" align="absmiddle" alt="" title="" border="0"/></a>
+			<a href="/pt/"><img src="/flags/br.gif" width="16" height="11" align="absmiddle" alt="Portuguese" title="Portuguese" border="0"/></a>
+			<a href="/fr/" ><img src="/flags/fr.gif" width="16" height="11" align="absmiddle" / alt="French" title="French" border="0"/></a>
+			<a href="/de/" ><img src="/flags/de.gif" width="16" height="11" align="absmiddle" / alt="German" title="German" border="0"/></a>
+		    <a href="/zh/"><img src="/flags/cn.gif" width="16" height="11" align="absmiddle"  alt="Chinese" title="Chinese" border="0"/></a>
+		    <a href="/it/"><img src="/flags/it.gif" width="16" height="11" align="absmiddle"  alt="Italian" title="Italian" border="0"/></a>
+		</td>
+  </tr>
+  <tr>
+    <td height="35" colspan="2" background="/images/bg_bar.gif" bgcolor="#999999" class="tbl_style"><table width="760" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="center"><span class="arial13"><strong><a href="/en/">View my IP information</a></strong></span></td>
+          <td width="5" align="center"><img src="/images/separador.gif" width="5" height="28" /></td>
+          <td align="center"><span class="arial13"><a href="/en/ip_info/">More info about IPs</a></span></td>
+          <td width="5" align="center"><img src="/images/separador.gif" width="5" height="28" /></td>
+          <td align="center"><span class="arial13"><a href="javascript:addEngine();">Firefox Plugin</a></span></td>
+		  <td width="5" align="center"><img src="/images/separador.gif" width="5" height="28" /></td>
+		  <td align="center"><span class="arial13"><a href="/en/online/">Now online</a></span></td>
+		  <td width="5" align="center"><img src="/images/separador.gif" width="5" height="28" /></td>
+		  <td align="center"><span class="arial13"><strong><a href="/en/webtools/">In your Website</a></strong></span></td>		  
+		  
+		  
+		</tr>
+    </table></td>
+  </tr>
+</table>
+
+
+
+<table width="784" height="400" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#999999" background="/images/bg.gif" bgcolor="#0A70B4">
+  <tr>
+    <td align="center" valign="middle" background="/images/bg.gif">
+
+	 <table width="750" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="center" valign="top">
+			 
+            <table width="300" border="0" cellpadding="0" cellspacing="0" class="tbl_style">
+              <tr>
+                <td height="70" align="center">
+				
+					<script type="text/javascript"><!--
+					google_ad_client = "pub-6560804155104041";
+					/* 234x60, creado 7/02/08 */
+					google_ad_slot = "4964759913";
+					google_ad_width = 234;
+					google_ad_height = 60;
+					//-->
+					</script>
+					<script type="text/javascript"
+					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+					</script>
+				
+				
+              </tr>
+            </table>
+
+			 <table width="300" border="0" cellpadding="3" cellspacing="0" class="tbl_style">
+              <tr>
+				  <form method="get" id="searchform"action="/en/">
+                <td height="40" align="center" valign="middle"><span class="arial_bold">Host / IP:</span>
+                  <input name="IP" type="text" class="arial" id="IP" value="" size="18" />
+                  <input type="submit" class="btn_sarch" value="View info" />
+                </td></FORM>
+              </tr>
+            </table>
+            <table width="300" height="300" border="0" cellpadding="4" cellspacing="0" class="tbl_style">
+              <tr>
+                <td align="right"><span class="arial">Host Name:</span></td>
+                <td width="198" align="left" class="arial_bold">mil01s17-in-f17.1e100.net</td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">IP Address:</span></td>
+                <td align="left" class="arial_bold">173.194.35.49</td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Country:</span></td>
+                <td align="left" class="arial_bold"><a href="http://en.wikipedia.org/wiki/united states" target="_blank"> United States</a> <img src='/flags/us.gif' alt="united states" align="absmiddle" ></td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Country code:</span></td>
+                <td align="left" class="arial_bold">US (USA)</td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Region:</span></td>
+                <td align="left" class="arial_bold"><a href="http://en.wikipedia.org/wiki/California" target="_blank">California</a></td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">City:</span></td>
+                <td align="left" class="arial_bold">Mountain View</td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Postal code:</span></td>
+                <td align="left" class="arial_bold">94043</td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Calling code:</span></td>
+                <td align="left" class="arial_bold"><a href="http://en.wikipedia.org/wiki/Area_code#United_States">+1</a></td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Longitude:</span></td>
+                <td align="left" class="arial_bold">-122.0574</td>
+              </tr>
+              <tr>
+                <td align="right"><span class="arial">Latitude:</span></td>
+                <td align="left" class="arial_bold">37.4192</td>
+              </tr>
+            </table>
+</td>
+          <td align="center" valign="top">
+          
+            <table width="468" border="0" cellpadding="0" cellspacing="0"  bgcolor="#FFFCE2" class="tbl_basic arial14">
+              <tr>
+                <td height="30" align="center">
+               <a href="/en/webtools/"> New tool for your Web! </a>
+                </td>
+              </tr>
+            </table>
+          <table width="468" height="326" border="0" cellpadding="0" cellspacing="0" class="tbl_style">
+              <tr>
+                <td align="center" valign="top">
+	<div id="map" style="white-space:nowrap; width: 468px; height: 326px"></div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-6560804155104041";
+/*  */
+google_ad_slot = "6010337085";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+                </td>
+              </tr>
+          </table>
+
+	</td>
+	        </tr>
+	    </table>
+
+
+</td>
+  </tr>
+</table>
+<script type="text/javascript">
+
+	function createMarker(point,html) {
+		var marker = new GMarker(point);
+		GEvent.addListener(marker, "click", function() {
+		marker.openInfoWindowHtml(html);
+		});
+		return marker;
+        }
+
+	if (GBrowserIsCompatible()) {
+		var map = new GMap(document.getElementById("map"));
+		map.addControl(new GLargeMapControl());
+		map.addControl(new GMapTypeControl());
+		map.centerAndZoom(new GPoint(-122.0574, 37.4192), 13);
+
+				var point = new GPoint(-122.0574, 37.4192);
+			var marker = createMarker(point,"<div style=\"font-family:Arial,Helvetica,Tahoma;font-size:11px;\" align=\"left\"><strong>City</strong>: Mountain View<br><strong>Country</strong>: United States<br><strong>IP Address</strong>: 173.194.35.49<br> </div>")
+			map.addOverlay(marker);
+	
+	}
+
+</script>
+
+<div style="height: 30px;width:786px;text-align: center;margin: 5px auto 5px auto;">
+
+	<div style="float:left;width: 550px;height:30px;padding-top:6px">
+
+
+<script type="text/javascript">(function(){var x=document.createElement('script'), s=document.getElementsByTagName('script')[0];x.async=true;x.src='http://widgets.itaringa.net/share.js';s.parentNode.insertBefore(x,s)})()</script>
+<t:sharer data-url="http://www.geoiptool.com/" data-layout="medium_counter"></t:sharer>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.geoiptool.com/"  data-hashtags="GeoIPTool">Twittear</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<g:plusone size="medium"></g:plusone>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.geoiptool.com%2F&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=223059641082996" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
+
+
+<div style="float:right;width:55px">
+<script type="text/javascript"><!--
+document.write(VK.Share.button({url: "http://www.geoiptool.com/"},{type: "round"}));
+--></script>
+</div>
+
+</div>
+
+	<div style="float:right">
+	<a href="http://www.wiroos.com" title="Hosting, Alojamiento web, Webhosting" alt="Hosting, Alojamiento web, Webhosting"><img src="/images/wiroos_2.png" border="0" /></a>
+	</div>
+</div>
+
+</div>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-82878-6";
+urchinTracker();
+</script>
+
+
+<br />
+
+</body>
+</html>
