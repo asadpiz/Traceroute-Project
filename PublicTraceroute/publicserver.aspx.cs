@@ -29,16 +29,18 @@ public partial class publicserver : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            GoogleMapForASPNet1.GoogleMapObject.APIKey = ConfigurationManager.AppSettings["GoogleAPIKey"];
+            GoogleMapForASPNet1.GoogleMapObject.APIKey = ConfigurationManager.AppSettings["AIzaSyD5wy_45yUBtsUlxasj6ms-mM55bjyTN_I"];
             GoogleMapForASPNet1.GoogleMapObject.APIVersion = "3";
-            GoogleMapForASPNet1.GoogleMapObject.Width = "1400px";
-            GoogleMapForASPNet1.GoogleMapObject.Height = "400px";
+            GoogleMapForASPNet1.GoogleMapObject.Width = "960px";
+            GoogleMapForASPNet1.GoogleMapObject.Height = "500px";
             GoogleMapForASPNet1.GoogleMapObject.ZoomLevel = 3;
             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint("0", 0, 0);
         }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
+        GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
+        GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
         string IP = "115.186.131.102";
         //////////////////////////////////////////////////////////REVERSE TRACEROUTE ///////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -334,33 +336,40 @@ public partial class publicserver : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                //string whois = "";
                 string whois = whoisinfo(server, item);
-                whois = whois + "end";
-                ////////////////////// AS NO ////////////////////
-                Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                if (asnummatch.Success)
+                if (whois == "sNA")
                 {
-                    string asno = asnummatch.Value;
-                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Fendchar);
-                    RASno.Add(asno);
+                    RASno.Add("sNA");
+                    RASna.Add("sNA");
                 }
                 else
-                { RASno.Add("NA"); }
-                ////////////////////////////////AS NAME ////////////////////////////////////////
-                Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                if (asnamematch.Success)
                 {
-                    string asna = asnamematch.Value;
-                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Fendchar);
-                    char Fstart = '|';
-                    asna = asna.TrimStart(Fstart);
-                    RASna.Add(asna);
+                    whois = whois + "end";
+                    ////////////////////// AS NO ////////////////////
+                    Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                    if (asnummatch.Success)
+                    {
+                        string asno = asnummatch.Value;
+                        char[] Rendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                        asno = asno.TrimStart(Rendchar);
+                        RASno.Add(asno);
+                    }
+                    else
+                    { RASno.Add("NA"); }
+                    ////////////////////////////////AS NAME ////////////////////////////////////////
+                    Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                    if (asnamematch.Success)
+                    {
+                        string asna = asnamematch.Value;
+                        char[] Rendchar = { 'e', 'n', 'd', '\n' };
+                        asna = asna.TrimEnd(Rendchar);
+                        char Rstart = '|';
+                        asna = asna.TrimStart(Rstart);
+                        RASna.Add(asna);
+                    }
+                    else
+                    { RASna.Add("NA"); }
                 }
-                else
-                { RASna.Add("NA"); }
             }
             else
             {
@@ -383,10 +392,13 @@ public partial class publicserver : System.Web.UI.Page
     public void Traceroute(string ipAddressOrHostName, string dirname)
     {
 
+        System.IO.Directory.CreateDirectory(Server.MapPath("~/App_Data/" + dirname));
+        ////////////Insert whether valid data is entered or not
         IPAddress ipAddress = Dns.GetHostEntry(ipAddressOrHostName).AddressList[0];
         StringBuilder traceResults = new StringBuilder();
         using (Ping pingSender = new Ping())
         {
+
             PingOptions pingOptions = new PingOptions();
             Stopwatch stopWatch = new Stopwatch();
             byte[] bytes = new byte[32];
@@ -399,8 +411,7 @@ public partial class publicserver : System.Web.UI.Page
                 stopWatch.Reset();
                 stopWatch.Start();
                 PingReply pingReply = pingSender.Send(ipAddress, 5000, new byte[32], pingOptions);
-                ListBox2.Visible = true;
-                ListBox2.Items.Add(string.Format("{0}\t{1} \t{2} ms\n", i, pingReply.Address, stopWatch.ElapsedMilliseconds));
+                stopWatch.Stop();
                 File.AppendAllText(Server.MapPath("~/App_Data/" + dirname + "/ftr.txt"), string.Format("{0}\t{1}ms \t{2}\n", i, stopWatch.ElapsedMilliseconds, pingReply.Address + Environment.NewLine));
                 if (pingReply.Status == IPStatus.Success)
                 {
@@ -445,6 +456,7 @@ public partial class publicserver : System.Web.UI.Page
             else
             {
                 FipS.Add("Destination Unreachable");
+                Frttave.Add("0");
                 star = 1;
             }
 
@@ -458,6 +470,8 @@ public partial class publicserver : System.Web.UI.Page
                     string Rtrimst = Rtrimen.TrimEnd(Rendchar);
                     Frttave.Add(Rtrimst);
                 }
+                else
+                { Frttave.Add("0"); }
             }
         }
 
@@ -503,33 +517,40 @@ public partial class publicserver : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-
                 string whois = whoisinfo(server, item);
-                whois = whois + "end";
-                ////////////////////// AS NO ////////////////////
-                Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                if (asnummatch.Success)
+                if (whois == "sNA")
                 {
-                    string asno = asnummatch.Value;
-                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Fendchar);
-                    FASno.Add(asno);
+                    FASno.Add("sNA");
+                    FASna.Add("sNA");
                 }
                 else
-                { FASno.Add("NA"); }
-                ////////////////////////////////AS NAME ////////////////////////////////////////
-                Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                if (asnamematch.Success)
                 {
-                    string asna = asnamematch.Value;
-                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Fendchar);
-                    char Fstart = '|';
-                    asna = asna.TrimStart(Fstart);
-                    FASna.Add(asna);
+                    whois = whois + "end";
+                    ////////////////////// AS NO ////////////////////
+                    Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                    if (asnummatch.Success)
+                    {
+                        string asno = asnummatch.Value;
+                        char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                        asno = asno.TrimStart(Fendchar);
+                        FASno.Add(asno);
+                    }
+                    else
+                    { FASno.Add("NA"); }
+                    ////////////////////////////////AS NAME ////////////////////////////////////////
+                    Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                    if (asnamematch.Success)
+                    {
+                        string asna = asnamematch.Value;
+                        char[] Fendchar = { 'e', 'n', 'd', '\n' };
+                        asna = asna.TrimEnd(Fendchar);
+                        char Fstart = '|';
+                        asna = asna.TrimStart(Fstart);
+                        FASna.Add(asna);
+                    }
+                    else
+                    { FASna.Add("NA"); }
                 }
-                else
-                { FASna.Add("NA"); }
             }
             else
             {
@@ -541,7 +562,7 @@ public partial class publicserver : System.Web.UI.Page
         }
 
         int forward = 1;
-        GenerateGMap(Flonlat, FipS, Frttave, dirname, methodstr, FASno, FASna, forward);
+        GenerateGMap(Flonlat, FipS, Frttave, dirname, methodstr, FASno, FASna,forward);
     }
 
     void GenerateGMap(List<string> LongLat, List<string> FipS, List<string> Frttave, string dirname, List<string> methodstr, List<string> FASno, List<string> FASna, int forward)
@@ -834,21 +855,28 @@ public partial class publicserver : System.Web.UI.Page
     }
     private string whoisinfo(string whoisServer, string url)
     {
-        StringBuilder whoisresult = new StringBuilder();
-        TcpClient whoisclient = new TcpClient(whoisServer, 43);
-        NetworkStream whoisnetworkstream = whoisclient.GetStream();
-        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+        try
+        {
+            StringBuilder whoisresult = new StringBuilder();
+            TcpClient whoisclient = new TcpClient(whoisServer, 43);
+            NetworkStream whoisnetworkstream = whoisclient.GetStream();
+            BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+            StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+            streamWriter.WriteLine(url);
+            streamWriter.Flush();
 
-        streamWriter.WriteLine(url);
-        streamWriter.Flush();
+            StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+            while (!streamReaderReceive.EndOfStream)
+            { whoisresult.Append(streamReaderReceive.ReadLine()); }
+            return whoisresult.ToString();
 
-        while (!streamReaderReceive.EndOfStream)
-        { whoisresult.Append(streamReaderReceive.ReadLine()); }
-
-        return whoisresult.ToString();
+        }
+        catch (SocketException)
+        {
+            string whoisresult = "sNA";
+            return whoisresult;
+        }
     }
 }
 

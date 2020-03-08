@@ -32,13 +32,16 @@ public partial class vrtr : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            GoogleMapForASPNet1.GoogleMapObject.APIKey = ConfigurationManager.AppSettings["GoogleAPIKey"];
+            GoogleMapForASPNet1.GoogleMapObject.APIKey = ConfigurationManager.AppSettings["AIzaSyD5wy_45yUBtsUlxasj6ms-mM55bjyTN_I"];
             GoogleMapForASPNet1.GoogleMapObject.APIVersion = "3";
             GoogleMapForASPNet1.GoogleMapObject.Width = "960px";
             GoogleMapForASPNet1.GoogleMapObject.Height = "500px";
             GoogleMapForASPNet1.GoogleMapObject.ZoomLevel = 3;
             GoogleMapForASPNet1.GoogleMapObject.CenterPoint = new GooglePoint("0", 0, 0);
         }
+        //GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
+        //GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
+  
     }
 
     protected void UploadButton_Click(object sender, EventArgs e)
@@ -206,33 +209,40 @@ public partial class vrtr : System.Web.UI.Page
                 }
                 //////////////////////////////////FINDING AS no & Name ////////////////////////////
 
-                //string whois = "";
                 string whois = whoisinfo(server, item);
-                whois = whois + "end";
-                ////////////////////// AS NO ////////////////////
-                Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
-                if (asnummatch.Success)
+                if (whois == "sNA")
                 {
-                    string asno = asnummatch.Value;
-                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
-                    asno = asno.TrimStart(Fendchar);
-                    RASno.Add(asno);
+                    RASno.Add("sNA");
+                    RASna.Add("sNA");
                 }
                 else
-                { RASno.Add("NA"); }
-                ////////////////////////////////AS NAME ////////////////////////////////////////
-                Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
-                if (asnamematch.Success)
                 {
-                    string asna = asnamematch.Value;
-                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
-                    asna = asna.TrimEnd(Fendchar);
-                    char Fstart = '|';
-                    asna = asna.TrimStart(Fstart);
-                    RASna.Add(asna);
+                    whois = whois + "end";
+                    ////////////////////// AS NO ////////////////////
+                    Match asnummatch = Regex.Match(whois, @"AS Name(\d)+ ");
+                    if (asnummatch.Success)
+                    {
+                        string asno = asnummatch.Value;
+                        char[] Rendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                        asno = asno.TrimStart(Rendchar);
+                        RASno.Add(asno);
+                    }
+                    else
+                    { RASno.Add("NA"); }
+                    ////////////////////////////////AS NAME ////////////////////////////////////////
+                    Match asnamematch = Regex.Match(whois, @"(\| [A-z][A-z][A-z].+?[^\|]end)");
+                    if (asnamematch.Success)
+                    {
+                        string asna = asnamematch.Value;
+                        char[] Rendchar = { 'e', 'n', 'd', '\n' };
+                        asna = asna.TrimEnd(Rendchar);
+                        char Rstart = '|';
+                        asna = asna.TrimStart(Rstart);
+                        RASna.Add(asna);
+                    }
+                    else
+                    { RASna.Add("NA"); }
                 }
-                else
-                { RASna.Add("NA"); }
             }
             else
             {
@@ -242,6 +252,7 @@ public partial class vrtr : System.Web.UI.Page
                 RASno.Add("NA");
             }
         }
+
         GenerateGMap(Rlonlat, RipS, Rrttave, dirname, methodstr, RASno, RASna);
     }
     ////////////// ISSUE LIVE TRACERT     //////////////////////////
@@ -420,7 +431,8 @@ public partial class vrtr : System.Web.UI.Page
 
     void GenerateGMap(List<string> LongLat, List<string> FipS, List<string> Frttave, string dirname, List<string> methodstr, List<string> FASno, List<string> FASna)
     {
-
+        GoogleMapForASPNet1.GoogleMapObject.Polylines.Clear();
+        GoogleMapForASPNet1.GoogleMapObject.Points.Clear();
         List<double> LonLat = LongLat.Select(x => double.Parse(x)).ToList();
 
         int m = 0;
@@ -672,21 +684,28 @@ public partial class vrtr : System.Web.UI.Page
 
     private string whoisinfo(string whoisServer, string url)
     {
-        StringBuilder whoisresult = new StringBuilder();
-        TcpClient whoisclient = new TcpClient(whoisServer, 43);
-        NetworkStream whoisnetworkstream = whoisclient.GetStream();
-        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
-        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+        try
+        {
+            StringBuilder whoisresult = new StringBuilder();
+            TcpClient whoisclient = new TcpClient(whoisServer, 43);
+            NetworkStream whoisnetworkstream = whoisclient.GetStream();
+            BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+            StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+            streamWriter.WriteLine(url);
+            streamWriter.Flush();
 
-        streamWriter.WriteLine(url);
-        streamWriter.Flush();
+            StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
 
-        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+            while (!streamReaderReceive.EndOfStream)
+            { whoisresult.Append(streamReaderReceive.ReadLine()); }
+            return whoisresult.ToString();
 
-        while (!streamReaderReceive.EndOfStream)
-        { whoisresult.Append(streamReaderReceive.ReadLine()); }
-
-        return whoisresult.ToString();
+        }
+        catch (SocketException)
+        {
+            string whoisresult = "sNA";
+            return whoisresult;
+        }
     }
     private string dattime()
     {

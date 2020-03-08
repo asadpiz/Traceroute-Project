@@ -551,18 +551,7 @@ public partial class vtrmore : System.Web.UI.Page
     }
     protected void Button4_Click(object sender, EventArgs e)
     {
-        var FASna = (List<string>)Session["AsName"];
-        var Frtta = (List<string>)Session["Rttave"];
-        List<int> Frttave = new List<int>();
-        int Rrtt11 = 0;
-        foreach (var item in Frtta)
-        {
-            string Rrtttemp = item;
-            char[] Rendchar = { ' ', 'm', 's' };
-            string Rtrimen = Rrtttemp.TrimEnd(Rendchar);
-            Rrtt11 = Convert.ToInt16(Rtrimen);
-            Frttave.Add(Rrtt11);
-        }
+        var FASna = (List<string>)Session["Asname"];
 
         var g = FASna.GroupBy(i => i);
         int countLength = 0;
@@ -581,7 +570,7 @@ public partial class vtrmore : System.Web.UI.Page
         }
 
         DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart").InitChart(new Chart { DefaultSeriesType = ChartTypes.Pie, PlotShadow = false })
-        .SetTitle(new Title { Text = "Province Based Institutions Registration" })
+        .SetTitle(new Title { Text = "% Path Covered by Autonomous Systems" })
         .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %'; }" })
         .SetPlotOptions(new PlotOptions
         {

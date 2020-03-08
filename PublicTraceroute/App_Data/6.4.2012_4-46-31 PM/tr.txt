@@ -1,0 +1,26 @@
+reverse traceroute from ir2.fp.vip.sp2.yahoo.com (98.139.127.62) back to planetlab1.sfc.wide.ad.jp (203.178.143.10)
+ 0  ir2.fp.vip.sp2.yahoo.com (98.139.127.62) 163.031998 ms 162.227005 ms 163.516006 ms                                   dst
+ 1  po-10.bas2-3-prd.sp2.yahoo.com (76.13.244.15) 134.854996 ms 134.768005 ms 134.684006 ms                              sym
+ 2  et-17-25.fab1-1-gdc.sp2.yahoo.com (98.136.16.19) 130.912003 ms 130.985001 ms 130.740997 ms                           -sym
+ 3  ae-1-d171.msr2.sp1.yahoo.com (216.115.107.87) 104.883003 ms 114.086998 ms 113.477997 ms                              -sym
+ 4  YAHOO-INC.car3.SanJose1.Level3.net (4.71.112.14) 112.815002 ms 112.777 ms 112.625 ms                                 -sym
+ 5  ae-33-80.car3.SanJose1.Level3.net (4.69.152.133) 118.751999 ms 119.047997 ms 118.598 ms                              -sym
+ 6  ae-23-70.car3.SanJose1.Level3.net (4.69.152.69) 113.878998 ms 113.870003 ms 113.986 ms                               rr
+ 7  lo-0.edge1.SanJose3.Level3.net (4.68.4.9) 119.967003 ms 119.823997 ms 120.101997 ms                                  -rr
+ 8  ae-1.r07.snjsca04.us.bb.gin.ntt.net (129.250.5.53) 115.295998 ms 115.126999 ms 115.206001 ms                         -rr
+ 9  r25.tokyjp01.jp.bb.gin.ntt.net (129.250.1.4) 2.177 ms 2.078 ms 2.214 ms                                              -rr
+10  ge-8-2.a15.tokyjp01.jp.ra.gin.ntt.net (203.105.72.17) 2.27 ms 2.121 ms 49.243999 ms                                  -rr
+11  ve-51.cisco2.notemachi.wide.ad.jp (203.178.141.142) 1.987 ms 1.595 ms 1.733 ms                                       -rr
+12  ve-42.foundry6.otemachi.wide.ad.jp (203.178.136.65) 1.811 ms 1.524 ms 1.696 ms                                       rr
+13  ve-45.foundry4.nezu.wide.ad.jp (203.178.136.73) 1.541 ms 5.367 ms 1.483 ms                                           -rr
+14  ve-46.foundry2.yagami.wide.ad.jp (203.178.136.93) 0.775 ms 0.724 ms 0.814 ms                                         sym
+15  te-0-0-0-v100.cisco2.fujisawa.wide.ad.jp (203.178.137.75) 0.419 ms 0.151 ms 0.159 ms                                 -sym
+16  ve-302.alaxala3.sfc.wide.ad.jp (203.178.143.84) 0.498 ms 0.671 ms 0.455 ms                                           rr
+17  planetlab1.sfc.wide.ad.jp (203.178.143.10) 0.044 ms 0.03 ms 0.03 ms                                                  -rr
+
+The rightmost columns explains how we determined a path. A dash prefix indicates that this hop was determined from the same segment as an earlier hop.
+dst - This hop is the destination or the destination's uplink.
+sym - We had to assume this hop was symmetric to the forward traceroute in order to generate the path. Note that we always assume that hop1, the destination's uplink, is symmetric, in order to avoid excess probing of endhosts. This assumption will generally be true for endhosts.
+tr - This hop was determined from an intersection with a known traceroute.
+rr - We used the Record Route option of the Internet Protocol to find this hop.
+ts - We used the Timestamp option of the Internet Protocol to find this hop.

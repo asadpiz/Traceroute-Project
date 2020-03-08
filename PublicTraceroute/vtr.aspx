@@ -37,11 +37,6 @@ left:-120px;
 width:1280px;
 height:1200px;
 }
-    .style2
-    {
-        font-family: sans-serif;
-        color: #FF6666;
-    }
     .style7
     {
         text-decoration: none;
@@ -49,23 +44,13 @@ height:1200px;
     .style8
     {
         text-align: center;
+        top: 0px;
+        left: 0px;
+        height: 0px;
     }
     .style9
     {
         list-style-type: square;
-    }
-    .style10
-    {
-        color: #FF9900;
-    }
-    .style11
-    {
-        font-family: "Trebuchet MS";
-    }
-    .style12
-    {
-        font-family: "Trebuchet MS";
-        color: #FF9900;
     }
     .style13
     {
@@ -76,7 +61,7 @@ height:1200px;
     {
         font-family: "Britannic Bold";
         font-size: xx-large;
-        color: #CCCCCC;
+        color: #003399;
     }
     .style15
     {
@@ -84,96 +69,57 @@ height:1200px;
     }
     .style16
     {
-        font-family: sans-serif;
-        color: #000000;
+        color: #FF0000;
     }
 </style>
 </head>
 
 <body onload="frames['content'].scrollTo(10,10);">
 <div id="logo">
-<h1><a href="#">ViZiTrace</a></h1>
-</div>
+    <asp:Image ID="Image2" runat="server" Height="132px" 
+        ImageUrl="~/images/logo-984520.jpg" Width="308px" />
+        <span class="style14"><strong>&nbsp;&nbsp;&nbsp; Visualize</strong></span><a 
+            class="style7" href="http://revtr.cs.washington.edu/"><span class="style1"><strong> 
+        <span class="style16">Traceroute</span></strong></span></a></div>
 <div id="menu">
-	<ul>
+		<ul>
 		<li class="first"><a href="http://traceroute.cognet.seecs.nust.edu.pk/index.aspx" accesskey="1" title="">Home</a></li>
 		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vtr.aspx" accesskey="2" title="">Traceroute</a></li>
         <li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vrtr.aspx" accesskey="3" title="">Reverse Traceroute</a></li>
 		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/publicserver.aspx" accesskey="4" title="">AS Topology</a></li>
 		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/TopSites.aspx"accesskey="5" title="">Top 50 Sites Analysis</a></li>
-		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/usage.aspx" accesskey="6" title="">Usage</a></li>
-        <li><a href="http://traceroute.cognet.seecs.nust.edu.pk/about.aspx"accesskey="7" title="">About Us</a></li>
+		<li><a href="http://traceroute.cognet.seecs.nust.edu.pk/vtrmore.aspx"accesskey="7" title="">Upload Probes</a></li>
+        <li><a href="http://traceroute.cognet.seecs.nust.edu.pk/about.aspx"accesskey="8" title="">About Us</a></li>
 	</ul>
 </div>
     <div class="style8">
-        <span class="style14"><strong>Visualize</strong></span><a 
-            class="style7" href="http://revtr.cs.washington.edu/"><span class="style1"><strong> 
-        Traceroute</strong></span></a><br />
+        <br />
     <%--<div id="banner"><img src="images/banner.jpg" alt="" width="960" height="200" /></div>--%>
     </div>
 <div id="page">
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
    <div>
         <div>
             <ul class="style9">
-                <li><span class="style13"><strong>Issue Traceroute To any Arbitrary Destination from our Server.</strong></span><br />&nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="27px" Width="307px" 
-             AutoCompleteType="Homepage" BackColor="Fuchsia"></asp:TextBox>
+                <li><span class="style13"><strong>Issue Traceroute To any Arbitrary Destination from our Server.</strong></span><br />&nbsp;<asp:TextBox 
+                        ID="TextBox2" runat="server" Height="27px" Width="307px" 
+             AutoCompleteType="Homepage" BackColor="#003366"></asp:TextBox>
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-            <asp:Button ID="Button3" runat="server" Text="Show Trace" Width="74px" 
-                     Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
-                        CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                        ViewStateMode="Enabled" onclick="Button3_Click"  />
-                     
-                    &nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="Button4" runat="server" Text="Show More" Width="74px" 
-             Height="31px" BackColor="#FFCCFF" BorderColor="#FF99FF" BorderStyle="Solid" 
+                    <asp:Button ID="Button3" runat="server" Text="Show Trace" Width="74px" 
+             Height="31px" BackColor="#003366" BorderColor="#3366CC" BorderStyle="Solid" 
                 CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled" onclick="Button4_Click"  />
+                ViewStateMode="Enabled" onclick="Button3_Click"  />
                     <br />
                     <br /></li>
             </ul>
-
-         <br /> 
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+         <br />
     <uc1:GoogleMapForASPNet ID="GoogleMapForASPNet1" runat="server"  />
-
             <br />
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/legend.jpg" />
-            <ul class="style9">
-                <li><strong><span class="style12">Alternatively Upload Traceroute </span><span 
-                        class="style11"><span class="style10">Results (</span><span class="style15">.txt</span><span class="style10">) 
-                    Or Paste them in the Box Below to show them 
-                    Graphically</span></span></strong><br />
-                    <br /></li>
-            </ul>
-
-      <div align="center">
-          <span class="style2">&nbsp;</span><span class="style16">(Click &quot;<strong>Upload&quot;</strong> Before Clicking &quot;<strong>Show 
-          Route Forward&quot;)</strong></span>
-          <span class="style2"><br />
-          </span>
-          <asp:FileUpload id="FileUploadControl" runat="server" />
-                  <asp:Button runat="server" id="UploadButton" text="Upload" onclick="UploadButton_Click" Width="74px" 
-             Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled"/>
-          <br />
-    <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
-          <br />
-          <br />
-         <asp:Button ID="Button1" runat="server" Text="Show Forward Route" Width="128px" 
-             Height="31px" BackColor="#666666" BorderColor="#669999" BorderStyle="Solid" 
-                CssClass="credit" EnableTheming="True" ForeColor="Black" SkinID="DodgerBlue" 
-                ViewStateMode="Enabled" onclick="Button1_Click1"/>
     
     </div>
-
-    <asp:TextBox ID="TextBox1" runat="server" Rows="40" TextMode="MultiLine" 
-        Width="960px" AutoCompleteType="Notes" BackColor="#FFCC99" 
-        BorderColor="#FFFF66" BorderStyle="Dotted" BorderWidth="1px" 
-        style="margin-top: 0px" Enabled="False" ReadOnly="True" Visible="False"></asp:TextBox>
     <br />
     <br />
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -1,0 +1,22 @@
+
+Tracing route to a330.g.akamai.net [80.239.224.26]
+over a maximum of 30 hops:
+
+  1     2 ms     1 ms     1 ms  192.168.1.1 
+  2    34 ms    55 ms    36 ms  182.176.0.32 
+  3    56 ms    63 ms    55 ms  10.1.1.6 
+  4    56 ms    55 ms    57 ms  203.99.170.145 
+  5    58 ms    58 ms   119 ms  static-10GE-KHI275-PO1-PE01.pie.net.pk [221.120.251.157] 
+  6    58 ms    60 ms    79 ms  static-khi-ni01-swa.pie.net.pk [202.125.128.162] 
+  7   166 ms   165 ms   185 ms  so-6-1-2.edge1.Marseille1.Level3.net [212.73.206.73] 
+  8   227 ms   170 ms   168 ms  ae-3-4.bar1.Marseille1.Level3.net [4.69.148.9] 
+  9   179 ms   179 ms   181 ms  ae-7-7.ebr1.Paris1.Level3.net [4.69.143.238] 
+ 10   181 ms   203 ms   179 ms  ae-56-111.csw1.Paris1.Level3.net [4.69.161.38] 
+ 11   227 ms   178 ms   178 ms  ae-1-51.edge3.Paris1.Level3.net [4.69.139.201] 
+ 12   438 ms   389 ms   390 ms  telia-level3-ge.paris1.Level3.net [4.68.62.126] 
+ 13   387 ms   444 ms   392 ms  prs-bb1-link.telia.net [213.155.134.220] 
+ 14   380 ms   383 ms   386 ms  ldn-bb1-link.telia.net [80.91.247.35] 
+ 15   443 ms   399 ms   408 ms  ldn-b5-link.telia.net [80.91.247.90] 
+ 16   393 ms   394 ms   398 ms  80-239-224-26.customer.teliacarrier.com [80.239.224.26] 
+
+Trace complete.

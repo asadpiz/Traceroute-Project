@@ -1,0 +1,25 @@
+Thanks for trying our reverse traceroute tool! The resulting data follows:
+
+reverse traceroute from bbc-vip112.telhc.bbc.co.uk (212.58.244.67) back to planetlab-2.cs.auckland.ac.nz (130.216.1.23)
+ 0  bbc-vip112.telhc.bbc.co.uk (212.58.244.67) 266.153992 ms 266.161987 ms 266.234985 ms                                 dst
+ 1   (132.185.255.148) 266.679993 ms 266.591003 ms 266.542999 ms                                                         sym
+ 2  lo0.er01.telhc.bbc.co.uk (132.185.255.209) 266.212006 ms 266.253998 ms 266.230988 ms                                 rr
+ 3  bbc-gw1-linx.prt0.thdoe.bbc.co.uk (195.66.226.103) 280.727997 ms 280.506012 ms 279.312012 ms                         -rr
+ 4  i-6-2.ulco-core01.bx.reach.com (202.84.140.46) 265.93399 ms 265.545013 ms 265.529999 ms                              rr
+ 5  i-12-0.eig-core01.bi.reach.com (202.84.141.89) 195.473999 ms 195.356003 ms 195.457993 ms                             rr
+ 6  i-11-0.nwk-core01.bx.reach.com (202.84.140.45) 196.462006 ms 196.412003 ms 196.613007 ms                             -rr
+ 7  i-0-5-4-6.tlot-core01.bi.reach.com (202.84.141.154) 125.838997 ms 125.592003 ms 125.400002 ms                        rr
+ 8   (203.167.201.41) 0.902 ms 1.013 ms 1.154 ms                                                                         rr
+ 9  br1-gw-1-125.net.auckland.ac.nz (130.216.1.125) 2.741 ms 1.813 ms 1.16 ms                                            ts
+10  planetlab-2.cs.auckland.ac.nz (130.216.1.23) 0.097 ms 0.022 ms 0.021 ms                                              rr
+
+The rightmost columns explains how we determined a path. A dash prefix indicates that this hop was determined from the same segment as an earlier hop.
+dst - This hop is the destination or the destination's uplink.
+sym - We had to assume this hop was symmetric to the forward traceroute in order to generate the path. Note that we always assume that hop1, the destination's uplink, is symmetric, in order to avoid excess probing of endhosts. This assumption will generally be true for endhosts.
+tr - This hop was determined from an intersection with a known traceroute.
+rr - We used the Record Route option of the Internet Protocol to find this hop.
+ts - We used the Timestamp option of the Internet Protocol to find this hop.
+
+See here for more details on the different methods.
+
+Have questions? Check out our FAQ! 

@@ -14,7 +14,8 @@
 </head>
 <body>
 <div id="logo">
-<h1><a href="#">ViZiTrace</a></h1>
+    <asp:Image ID="Image2" runat="server" Height="132px" 
+        ImageUrl="~/images/logo-984520.jpg" Width="308px" />
 </div>
 <div id="menu">
 	<ul>

@@ -2,7 +2,6 @@
 
 <%-- Add content controls here --%>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-    <form id="form1" runat="server">
 <div id="page">
 	<!-- start content -->
 		<div class="post">
@@ -13,7 +12,7 @@
                 <span style="font-family: Georgia; color: #FF9900">Trace</span></h2>
 			<div class="entry">
 				<h3 style="font-family: Georgia; color: #FF9900">A free Internet Traceroute/Reverse Traceroute Visualizer</h3>
-				<img src="images/img06.jpg" alt="" width="132" height="72" class="left" />
+				<img src="images/logo-984520.jpg" alt="" width="132" height="72" class="left" />
 				<p>Here at <strong>ViZiTrace</strong>, You can Issue both Forward &amp; Reverse Traceroutes and display 
                     the results on Google Maps.</p>
 				<p><strong>ViZiTrace</strong> Visualizes Internet Routes on Google Maps. Showing Exact Geographical 
@@ -31,7 +30,7 @@
 		</div>
 	</div>
  
-</form>
+
 </asp:Content>
 <asp:Content ID="Content1" runat="server" contentplaceholderid="HeadContent">
     <style type="text/css">

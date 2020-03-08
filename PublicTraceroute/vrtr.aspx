@@ -53,7 +53,7 @@ height:1200px;
     {
         font-family: "Britannic Bold";
         font-size: xx-large;
-        color: #FF6600;
+        color: #003366;
     }
     .style7
     {
@@ -95,13 +95,29 @@ height:1200px;
         font-size: xx-large;
         color: #CCCCCC;
     }
+    .style16
+    {
+        color: #003366;
+    }
+    .style17
+    {
+        font-family: "Britannic Bold";
+        font-size: xx-large;
+        color: #FF0000;
+    }
 </style>
 </head>
 
 <body onload="frames['content'].scrollTo(10,10);">
 <div id="logo">
-<h1><a href="#">ViZiTrace</a></h1>
-</div>
+    <asp:Image ID="Image2" runat="server" Height="132px" 
+        ImageUrl="~/images/logo-984520.jpg" Width="308px" />
+        <strong>
+        <span class="style15">&nbsp;&nbsp;&nbsp; <span class="style16">Visualize</span></span><span 
+        class="style6"> </span> </strong><a 
+            class="style7" href="http://revtr.cs.washington.edu/">
+    <span class="style17"><strong>Reverse</strong></span><strong><span class="style1"> </span>
+        <span class="style17">Traceroute</span></strong></a></div>
 <div id="menu">
 	<ul>
 		<li class="first"><a href="http://traceroute.cognet.seecs.nust.edu.pk/index.aspx" accesskey="1" title="">Home</a></li>
@@ -114,10 +130,7 @@ height:1200px;
 	</ul>
 </div>
     <div class="style8">
-        <strong>
-        <span class="style15">Visualize</span><span class="style1"> </span> </strong><a 
-            class="style7" href="http://revtr.cs.washington.edu/"><span class="style6"><strong>Reverse</strong></span><strong><span class="style1"> </span>
-        <span class="style15">Traceroute</span></strong></a><br />
+        <br />
     <%--<div id="banner"><img src="images/banner.jpg" alt="" width="960" height="200" /></div>--%>
     </div>
 <div id="page">
@@ -180,9 +193,9 @@ height:1200px;
     
     </div>
     <asp:TextBox ID="TextBox1" runat="server" Rows="40" TextMode="MultiLine" 
-        Width="960px" AutoCompleteType="Notes" BackColor="#FFCC99" 
+        Width="960px" AutoCompleteType="Notes" BackColor="#24486C" 
         BorderColor="#FFFF66" BorderStyle="Dotted" BorderWidth="1px" 
-        style="margin-top: 0px" ToolTip="Paste Trace Results Here"></asp:TextBox>
+        style="margin-top: 0px" ToolTip="Paste Trace Results Here" ForeColor="White"></asp:TextBox>
     <br />
     <br />
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

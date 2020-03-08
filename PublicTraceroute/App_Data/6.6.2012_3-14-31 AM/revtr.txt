@@ -1,0 +1,48 @@
+<title>traceroute from 128.125.137.243 (www.usc.edu) to  115.186.131.102 (115-186-131-102.nayatel.pk) for 182.177.30.176</title>
+<div align='center'><table border='1'><td align='center'><h2>traceroute from 128.125.137.243 (www.usc.edu) to  115.186.131.102 (115-186-131-102.nayatel.pk) for 182.177.30.176</h2>
+To perform a
+       <!-- a href='http://boardwatch.internet.com/mag/96/dec/bwm38.html' -->
+        traceroute
+        from www.usc.edu,
+        enter the desired target
+       <a href='http://webopedia.internet.com/TERM/d/domain_name.html'>host.domain</a>
+       (e.g. www.yahoo.com) or
+       <a href='http://aol.pcwebopedia.com/TERM/I/IP_address.html'>Internet
+       address</a> (e.g. 137.138.28.228) in the box
+       below:
+       <form action='/cgi-bin/traceroute' method='GET'>
+       Enter target name or address:
+       <input type='text' size='30' name='target'> then push 'Enter' key.
+       </form></tr></table></div>
+<table bgcolor='yellow'><tr><td align='center'><font color=red><b>
+Please note that traceroutes can appear similar 
+to port scans. If you see a suspected port scan alert, 
+for example from your firewall, with 
+a series of ports in the range 33434 - 33465, coming 
+from www.usc.edu it is probably a reverse traceroute from our 
+web based reverse traceroute server. Please do NOT report this to 
+us, it will almost certainly be a waste of both of our times. 
+For more on this see<br>
+<a href='http://www.slac.stanford.edu/comp/net/wan-mon/traceroute-srv.html#security'>
+Traceroute security issues</a>.</b></font></td></tr></table>
+<pre>
+Executing 'traceroute -m 30 -q 3 -f 3 115.186.131.102'<br>
+traceroute to 115.186.131.102 (115.186.131.102), 30 hops max, 40 byte packets
+ 3  v249-gw-6 (68.181.194.65)  0.737 ms  0.625 ms  0.625 ms
+ 4  lax-dc1--losnettos-dc.cenic.net (137.164.23.225)  0.602 ms  0.520 ms  0.619 ms
+ 5  dc-lax-core2--lax-agg1-ge.cenic.net (137.164.46.107)  1.053 ms  1.197 ms  1.010 ms
+ 6  dc-svl-core1--lax-core2-10ge-1.cenic.net (137.164.46.51)  8.902 ms  8.927 ms  8.895 ms
+ 7  dc-svl-px1--svl-core1-10ge-2.cenic.net (137.164.46.13)  8.888 ms  8.868 ms  8.718 ms
+ 8  137.164.131.61 (137.164.131.61)  9.889 ms  67.504 ms  9.471 ms
+ 9  g5-0-0.plapx-dr1.ix.singtel.com (198.32.176.50)  9.117 ms  9.187 ms  9.049 ms
+10  203.208.171.241 (203.208.171.241)  9.114 ms  25.317 ms  65.388 ms
+11  203.208.172.225 (203.208.172.225)  178.079 ms 203.208.171.109 (203.208.171.109)  9.316 ms 203.208.153.125 (203.208.153.125)  195.640 ms
+12  so-3-0-1-0.sngtp-cr1.ix.singtel.com (203.208.151.245)  206.691 ms ge-4-0-3-0.sngc3-cr1.ix.singtel.com (203.208.183.45)  205.413 ms so-3-0-1-0.sngtp-cr1.ix.singtel.com (203.208.151.245)  191.199 ms
+13  203.208.192.66 (203.208.192.66)  267.005 ms ge-4-0-0-0.sngtp-cr2.ix.singtel.com (203.208.182.102)  179.629 ms 203.208.192.66 (203.208.192.66)  267.625 ms
+14  203.208.152.218 (203.208.152.218)  185.550 ms static-10GE-KHI275-P01-SwA.pie.net.pk (202.125.128.173)  274.379 ms 203.208.166.198 (203.208.166.198)  195.670 ms
+15  203.208.192.66 (203.208.192.66)  279.698 ms  272.778 ms  279.989 ms
+16  static-10GE-KHI275-P01-SwA.pie.net.pk (202.125.128.173)  291.365 ms  272.754 ms rwp44.pie.net.pk (221.120.253.34)  317.856 ms
+17  rwp44.pie.net.pk (221.120.254.13)  318.720 ms  305.685 ms NUST.rwp44d4.pie.net.pk (202.125.149.2)  291.138 ms
+18  rwp44.pie.net.pk (221.120.253.34)  298.719 ms 58-65-175-206.nayatel.pk (58.65.175.206)  296.519 ms  449.509 ms
+19  NUST.rwp44d4.pie.net.pk (202.125.149.2)  297.006 ms  289.001 ms  306.875 ms
+20  115-186-131-102.nayatel.pk (115.186.131.102)  317.908 ms 58-65-175-206.nayatel.pk (58.65.175.206)  294.761 ms 115-186-131-102.nayatel.pk (115.186.131.102)  290.653 ms

@@ -58,7 +58,7 @@
             <asp:Label ID="Label2" runat="server" Font-Bold="True" ForeColor="#003366" 
                 Text="Select a server"></asp:Label>
            :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            <asp:DropDownList ID="DropDownList1" runat="server" Height="38px" Width="423px">
+            <asp:DropDownList ID="DropDownList1" runat="server" Height="20px" Width="423px">
                 <asp:ListItem>University of Southern California (AS47)	Los Angeles, CA, US</asp:ListItem>
                 <asp:ListItem>University of Washington (AS73) Seattle, WA, US</asp:ListItem>
                 <asp:ListItem>RUSnet (AS3277) Saint Petersburg, 66, RU</asp:ListItem>
@@ -147,18 +147,6 @@
     
            </td>
            </tr>
-           <tr>
-        <td class="style9" colspan="2">
-        <div align="center">
-        <!-- BEGIN geoiptool.com -->
-<script language="JavaScript"
-src="http://www.geoiptool.com/webjs.php?xl=en&xt=1&xw=200&xh=275"></script>
-<noscript><a target="_blank" href="http://www.geoiptool.com/">Geo Web Tool</a></noscript>
-<!-- END geoiptool.com --> </div>
-            </td>
-        
-    </tr>
-
 </table>
     </form>
 </asp:Content>
