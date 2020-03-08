@@ -19,26 +19,30 @@
             font-family: "Bradley Hand ITC";
         }
     </style>
-    <style type="text/css">
-#container{
-    width:400px;
-    height:400px;
-    border:1px solid #000; 
-    overflow:hidden;
-    margin:auto;
+<style type="text/css">
+#outerdiv
+{
+width:620px;
+height:190px;
+overflow:hidden;
+position:relative;
 }
-#container iframe {
-    width:200px;
-    height:750px;
-    margin-left:-100px;
-    margin-top:-350px;   
-    border:0 solid;
- }
+
+#inneriframe
+{
+position:absolute;
+top:-350px;
+left:-120px;
+width:1280px;
+height:1200px;
+}
 </style>
 </head>
-<body>
+<body onload="frames['content'].scrollTo(10,10);">
+
     <form id="form1" runat="server">
-    <div>
+     <div>
+    
     
         <span class="style1">Graphcial Forward/Reverse Traceroute</span><br />
         <br />
@@ -46,8 +50,11 @@
             NavigateUrl="http://revtr.cs.washington.edu/">Reverse Traceroute</asp:HyperLink>
 &nbsp;Results in the Box Below to show them Graphically<br />
         <br />
-        <div id="container">
-<iframe id="video" runat="server" title="YouTube video player" type="text/html" width="475" height="278" src="http://revtr.cs.washington.edu" frameborder="0"></iframe>
+<div id='outerdiv'>
+
+  <iframe id='inneriframe' name='content' marginheight="0px" marginwidth="0px" runat="server" title="Washigton.edu" type="text/html" width="500" height="278" src="http://revtr.cs.washington.edu" frameborder="0" align="center" >
+  </iframe>
+
 </div>
       <div align="center">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -76,4 +83,5 @@
     <br />
     </form>
 </body>
+
 </html>

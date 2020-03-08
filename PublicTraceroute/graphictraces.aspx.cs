@@ -32,7 +32,7 @@ public partial class graphictraces : System.Web.UI.Page
 
 
     }
-   protected void UploadButton_Click(object sender, EventArgs e)
+    protected void UploadButton_Click(object sender, EventArgs e)
     {
         DateTime now = DateTime.Now;
         string timendate = DateTime.Now.ToString();
@@ -160,6 +160,8 @@ public partial class graphictraces : System.Web.UI.Page
 
         /////////////////////////// FINDING LONGITUDE & LATITUDE OF FORWARD IPS /////////////////////////////////////////////////
         List<string> Flonlat = new List<string>();
+        List<string> FASno = new List<string>();
+        List<string> FASna = new List<string>();
         foreach (string item in FipS)
         {
             if (item != "Destination Unreachable")
@@ -195,11 +197,40 @@ public partial class graphictraces : System.Web.UI.Page
                     Flonlat.Add("0");
                     Flonlat.Add("0");
                 }
+                //////////////////////////////////FINDING AS no & Name ////////////////////////////
+
+                string server = "v4.whois.cymru.com";
+                string whois = whoisinfo(server, item);
+                whois = whois + "end";
+                ////////////////////// AS NO ////////////////////
+                Match asnummatch = Regex.Match(whois, @"AS Name\n(\d)+ ");
+                if (asnummatch.Success)
+                {
+                    string asno = asnummatch.Value;
+                    char[] Fendchar = { 'A', 'S', ' ', 'N', 'a', 'm', 'e', '\n' };
+                    asno = asno.TrimStart(Fendchar);
+                    FASno.Add(asno);
+                }
+                else
+                { FASno.Add("NA"); }
+            ////////////////////////////////AS NAME ////////////////////////////////////////
+                Match asnamematch = Regex.Match(whois, @"/| [a-zA-Z].*?[^\|]end");
+                if (asnamematch.Success)
+                {
+                    string asna = asnamematch.Value;
+                    char[] Fendchar = { 'e', 'n', 'd', '\n' };
+                    asna = asna.TrimEnd(Fendchar);
+                    FASna.Add(asna);
+                }
+                else
+                { FASna.Add("NA"); }
             }
             else
             {
                 Flonlat.Add("0");
                 Flonlat.Add("0");
+                FASna.Add("NA");
+                FASno.Add("NA");
             }
         }
 
@@ -866,6 +897,24 @@ public partial class graphictraces : System.Web.UI.Page
             }
 
         }
+    }
+    private string whoisinfo(string whoisServer, string url)
+    {
+        StringBuilder whoisresult = new StringBuilder();
+        TcpClient whoisclient = new TcpClient(whoisServer, 43);
+        NetworkStream whoisnetworkstream = whoisclient.GetStream();
+        BufferedStream whoisbufferedstream = new BufferedStream(whoisnetworkstream);
+        StreamWriter streamWriter = new StreamWriter(whoisbufferedstream);
+
+        streamWriter.WriteLine(url);
+        streamWriter.Flush();
+
+        StreamReader streamReaderReceive = new StreamReader(whoisbufferedstream);
+
+        while (!streamReaderReceive.EndOfStream)
+        { whoisresult.Append(streamReaderReceive.ReadLine()); }
+
+        return whoisresult.ToString();
     }
 
 }
